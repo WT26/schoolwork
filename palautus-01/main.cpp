@@ -1,8 +1,25 @@
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
+#include <map>
+#include <set>
 
 using namespace std;
+
+class Pala {
+    public:
+        Pala(vector<string> palan_muoto );
+        void tulosta() const;
+        void kaanna_pala ();
+
+    private:
+        int ylalaita_;
+        int oikea_laita_;
+        int alalaita_;
+        int vasen_laita_;
+        string kuvan_rivit_yhteen_kirjoitettuna_;
+};
 
 //Kaytettavien funktioiden esittely
 vector<string> split(const string& merkkijono, char erotinmerkki);
@@ -46,7 +63,7 @@ vector <string> tarkista_komento(string komento)
 {
     const vector<string>komentolista{"pala", "tulosta", "kierra", "rinnakkain"};
     vector<string>tarkistettava_komento;
-    tarkistettava_komento = split(komento, ':');
+    tarkistettava_komento = split(komento, ' ');
     int tarkistus{0};
 
     while ( tarkistus < komentolista.size() ){
@@ -63,6 +80,8 @@ vector <string> tarkista_komento(string komento)
 int main()
 {
     int ohjelma_kaynnissa{1};
+    set<int> palojen_numerot;
+
     while (ohjelma_kaynnissa == 1) {
         string syotetty_komento{""};
         vector<string> komento;
@@ -76,7 +95,22 @@ int main()
         } else {
 
             komento = tarkista_komento(syotetty_komento);
-            if (komento[0] == "pala"){
+
+            if ( komento[0] == "pala" ){
+                int palan_numero;
+                palan_numero = stoi(komento[1]);
+
+                if ( palojen_numerot.find( palan_numero ) == palojen_numerot.end() ){
+                    palojen_numerot.insert( palan_numero );
+
+                    vector<string> palan_muoto = split(komento[2], ':');
+                    cout << palan_muoto[0]<<palan_muoto[1]<<palan_muoto[2]<<palan_muoto[3]<<palan_muoto[4]<< endl;
+
+                    //pala(palan_muoto);
+                } else {
+
+                }
+
 
             }
 
@@ -91,9 +125,16 @@ int main()
             if (komento[0] == "rinnakkain") {
 
             }
-
         }
-
     }
 }
+//Pala::Pala(vector<string> palan_muoto):
+    //ylalaita_{ palan_muoto[0] },
+    //oikea_laita_{ palan_muoto[1]},
+    //alalaita_{ palan_muoto[2] },
+    //vasen_laita_{ palan_muoto[3] }
+    //kuvan_rivit_yhteen_kirjoitettuna_{ palan_muoto[4] }
+//{
+//}
+
 
