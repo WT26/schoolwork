@@ -81,6 +81,7 @@ int main()
 {
     int ohjelma_kaynnissa{1};
     set<int> palojen_numerot;
+    map<int, Pala> pala_hakemisto;
 
     while (ohjelma_kaynnissa == 1) {
         string syotetty_komento{""};
@@ -102,13 +103,15 @@ int main()
 
                 if ( palojen_numerot.find( palan_numero ) == palojen_numerot.end() ){
                     palojen_numerot.insert( palan_numero );
-
-                    vector<string> palan_muoto = split(komento[2], ':');
+                    vector<string> palan_muoto = split( komento[2], ':' );
                     cout << palan_muoto[0]<<palan_muoto[1]<<palan_muoto[2]<<palan_muoto[3]<<palan_muoto[4]<< endl;
+                    pala_hakemisto.insert( { palan_numero, Pala(palan_muoto ) } );
 
-                    //pala(palan_muoto);
-                } else {
-
+                } else { //Jos pala onkin jo hakemistossa, poistetaan vanha ja korvataan uudella
+                    vector<string> palan_muoto = split( komento[2], ':' );
+                    cout << palan_muoto[0]<<palan_muoto[1]<<palan_muoto[2]<<palan_muoto[3]<<palan_muoto[4]<< endl;
+                    pala_hakemisto.erase( palan_numero );
+                    pala_hakemisto.insert( { palan_numero, Pala(palan_muoto ) } );
                 }
 
 
@@ -128,13 +131,13 @@ int main()
         }
     }
 }
-//Pala::Pala(vector<string> palan_muoto):
-    //ylalaita_{ palan_muoto[0] },
-    //oikea_laita_{ palan_muoto[1]},
-    //alalaita_{ palan_muoto[2] },
-    //vasen_laita_{ palan_muoto[3] }
-    //kuvan_rivit_yhteen_kirjoitettuna_{ palan_muoto[4] }
-//{
-//}
+Pala::Pala(vector<string> palan_muoto):
+    ylalaita_{ stoi( palan_muoto[0] ) },
+    oikea_laita_{ stoi( palan_muoto[1] ) },
+    alalaita_{ stoi( palan_muoto[2] ) },
+    vasen_laita_{stoi( palan_muoto[3] ) },
+    kuvan_rivit_yhteen_kirjoitettuna_{ palan_muoto[4] }
+{
+}
 
 
