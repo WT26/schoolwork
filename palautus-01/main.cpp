@@ -27,6 +27,8 @@ class Pala {
 vector<string> split(const string& merkkijono, char erotinmerkki);
 vector<string> tarkista_komento(string komento);
 bool tarkista_tiedot(vector<string> palan_tiedot);
+char tarkista_char(char merkki);
+void rinnakkain(Pala, Pala);
 
 //Funktio jakaa merkkijonon annetun erotinmerkin kohdalta.
 //Kyseinen funktio on sama kuin viikkoharjoituksessa oltiin annettu
@@ -101,7 +103,7 @@ bool tarkista_tiedot( vector<string> palan_tiedot )
                                     'C', 'D', 'R', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                                     'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3',
                                     '4', '5', '6', '7', '8', '9', ' ', '-', '|', '+',  '*',  '#',  '@',
-                                    '/', '\\'};//merkki \ ei toimi
+                                    '/', '\\'};
     vector<char>::iterator merkki_iter;
     merkki_iter = sallitut_merkit.begin();
     int indeksi{0};
@@ -125,7 +127,6 @@ bool tarkista_tiedot( vector<string> palan_tiedot )
 
                 } else {
 
-                cout << palan_tiedot[4].at(indeksi)<<endl;
                 ++merkki_iter;
 
                 }
@@ -139,6 +140,8 @@ bool tarkista_tiedot( vector<string> palan_tiedot )
             merkki_iter = sallitut_merkit.begin();
 
         }
+        //Tama vaihe tarkistaa palan laidat, niiden on oltava positiivisia kokonaislukuja
+
         try {
             int numero_1 = stoi( palan_tiedot[0] );
             int numero_2 = stoi( palan_tiedot[1] );
@@ -156,7 +159,48 @@ bool tarkista_tiedot( vector<string> palan_tiedot )
             cout << "Virhe: Palan laidat eivat olleet positiivisia kokonaislukuja" <<endl;
             return false;
         }
+    }
+}
 
+char tarkista_char( char merkki ) {
+    if ( merkki == '\\' ) {
+        merkki = '/';
+        return merkki;
+    }
+    else if ( merkki == '/' ) {
+        merkki = '\\';
+        return merkki;
+    }
+    else if ( merkki == '-' ) {
+        merkki = '|';
+        return merkki;
+    }
+    else if ( merkki == '|' ) {
+        merkki = '-';
+        return merkki;
+    }
+    else {
+        return merkki;
+    }
+}
+
+void rinnakkain(Pala pala1, Pala pala2 ){
+    int indeksi{0};
+    while (indeksi < 4){
+        if ( pala1.oikea_laita_ == pala2.vasen_laita_ ) {
+            cout << pala1.kryk_.at(0) << pala1.kryk_.at(1) << pala1.kryk_.at(2);
+            cout << pala2.kryk_.at(0) << pala2.kryk_.at(1) << pala2.kryk_.at(2) << endl;
+
+            cout << pala1.kryk_.at(3) << pala1.kryk_.at(4) << pala1.kryk_.at(5);
+            cout << pala2.kryk_.at(3) << pala2.kryk_.at(4) << pala2.kryk_.at(5) << endl;
+
+            cout << pala1.kryk_.at(6) << pala1.kryk_.at(7) << pala1.kryk_.at(8);
+            cout << pala2.kryk_.at(6) << pala2.kryk_.at(7) << pala2.kryk_.at(8) << endl;
+        }
+        else {
+            pala2.kierra_pala(1);
+            indeksi++;
+        }
     }
 }
 
@@ -204,16 +248,19 @@ int main()
                 }
             }
 
-            if (komento[0] == "tulosta") {
+            else if (komento[0] == "tulosta") {
                 pala_hakemisto.at( stoi( komento[1] ) ).tulosta();
             }
 
-            if (komento[0] == "kierra") {
+            else if (komento[0] == "kierra") {
                 pala_hakemisto.at( stoi( komento[1] ) ).kierra_pala( stoi( komento[1] ) );
             }
 
-            if (komento[0] == "rinnakkain") {
-
+            else if (komento[0] == "rinnakkain") {
+                //rinnakain( pala_hakemisto.at( stoi(komento[1]) ), pala_hakemisto.at( stoi(komento[2]) ) );
+            }
+            else {
+                cout << "Virhe: Vaaranlainen komento" << endl;
             }
         }
     }
@@ -245,25 +292,39 @@ void Pala::kierra_pala( int palan_numero ) {
     int oikea_vaihtaja = oikea_laita_;
     int alas_vaihtaja = alalaita_;
     int vasen_vaihtaja = vasen_laita_;
-//    if ( kryk_.at(0) == '/' ) {
-//        vaihtaja_0 = '\\';
-//    }
 
-        //Tilanne ennen:
-    char vaihtaja_0 = kryk_.at(0);      //0 1 2
-    char vaihtaja_1 = kryk_.at(1);      //3 4 5
-    char vaihtaja_2 = kryk_.at(2);      //6 7 8
+    string uusi_kryk{""};
+    vector<int> jarjestus {6, 3, 0, 7, 4, 1, 8, 5, 2};
+
+    //Vaihdetaan tarvittavat merkit / ja \ sekä - ja | toisikseen.
+    int indeksi{0};
+    while (indeksi < 9){
+        uusi_kryk.push_back(tarkista_char(kryk_.at(indeksi)));
+        indeksi++;
+    }
+
+    //Sijoitellaan "jarjestus" vektorin jarjestyksessa jokainen uudenkrykin merkki
+    //kryk_:kiin
+    indeksi = 0;
+    while (indeksi < 9){
+        kryk_.at(indeksi) = uusi_kryk.at(jarjestus[indeksi]);
+        indeksi++;
+    }
+
+/*
+
+                                        //Tilanne ennen:
+    char vaihtaja_0 = kryk_.at(0);      // 0 1 2
+    char vaihtaja_1 = kryk_.at(1);      // 3 4 5
+    char vaihtaja_2 = kryk_.at(2);      // 6 7 8
     char vaihtaja_3 = kryk_.at(3);
     char vaihtaja_5 = kryk_.at(5);      //Tilanne kierron jalkeen:
-    char vaihtaja_6 = kryk_.at(6);      //6 3 0
-    char vaihtaja_7 = kryk_.at(7);      //7 4 1
-    char vaihtaja_8 = kryk_.at(8);      //8 5 2
+    char vaihtaja_6 = kryk_.at(6);      // 6 3 0
+    char vaihtaja_7 = kryk_.at(7);      // 7 4 1
+    char vaihtaja_8 = kryk_.at(8);      // 8 5 2
 
     //kierretaan 90 astetta oikealle
-    ylalaita_ = vasen_vaihtaja;
-    oikea_laita_ = ylos_vaihtaja;
-    alalaita_ = oikea_vaihtaja;
-    vasen_laita_ = alas_vaihtaja;
+
     kryk_.at(0) = vaihtaja_6;
     kryk_.at(1) = vaihtaja_3;
     kryk_.at(2) = vaihtaja_0;
@@ -272,11 +333,18 @@ void Pala::kierra_pala( int palan_numero ) {
     kryk_.at(6) = vaihtaja_8;
     kryk_.at(7) = vaihtaja_5;
     kryk_.at(8) = vaihtaja_2;
+*/
 
+    ylalaita_ = vasen_vaihtaja;
+    oikea_laita_ = ylos_vaihtaja;
+    alalaita_ = oikea_vaihtaja;
+    vasen_laita_ = alas_vaihtaja;
     cout << "Palaa " << palan_numero << " kierretty." << endl;
 }
 
+void Pala::rinnakkain(Pala pala2){
 
+}
 
 //############################Metodien maarittely valmis############################
 
