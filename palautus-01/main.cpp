@@ -139,18 +139,24 @@ bool tarkista_tiedot( vector<string> palan_tiedot )
             merkki_iter = sallitut_merkit.begin();
 
         }
+        try {
+            int numero_1 = stoi( palan_tiedot[0] );
+            int numero_2 = stoi( palan_tiedot[1] );
+            int numero_3 = stoi( palan_tiedot[2] );
+            int numero_4 = stoi( palan_tiedot[3] );
+            if ( ( numero_1 > 0 ) && ( numero_2 > 0 ) && ( numero_3 > 0 ) && ( numero_4 > 0 ) ) {
+                return true;
 
-        int numero_1 = stoi( palan_tiedot[0] );
-        int numero_2 = stoi( palan_tiedot[1] );
-        int numero_3 = stoi( palan_tiedot[2] );
-        int numero_4 = stoi( palan_tiedot[3] );
-        if ( ( numero_1 > 0 ) && ( numero_2 > 0 ) && ( numero_3 > 0 ) && ( numero_4 > 0 ) ) {
-            return true;
-
-        } else {
-            cout << "Virhe: Palan laidat eivat olleet positiivisia kokonaislukuja" << endl;
+            } else {
+                cout << "Virhe: Palan laidat eivat olleet positiivisia kokonaislukuja" << endl;
+                return false;
+            }
+        }
+        catch(exception const){
+            cout << "Virhe: Palan laidat eivat olleet positiivisia kokonaislukuja" <<endl;
             return false;
         }
+
     }
 }
 
@@ -199,13 +205,11 @@ int main()
             }
 
             if (komento[0] == "tulosta") {
-                Pala tulostettava = pala_hakemisto.at( stoi( komento[1] ) );
-                tulostettava.tulosta();
+                pala_hakemisto.at( stoi( komento[1] ) ).tulosta();
             }
 
             if (komento[0] == "kierra") {
-                Pala kierrettava = pala_hakemisto.at( stoi( komento[1] ) );
-                kierrettava.kierra_pala( stoi( komento[1] ) );
+                pala_hakemisto.at( stoi( komento[1] ) ).kierra_pala( stoi( komento[1] ) );
             }
 
             if (komento[0] == "rinnakkain") {
@@ -240,7 +244,12 @@ void Pala::kierra_pala( int palan_numero ) {
     int ylos_vaihtaja = ylalaita_;
     int oikea_vaihtaja = oikea_laita_;
     int alas_vaihtaja = alalaita_;
-    int vasen_vaihtaja = vasen_laita_;  //Tilanne ennen:
+    int vasen_vaihtaja = vasen_laita_;
+//    if ( kryk_.at(0) == '/' ) {
+//        vaihtaja_0 = '\\';
+//    }
+
+        //Tilanne ennen:
     char vaihtaja_0 = kryk_.at(0);      //0 1 2
     char vaihtaja_1 = kryk_.at(1);      //3 4 5
     char vaihtaja_2 = kryk_.at(2);      //6 7 8
