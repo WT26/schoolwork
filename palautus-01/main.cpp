@@ -11,10 +11,9 @@ class Pala {
     public:
         Pala(vector<string> palan_tiedot );
         void tulosta() const;
-        void kaanna_pala();
+        void kierra_pala( int palan_numero );
 
     private:
-        void tarkista_muoto() const;
         int ylalaita_;
         int oikea_laita_;
         int alalaita_;
@@ -92,6 +91,7 @@ vector<string> tarkista_komento(string komento)
     cout << "Virhe: Syottamaasi komentoa ei loydy" << endl;
 }
 
+
 //Funktio tarkistaa onko kaikki annetut palan tiedot oikein:
 //onko kuvassa kaytetty oikeita merkkeja ja onko laidat positiivisia kokonaislukuja
 bool tarkista_tiedot( vector<string> palan_tiedot )
@@ -101,7 +101,7 @@ bool tarkista_tiedot( vector<string> palan_tiedot )
                                     'C', 'D', 'R', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                                     'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3',
                                     '4', '5', '6', '7', '8', '9', ' ', '-', '|', '+',  '*',  '#',  '@',
-                                    '/'};//merkki \ ei toimi
+                                    '/', '\\'};//merkki \ ei toimi
     vector<char>::iterator merkki_iter;
     merkki_iter = sallitut_merkit.begin();
     int indeksi{0};
@@ -137,8 +137,20 @@ bool tarkista_tiedot( vector<string> palan_tiedot )
             }
             ++indeksi;
             merkki_iter = sallitut_merkit.begin();
+
         }
-        return true;
+
+        int numero_1 = stoi( palan_tiedot[0] );
+        int numero_2 = stoi( palan_tiedot[1] );
+        int numero_3 = stoi( palan_tiedot[2] );
+        int numero_4 = stoi( palan_tiedot[3] );
+        if ( ( numero_1 > 0 ) && ( numero_2 > 0 ) && ( numero_3 > 0 ) && ( numero_4 > 0 ) ) {
+            return true;
+
+        } else {
+            cout << "Virhe: Palan laidat eivat olleet positiivisia kokonaislukuja" << endl;
+            return false;
+        }
     }
 }
 
@@ -178,12 +190,12 @@ int main()
 
                 } else { //Jos pala onkin jo hakemistossa, poistetaan vanha ja korvataan uudella
                     vector<string> palan_tiedot = split( komento[2], ':' );
-                    pala_hakemisto.erase( palan_numero );
-                    pala_hakemisto.insert( { palan_numero, Pala( palan_tiedot ) } );
-                    cout << "Pala "<< palan_numero << " asetettu." << endl;
+                    if ( tarkista_tiedot(palan_tiedot) == true ) {
+                        pala_hakemisto.erase( palan_numero );
+                        pala_hakemisto.insert( { palan_numero, Pala( palan_tiedot ) } );
+                        cout << "Pala "<< palan_numero << " asetettu." << endl;
+                    }
                 }
-
-
             }
 
             if (komento[0] == "tulosta") {
@@ -192,7 +204,8 @@ int main()
             }
 
             if (komento[0] == "kierra") {
-
+                Pala kierrettava = pala_hakemisto.at( stoi( komento[1] ) );
+                kierrettava.kierra_pala( stoi( komento[1] ) );
             }
 
             if (komento[0] == "rinnakkain") {
@@ -223,9 +236,38 @@ void Pala::tulosta() const{
     cout << kryk_.at(6) << kryk_.at(7) << kryk_.at(8) << endl;
 }
 
-//void Pala::tarkista_tiedot() const{
+void Pala::kierra_pala( int palan_numero ) {
+    int ylos_vaihtaja = ylalaita_;
+    int oikea_vaihtaja = oikea_laita_;
+    int alas_vaihtaja = alalaita_;
+    int vasen_vaihtaja = vasen_laita_;  //Tilanne ennen:
+    char vaihtaja_0 = kryk_.at(0);      //0 1 2
+    char vaihtaja_1 = kryk_.at(1);      //3 4 5
+    char vaihtaja_2 = kryk_.at(2);      //6 7 8
+    char vaihtaja_3 = kryk_.at(3);
+    char vaihtaja_5 = kryk_.at(5);      //Tilanne kierron jalkeen:
+    char vaihtaja_6 = kryk_.at(6);      //6 3 0
+    char vaihtaja_7 = kryk_.at(7);      //7 4 1
+    char vaihtaja_8 = kryk_.at(8);      //8 5 2
 
-//}
+    //kierretaan 90 astetta oikealle
+    ylalaita_ = vasen_vaihtaja;
+    oikea_laita_ = ylos_vaihtaja;
+    alalaita_ = oikea_vaihtaja;
+    vasen_laita_ = alas_vaihtaja;
+    kryk_.at(0) = vaihtaja_6;
+    kryk_.at(1) = vaihtaja_3;
+    kryk_.at(2) = vaihtaja_0;
+    kryk_.at(3) = vaihtaja_7;
+    kryk_.at(5) = vaihtaja_1;
+    kryk_.at(6) = vaihtaja_8;
+    kryk_.at(7) = vaihtaja_5;
+    kryk_.at(8) = vaihtaja_2;
+
+    cout << "Palaa " << palan_numero << " kierretty." << endl;
+}
+
+
 
 //############################Metodien maarittely valmis############################
 
