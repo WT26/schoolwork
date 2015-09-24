@@ -187,6 +187,7 @@ char tarkista_char(char merkki) {
 
 //############################Funktiot valmiit############################
 
+
 //############################Metodien maarittely############################
 
 Pala::Pala(vector<string> palan_tiedot):
