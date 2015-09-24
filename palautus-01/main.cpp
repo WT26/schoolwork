@@ -1,3 +1,7 @@
+// TIE-02200 Ohjelmoinnin peruskurssi, syksy 2015
+// Harjoitustehtava 1
+// 246479 joel.alanko@student.tut.fi (20h)
+
 #include <iostream>
 #include <sstream>
 #include <string>
