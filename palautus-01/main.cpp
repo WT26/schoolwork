@@ -11,7 +11,8 @@ class Pala {
     public:
         Pala(vector<string> palan_tiedot );
         void tulosta() const;
-        void kierra_pala( int palan_numero );
+        void kierra_pala( int palan_numero, bool rinnakkain_tulostus );
+        void rinnakkain( Pala rinnakkainen);
 
     private:
         int ylalaita_;
@@ -184,25 +185,6 @@ char tarkista_char( char merkki ) {
     }
 }
 
-void rinnakkain(Pala pala1, Pala pala2 ){
-    int indeksi{0};
-    while (indeksi < 4){
-        if ( pala1.oikea_laita_ == pala2.vasen_laita_ ) {
-            cout << pala1.kryk_.at(0) << pala1.kryk_.at(1) << pala1.kryk_.at(2);
-            cout << pala2.kryk_.at(0) << pala2.kryk_.at(1) << pala2.kryk_.at(2) << endl;
-
-            cout << pala1.kryk_.at(3) << pala1.kryk_.at(4) << pala1.kryk_.at(5);
-            cout << pala2.kryk_.at(3) << pala2.kryk_.at(4) << pala2.kryk_.at(5) << endl;
-
-            cout << pala1.kryk_.at(6) << pala1.kryk_.at(7) << pala1.kryk_.at(8);
-            cout << pala2.kryk_.at(6) << pala2.kryk_.at(7) << pala2.kryk_.at(8) << endl;
-        }
-        else {
-            pala2.kierra_pala(1);
-            indeksi++;
-        }
-    }
-}
 
 //############################Funktiot valmiit############################
 
@@ -233,6 +215,7 @@ int main()
                 if ( palojen_numerot.find( palan_numero ) == palojen_numerot.end() ){
                     palojen_numerot.insert( palan_numero );
                     vector<string> palan_tiedot = split( komento[2], ':' );
+
                     if ( tarkista_tiedot(palan_tiedot) == true ) {
                         pala_hakemisto.insert( { palan_numero, Pala(palan_tiedot ) } );
                         cout << "Pala "<< palan_numero << " asetettu." << endl;
@@ -240,6 +223,7 @@ int main()
 
                 } else { //Jos pala onkin jo hakemistossa, poistetaan vanha ja korvataan uudella
                     vector<string> palan_tiedot = split( komento[2], ':' );
+
                     if ( tarkista_tiedot(palan_tiedot) == true ) {
                         pala_hakemisto.erase( palan_numero );
                         pala_hakemisto.insert( { palan_numero, Pala( palan_tiedot ) } );
@@ -253,11 +237,11 @@ int main()
             }
 
             else if (komento[0] == "kierra") {
-                pala_hakemisto.at( stoi( komento[1] ) ).kierra_pala( stoi( komento[1] ) );
+                pala_hakemisto.at( stoi( komento[1] ) ).kierra_pala( stoi( komento[1] ), false );
             }
 
             else if (komento[0] == "rinnakkain") {
-                //rinnakain( pala_hakemisto.at( stoi(komento[1]) ), pala_hakemisto.at( stoi(komento[2]) ) );
+                pala_hakemisto.at( stoi(komento[1]) ).rinnakkain( pala_hakemisto.at( stoi(komento[2]) ) );
             }
             else {
                 cout << "Virhe: Vaaranlainen komento" << endl;
@@ -287,7 +271,7 @@ void Pala::tulosta() const{
     cout << kryk_.at(6) << kryk_.at(7) << kryk_.at(8) << endl;
 }
 
-void Pala::kierra_pala( int palan_numero ) {
+void Pala::kierra_pala( int palan_numero, bool rinnakkain_tulostus ) {
     int ylos_vaihtaja = ylalaita_;
     int oikea_vaihtaja = oikea_laita_;
     int alas_vaihtaja = alalaita_;
@@ -311,39 +295,47 @@ void Pala::kierra_pala( int palan_numero ) {
         indeksi++;
     }
 
-/*
-
-                                        //Tilanne ennen:
-    char vaihtaja_0 = kryk_.at(0);      // 0 1 2
-    char vaihtaja_1 = kryk_.at(1);      // 3 4 5
-    char vaihtaja_2 = kryk_.at(2);      // 6 7 8
-    char vaihtaja_3 = kryk_.at(3);
-    char vaihtaja_5 = kryk_.at(5);      //Tilanne kierron jalkeen:
-    char vaihtaja_6 = kryk_.at(6);      // 6 3 0
-    char vaihtaja_7 = kryk_.at(7);      // 7 4 1
-    char vaihtaja_8 = kryk_.at(8);      // 8 5 2
-
-    //kierretaan 90 astetta oikealle
-
-    kryk_.at(0) = vaihtaja_6;
-    kryk_.at(1) = vaihtaja_3;
-    kryk_.at(2) = vaihtaja_0;
-    kryk_.at(3) = vaihtaja_7;
-    kryk_.at(5) = vaihtaja_1;
-    kryk_.at(6) = vaihtaja_8;
-    kryk_.at(7) = vaihtaja_5;
-    kryk_.at(8) = vaihtaja_2;
-*/
-
     ylalaita_ = vasen_vaihtaja;
     oikea_laita_ = ylos_vaihtaja;
     alalaita_ = oikea_vaihtaja;
     vasen_laita_ = alas_vaihtaja;
-    cout << "Palaa " << palan_numero << " kierretty." << endl;
+
+    //Tilanne ennen:
+    // 0 1 2
+    // 3 4 5
+    // 6 7 8
+
+    //Tilanne kierron jalkeen:
+    // 6 3 0
+    // 7 4 1
+    // 8 5 2
+
+    if ( rinnakkain_tulostus == false ){
+        cout << "Palaa " << palan_numero << " kierretty." << endl;
+    }
 }
 
-void Pala::rinnakkain(Pala pala2){
+//Metodi tulostaa palat rinnakkain jos palan oikealaita vastaa verrattavan palan vasenta laitaa.
+//Jollei, niin kierretaan verrattava pala ympari ja koitetaan muita laitoja. Verrattava pala ei kuitenkaan
+//jaa tahan asentoon.
+void Pala::rinnakkain(Pala rinnakkainen){
+    int indeksi{0};
+    while (indeksi < 4){
 
+        if ( oikea_laita_ == rinnakkainen.vasen_laita_ ) {
+            cout << kryk_.at(0) << kryk_.at(1) << kryk_.at(2);
+            cout << rinnakkainen.kryk_.at(0) << rinnakkainen.kryk_.at(1) << rinnakkainen.kryk_.at(2) << endl;
+            cout << kryk_.at(3) << kryk_.at(4) << kryk_.at(5);
+            cout << rinnakkainen.kryk_.at(3) << rinnakkainen.kryk_.at(4) << rinnakkainen.kryk_.at(5) << endl;
+            cout << kryk_.at(6) << kryk_.at(7) << kryk_.at(8);
+            cout << rinnakkainen.kryk_.at(6) << rinnakkainen.kryk_.at(7) << rinnakkainen.kryk_.at(8) << endl;
+            indeksi = 4;
+        }
+        else {
+            rinnakkainen.kierra_pala( 2, true );
+            indeksi++;
+        }
+    }
 }
 
 //############################Metodien maarittely valmis############################
