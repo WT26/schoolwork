@@ -6,6 +6,8 @@
 #include <map>
 #include <set>
 
+using namespace std;
+
 vector<string> split(string& merkkijono, char erotinmerkki);
 char tarkista_char(char merkki);
 bool tarkista_tiedot(vector<string> palan_tiedot);

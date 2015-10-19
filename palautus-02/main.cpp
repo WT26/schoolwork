@@ -6,6 +6,7 @@
 #include "pala.hh"
 #include "palapeli.hh"
 #include <iostream>
+#include <fstream>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -20,7 +21,7 @@ int main()
     int ohjelma_kaynnissa{1};
 
     set<int> palojen_numerot;
-    map<int, Pala> pala_hakemisto;
+    //map<int, Pala> pala_hakemisto;
 
     while (ohjelma_kaynnissa == 1) {
         string tiedoston_nimi{""};
@@ -31,6 +32,32 @@ int main()
 
         if ( tiedoston_nimi == "" ){
             return 0;
+
+        try {
+                ifstream tiedosto_olio{tiedoston_nimi};
+                if ( not tiedosto_olio ) {
+                    cout<<"Virhe: tiedoston nimi vaarin"<<endl;
+
+                } else {
+                    string rivi;
+                    while (getline(tiedosto_olio, rivi)) {
+                        cout<< rivi << endl;
+
+                    }
+                }
+
+
+        }
+            catch(exception const){
+                cout << "Virhe: Palan laidat eivat olleet positiivisia kokonaislukuja" <<endl;
+                return false;
+            }
+
+
+
+
+
+
 /*
         } elif tiedoston_ni
 
@@ -60,8 +87,8 @@ int main()
                         }
                     }
                 }
-
-        }*/
+*/
+        }
     }
 }
 

@@ -1,8 +1,11 @@
 #include "apufunktiot.hh"
+#include <iostream>
 #include <string>
 #include <vector>
 #include <map>
 #include <set>
+
+using namespace std;
 
 //Funktio jakaa merkkijonon annetun erotinmerkin kohdalta palautettavaan vektoriin.
 //Kyseinen funktio on sama kuin viikkoharjoituksessa oltiin annettu

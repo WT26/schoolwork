@@ -1,9 +1,12 @@
 #include "pala.hh"
-
+#include "apufunktiot.hh"
+#include <iostream>
 #include <string>
 #include <vector>
 #include <map>
 #include <set>
+
+using namespace std;
 
 Pala::Pala(vector<string> palan_tiedot):
     ylalaita_{ stoi(palan_tiedot[0]) },
@@ -67,13 +70,7 @@ void Pala::rinnakkain(Pala rinnakkainen){
     while (indeksi < 4){
 
         if ( oikea_laita_ == rinnakkainen.vasen_laita_ ) {
-            cout << kryk_.at(0) << kryk_.at(1) << kryk_.at(2);
-            cout << rinnakkainen.kryk_.at(0) << rinnakkainen.kryk_.at(1) << rinnakkainen.kryk_.at(2) << endl;
-            cout << kryk_.at(3) << kryk_.at(4) << kryk_.at(5);
-            cout << rinnakkainen.kryk_.at(3) << rinnakkainen.kryk_.at(4) << rinnakkainen.kryk_.at(5) << endl;
-            cout << kryk_.at(6) << kryk_.at(7) << kryk_.at(8);
-            cout << rinnakkainen.kryk_.at(6) << rinnakkainen.kryk_.at(7) << rinnakkainen.kryk_.at(8) << endl;
-            indeksi = 4;
+            //vierekkaiset
         }
         else {
             rinnakkainen.kierra_pala(2, true);
