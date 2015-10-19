@@ -1,0 +1,3 @@
+#include "palapeli.hh"
+
+//metodit
