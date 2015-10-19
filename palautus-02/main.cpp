@@ -25,14 +25,13 @@ int main()
 
     while (ohjelma_kaynnissa == 1) {
         string tiedoston_nimi{""};
-        vector<string> komento;
 
         cout << "Luettava tiedosto ";
         getline(cin, tiedoston_nimi);
 
         if ( tiedoston_nimi == "" ){
             return 0;
-
+        }
         try {
                 ifstream tiedosto_olio{tiedoston_nimi};
                 if ( not tiedosto_olio ) {
@@ -41,20 +40,20 @@ int main()
                 } else {
                     string rivi;
                     while (getline(tiedosto_olio, rivi)) {
-                        cout<< rivi << endl;
+                        string rivi_string = rivi;
+                        if (tarkista_tiedot(rivi_string) == true) {
 
+                            cout<<"tiedot oikein"<<endl;
+                        }
+                        else {
+                            cout<<"Virhe: Tiedoston palojen tiedot ovat vaarin"<<endl;
+                        }
                     }
                 }
-
-
         }
-            catch(exception const){
-                cout << "Virhe: Palan laidat eivat olleet positiivisia kokonaislukuja" <<endl;
+        catch(exception const){
                 return false;
-            }
-
-
-
+        }
 
 
 
@@ -87,8 +86,9 @@ int main()
                         }
                     }
                 }
-*/
+
         }
+        */
     }
 }
 

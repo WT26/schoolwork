@@ -74,7 +74,8 @@ vector<string> tarkista_komento(string komento)
 
 //Funktio tarkistaa onko kaikki annetut palan tiedot oikein:
 //onko kuvassa kaytetty oikeita merkkeja ja onko laidat positiivisia kokonaislukuja
-bool tarkista_tiedot(vector<string> palan_tiedot) {
+bool tarkista_tiedot(string palan_tiedot_string) {
+    vector<string> palan_tiedot = split( palan_tiedot_string, ':' );
     vector<char>::iterator merkki_iter;
     vector<char> sallitut_merkit{   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
                                     'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z','A', 'B',
@@ -83,15 +84,24 @@ bool tarkista_tiedot(vector<string> palan_tiedot) {
                                     '4', '5', '6', '7', '8', '9', ' ', '-', '|', '+',  '*',  '#',  '@',
                                     '/', '\\'   };
 
+    bool tiedot_sallittuja_merkkien_tarkasteluun;
+
+    if ( (palan_tiedot[4].length() == 10) ){
+            if (palan_tiedot[4].at(9) == '='){
+                tiedot_sallittuja_merkkien_tarkasteluun = true;
+            }
+    }
+    else if (palan_tiedot[4].length() == 9){
+        tiedot_sallittuja_merkkien_tarkasteluun = true;
+    }
+    else {
+        tiedot_sallittuja_merkkien_tarkasteluun = false;
+    }
+
     merkki_iter = sallitut_merkit.begin();
-
     int indeksi{0};
-    if ( palan_tiedot[4].length() != 9 ){
-        cout << "Virhe: Palan kuvan merkkeja ei ole tasan yhdeksaa" << endl;
-        return false;
 
-    } else {
-
+    if (tiedot_sallittuja_merkkien_tarkasteluun == true) {
         //Ensimmainen looppi kay lapi annetut yhdeksan merkkia,
         //toinen vertaa naita merkkeja sallittujen merkkien vectoriin.
         while ( indeksi < palan_tiedot[4].length() ) {
@@ -119,13 +129,59 @@ bool tarkista_tiedot(vector<string> palan_tiedot) {
         }
 
         //Tama vaihe tarkistaa palan laidat, niiden on oltava positiivisia kokonaislukuja
+        //Tarkistaa myos onko nollia kaksi ja jos on, niiden on oltava vierekkaiset
         try {
+            int nollat{0};
             int numero_1 = stoi(palan_tiedot[0]);
             int numero_2 = stoi(palan_tiedot[1]);
             int numero_3 = stoi(palan_tiedot[2]);
             int numero_4 = stoi(palan_tiedot[3]);
-            if ( (numero_1 > 0) && (numero_2 > 0) && (numero_3 > 0) && (numero_4 > 0) ) {
-                return true;
+            bool nollat_vierekkain;
+
+            if ( numero_1 == 0) {
+                nollat++;
+            }
+            if ( numero_2 == 0) {
+                nollat++;
+            }
+            if ( numero_3 == 0) {
+                nollat++;
+            }
+            if ( numero_4 == 0) {
+                nollat++;
+            }
+
+
+            if ((numero_1 == 0) && (numero_2 == 0) && (nollat == 2)){
+                nollat_vierekkain = true;
+            }
+            else if ((numero_2 == 0) && (numero_3 == 0) && (nollat == 2)) {
+                nollat_vierekkain = true;
+            }
+            else if ((numero_3 == 0) && (numero_4 == 0) && (nollat == 2)) {
+                nollat_vierekkain = true;
+            }
+            else if ((numero_4 == 0) && (numero_1 == 0) && (nollat == 2)) {
+                nollat_vierekkain = true;
+            }
+            else if (nollat < 2) {
+                nollat_vierekkain = true;
+            }
+            else {
+                nollat_vierekkain = false;
+            }
+
+
+
+            if ( (numero_1 >= 0) && (numero_2 >= 0) && (numero_3 >= 0) && (numero_4 >= 0) ) {
+                if (nollat_vierekkain == true) {
+                    return true;
+
+                }
+                else {
+                    cout<<"Virhe: Jossain palassa enemman kuin 2 nollaa tai nollat eivat ole vierekkaiset nollat"<<endl;
+                    return false;
+                }
 
             } else {
                 cout << "Virhe: Palan laidat eivat olleet positiivisia kokonaislukuja" << endl;
@@ -136,6 +192,9 @@ bool tarkista_tiedot(vector<string> palan_tiedot) {
             cout << "Virhe: Palan laidat eivat olleet positiivisia kokonaislukuja" <<endl;
             return false;
         }
+    }
+    else {
+        return false;
     }
 }
 
