@@ -74,17 +74,17 @@ vector<string> tarkista_komento(string komento)
 
 //Funktio tarkistaa onko kaikki annetut palan tiedot oikein:
 //onko kuvassa kaytetty oikeita merkkeja ja onko laidat positiivisia kokonaislukuja
-bool tarkista_tiedot(string palan_tiedot_string) {
+string tarkista_tiedot(string palan_tiedot_string) {
     vector<string> palan_tiedot = split( palan_tiedot_string, ':' );
     vector<char>::iterator merkki_iter;
     vector<char> sallitut_merkit{   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
                                     'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z','A', 'B',
-                                    'C', 'D', 'R', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+                                    'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                                     'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3',
                                     '4', '5', '6', '7', '8', '9', ' ', '-', '|', '+',  '*',  '#',  '@',
-                                    '/', '\\'   };
+                                    '/', '\\', '='  };
 
-    bool tiedot_sallittuja_merkkien_tarkasteluun;
+    bool tiedot_sallittuja_merkkien_tarkasteluun = true;
 
     if ( (palan_tiedot[4].length() == 10) ){
             if (palan_tiedot[4].at(9) == '='){
@@ -94,7 +94,7 @@ bool tarkista_tiedot(string palan_tiedot_string) {
     else if (palan_tiedot[4].length() == 9){
         tiedot_sallittuja_merkkien_tarkasteluun = true;
     }
-    else {
+    else if (palan_tiedot[4].length() > 10) {
         tiedot_sallittuja_merkkien_tarkasteluun = false;
     }
 
@@ -121,7 +121,7 @@ bool tarkista_tiedot(string palan_tiedot_string) {
 
             if ( vaara_merkki == 0 ){
                 cout<< "Virhe: Palan tiedoissa vaaria merkkeja" << endl;
-                return false;
+                return "virhe";
             }
             ++indeksi;
             merkki_iter = sallitut_merkit.begin();
@@ -175,26 +175,38 @@ bool tarkista_tiedot(string palan_tiedot_string) {
 
             if ( (numero_1 >= 0) && (numero_2 >= 0) && (numero_3 >= 0) && (numero_4 >= 0) ) {
                 if (nollat_vierekkain == true) {
-                    return true;
+                    string pala_str = palan_tiedot[0] + ":" + palan_tiedot[1] + ":" + palan_tiedot[2]
+                            + ":" + palan_tiedot[3] + ":" + palan_tiedot[4];
+
+                    if (palan_tiedot[4].length() < 9) {
+                        int lisattavat = 9 - palan_tiedot[4].length();
+
+                        while (lisattavat > 0) {
+                            pala_str += " ";
+                            lisattavat--;
+                        }
+                    }
+                    return pala_str;
 
                 }
                 else {
                     cout<<"Virhe: Jossain palassa enemman kuin 2 nollaa tai nollat eivat ole vierekkaiset nollat"<<endl;
-                    return false;
+                    return "virhe";
                 }
 
             } else {
                 cout << "Virhe: Palan laidat eivat olleet positiivisia kokonaislukuja" << endl;
-                return false;
+                return "virhe";
             }
         }
         catch(exception const){
             cout << "Virhe: Palan laidat eivat olleet positiivisia kokonaislukuja" <<endl;
-            return false;
+            return "virhe";
         }
     }
     else {
-        return false;
+        cout<<"taalla virhe"<<endl;
+        return "virhe";
     }
 }
 

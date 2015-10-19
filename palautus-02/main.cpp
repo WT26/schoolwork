@@ -41,12 +41,13 @@ int main()
                     string rivi;
                     while (getline(tiedosto_olio, rivi)) {
                         string rivi_string = rivi;
-                        if (tarkista_tiedot(rivi_string) == true) {
 
-                            cout<<"tiedot oikein"<<endl;
+                        //tarkistetaan onko tiedoston tiedot syotetty oikein.
+                        if (tarkista_tiedot(rivi_string) != "virhe") {
+                            cout<<"oikein"<<endl;
                         }
                         else {
-                            cout<<"Virhe: Tiedoston palojen tiedot ovat vaarin"<<endl;
+                            cout<<"tiedot vaarin"<<endl;
                         }
                     }
                 }
