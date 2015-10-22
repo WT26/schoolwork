@@ -21,6 +21,8 @@ class Palapeli {
 
     private:
         deque<Pala> pala_jono_;
+        int leveys_;
+        int korkeus_;
 
 };
 
