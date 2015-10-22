@@ -53,6 +53,8 @@ int main()
                         }
                     }
                     Palapeli palapeli(pala_jono);
+                    palapeli.jarjesta();
+
                 }
         }
         catch(exception const){

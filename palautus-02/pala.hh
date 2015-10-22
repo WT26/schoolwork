@@ -13,7 +13,11 @@ class Pala {
         Pala (vector<string> palan_tiedot) ;
         void tulosta() const;
         void kierra_pala( int palan_numero, bool rinnakkain_tulostus );
-        void rinnakkain( Pala rinnakkainen );
+        void kierra_eka();
+        bool vierekkain( Pala verrattava );
+        bool allekkain ( Pala verrattava );
+        bool onko_aloituspala();
+        bool onko_kulmapala();
 
 
     private:

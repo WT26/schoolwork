@@ -26,6 +26,73 @@ void Pala::tulosta() const{
     cout << kryk_.at(3) << kryk_.at(4) << kryk_.at(5) << endl;
     cout << kryk_.at(6) << kryk_.at(7) << kryk_.at(8) << endl;
 }
+bool Pala::onko_aloituspala(){
+    if (kryk_.size() == 10) {
+        return true;
+    }
+    else {
+        return false;
+    }
+
+}
+
+bool Pala::onko_kulmapala(){
+    int nollia{0};
+    if (ylalaita_ == 0) {
+        nollia++;
+    }
+    if (alalaita_ == 0) {
+        nollia++;
+    }
+    if (oikea_laita_ == 0) {
+        nollia++;
+    }
+    if (vasen_laita_ == 0) {
+        nollia++;
+    }
+    if (nollia == 2) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+
+void Pala::kierra_eka(){
+    while (vasen_laita_ != 0 && ylalaita_ != 0){
+        int ylos_vaihtaja = ylalaita_;
+        int oikea_vaihtaja = oikea_laita_;
+        int alas_vaihtaja = alalaita_;
+        int vasen_vaihtaja = vasen_laita_;
+
+        string uusi_kryk{""};
+        vector<int> jarjestus {6, 3, 0, 7, 4, 1, 8, 5, 2};
+
+        //Vaihdetaan tarvittavat merkit / ja \ sekä - ja | toisikseen.
+        int indeksi{0};
+        while ( indeksi < 9 ){
+            uusi_kryk.push_back( tarkista_char(kryk_.at(indeksi)) );
+            indeksi++;
+        }
+
+        //Sijoitellaan "jarjestus" vektorin jarjestyksessa jokainen uudenkrykin merkki
+        //kryk_:kiin
+        indeksi = 0;
+        while (indeksi < 9){
+            kryk_.at(indeksi) = uusi_kryk.at(jarjestus[indeksi]);
+            indeksi++;
+        }
+
+        ylalaita_ = vasen_vaihtaja;
+        oikea_laita_ = ylos_vaihtaja;
+        alalaita_ = oikea_vaihtaja;
+        vasen_laita_ = alas_vaihtaja;
+        cout<<vasen_laita_ + "  " + ylalaita_<< endl;
+
+    }
+}
+
 
 void Pala::kierra_pala(int palan_numero, bool rinnakkain_tulostus) {
     int ylos_vaihtaja = ylalaita_;
@@ -65,16 +132,31 @@ void Pala::kierra_pala(int palan_numero, bool rinnakkain_tulostus) {
 //Metodi tulostaa palat rinnakkain jos palan oikealaita vastaa verrattavan palan vasenta laitaa.
 //Jollei, niin kierretaan verrattava pala ympari ja koitetaan muita laitoja. Verrattava pala ei kuitenkaan
 //jaa tahan asentoon.
-void Pala::rinnakkain(Pala rinnakkainen){
+bool Pala::vierekkain(Pala verrattava){
     int indeksi{0};
     while (indeksi < 4){
 
-        if ( oikea_laita_ == rinnakkainen.vasen_laita_ ) {
+        if ( oikea_laita_ == verrattava.vasen_laita_ ) {
             //vierekkaiset
         }
         else {
-            rinnakkainen.kierra_pala(2, true);
+            verrattava.kierra_pala(2, true);
             indeksi++;
         }
     }
 }
+
+bool Pala::allekkain(Pala allekkain){
+    int indeksi{0};
+    while (indeksi < 4){
+
+        if ( oikea_laita_ == allekkain.vasen_laita_ ) {
+            //vierekkaiset
+        }
+        else {
+            allekkain.kierra_pala(2, true);
+            indeksi++;
+        }
+    }
+}
+
