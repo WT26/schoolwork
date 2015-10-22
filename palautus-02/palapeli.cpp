@@ -20,6 +20,7 @@ void Palapeli::jarjesta() {
     bool jarjestus_valmis = false;
     int kulmapaloja_valmiina{0};
     int jarjestettu_lkm{0};
+    int leveys{};
 
     while (!jarjestus_valmis){
         if (jarjestettu_lkm == 0){
@@ -36,17 +37,24 @@ void Palapeli::jarjesta() {
                 jarjestaja++;
             }
         }
-        while ((jarjestettu_lkm >= 1) && (kulmapaloja_valmiina < 2)) {
-            for(jarjestaja = pala_jono_.begin() + 1;jarjestaja != pala_jono_.end();jarjestaja++){
+        while ((jarjestettu_lkm >= 1) && (kulmapaloja_valmiina == 1)) {
+            for(jarjestaja = pala_jono_.begin() + jarjestettu_lkm;jarjestaja != pala_jono_.end();jarjestaja++){
                 if (pala_jono_.at(jarjestettu_lkm - 1).vierekkain((*jarjestaja))){
                     if((*jarjestaja).onko_kulmapala()){
                         kulmapaloja_valmiina++;
+                        leveys = jarjestettu_lkm + 1;
                     }
                     iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
                     jarjestettu_lkm++;
                     cout<<"toinen pala valmis"<<endl;
-
                     break;
+                }
+            }
+        }
+        while (kulmapaloja_valmiina == 2) {
+            for(jarjestaja = pala_jono_.begin() + jarjestettu_lkm;jarjestaja != pala_jono_.end();jarjestaja++){
+                if(pala_jono_.at(0).allekkain(*jarjestaja)){
+
                 }
             }
         }

@@ -137,26 +137,28 @@ bool Pala::vierekkain(Pala verrattava){
     while (indeksi < 4){
 
         if ( oikea_laita_ == verrattava.vasen_laita_ ) {
-            //vierekkaiset
+            return true;
         }
         else {
             verrattava.kierra_pala(2, true);
             indeksi++;
         }
     }
+    return false;
 }
 
 bool Pala::allekkain(Pala allekkain){
     int indeksi{0};
     while (indeksi < 4){
 
-        if ( oikea_laita_ == allekkain.vasen_laita_ ) {
-            //vierekkaiset
+        if ( alalaita_ == allekkain.ylalaita_ ) {
+            return true;
         }
         else {
             allekkain.kierra_pala(2, true);
             indeksi++;
         }
     }
+    return false;
 }
 
