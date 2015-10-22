@@ -205,7 +205,6 @@ string tarkista_tiedot(string palan_tiedot_string) {
         }
     }
     else {
-        cout<<"taalla virhe"<<endl;
         return "virhe";
     }
 }

@@ -6,10 +6,12 @@
 #include "pala.hh"
 #include "palapeli.hh"
 #include <iostream>
+#include <ostream>
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <vector>
+#include <deque>
 #include <map>
 #include <set>
 
@@ -18,6 +20,7 @@ using namespace std;
 
 int main()
 {
+    deque<Pala> pala_jono;
     int ohjelma_kaynnissa{1};
 
     set<int> palojen_numerot;
@@ -41,15 +44,15 @@ int main()
                     string rivi;
                     while (getline(tiedosto_olio, rivi)) {
                         string rivi_string = rivi;
+                        string tarkistettu = tarkista_tiedot(rivi_string);
 
                         //tarkistetaan onko tiedoston tiedot syotetty oikein.
-                        if (tarkista_tiedot(rivi_string) != "virhe") {
-                            cout<<"oikein"<<endl;
-                        }
-                        else {
-                            cout<<"tiedot vaarin"<<endl;
+                        if (tarkistettu != "virhe") {
+                            vector<string> pala_vektori = split(tarkistettu, ':');
+                            pala_jono.push_back(Pala(pala_vektori));
                         }
                     }
+                    Palapeli palapeli(pala_jono);
                 }
         }
         catch(exception const){
