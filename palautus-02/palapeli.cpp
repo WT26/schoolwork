@@ -46,7 +46,10 @@ void Palapeli::jarjesta() {
                         kulmapaloja_valmiina++;
                         leveys_ = jarjestettu_lkm + 1;
                     }
-                    (*jarjestaja).kierra_vierekkain(pala_jono_.at(jarjestettu_lkm));
+                    cout<<(*jarjestaja).kryk_<<endl;
+                    (*jarjestaja).kierra_vierekkain(pala_jono_.at(jarjestettu_lkm - 1));
+                    cout<<(*jarjestaja).kryk_<<endl;
+
                     iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
                     jarjestettu_lkm++;
                     cout<<"toinen pala valmis"<<endl;
@@ -78,6 +81,7 @@ void Palapeli::jarjesta() {
                         }
                         else {
                             iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
+                            (*jarjestaja).tulosta();
                             jarjestettu_lkm++;
                             korkeus_selvilla = 1;
                             break;
@@ -93,13 +97,15 @@ void Palapeli::jarjesta() {
                         if((*jarjestaja).onko_kulmapala()){
                             kulmapaloja_valmiina++;
                             korkeus_selvilla = 2;
-                            jarjestettu_lkm++;
                             korkeus_ = (jarjestettu_lkm + leveys_ - 1) / leveys_;
                         }
-                        (*jarjestaja).kierra_vierekkain(pala_jono_.at(jarjestettu_lkm));
+                        (*jarjestaja).kierra_vierekkain(pala_jono_.at(jarjestettu_lkm-1));
                         iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
+                        (*jarjestaja).tulosta();
                         jarjestettu_lkm++;
-                        korkeus_selvilla = 0;
+                        if((*jarjestaja).onko_reunapala()) {
+                            korkeus_selvilla = 0;
+                        }
                         break;
                     }
                 }
@@ -119,7 +125,8 @@ void Palapeli::jarjesta() {
                         break;
                     }
                     else {
-                        (*jarjestaja).kierra_vierekkain(pala_jono_.at(jarjestettu_lkm));
+                        cout<<pala_jono_.at(jarjestettu_lkm).kryk_<<endl;
+                        (*jarjestaja).kierra_vierekkain(pala_jono_.at(jarjestettu_lkm - 1));
                         iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
                         jarjestettu_lkm++;
                         cout<<"toinen pala valmis"<<endl;
@@ -132,7 +139,8 @@ void Palapeli::jarjesta() {
 }
 
 void Palapeli::tulosta() const{
-
+    deque<Pala>::iterator tulostaja;
+    jarjestaja = pala_jono_.begin();
 }
 
 

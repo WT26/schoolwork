@@ -137,6 +137,14 @@ void Pala::kierra_allekkain(Pala verrattava){
     }
 }
 
+bool Pala::onko_reunapala(){
+    if ( oikea_laita_ == 0 ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 void Pala::kierra_vika(){
     while ((oikea_laita_ != 0) || (alalaita_ != 0)){
         int ylos_vaihtaja = ylalaita_;

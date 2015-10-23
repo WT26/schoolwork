@@ -21,6 +21,7 @@ class Pala {
         bool allekkain ( Pala verrattava );
         bool onko_aloituspala();
         bool onko_kulmapala();
+        bool onko_reunapala();
         int oikea_laita_;
         int vasen_laita_;
         int ylalaita_;
