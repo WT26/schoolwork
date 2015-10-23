@@ -26,12 +26,16 @@ void Pala::tulosta() const{
     cout << kryk_.at(3) << kryk_.at(4) << kryk_.at(5) << endl;
     cout << kryk_.at(6) << kryk_.at(7) << kryk_.at(8) << endl;
 }
+
 bool Pala::onko_aloituspala(){
     if (kryk_.size() == 10) {
         return true;
+        cout<<oikea_laita_<<"TOTTTAON WTF"<<endl;
     }
     else {
         return false;
+        cout<<oikea_laita_<<"TEPATOSI WTF"<<endl;
+
     }
 
 }
@@ -60,7 +64,7 @@ bool Pala::onko_kulmapala(){
 
 
 void Pala::kierra_eka(){
-    while (vasen_laita_ != 0 && ylalaita_ != 0){
+    while ((vasen_laita_ != 0) || (ylalaita_ != 0)){
         int ylos_vaihtaja = ylalaita_;
         int oikea_vaihtaja = oikea_laita_;
         int alas_vaihtaja = alalaita_;
@@ -88,13 +92,10 @@ void Pala::kierra_eka(){
         oikea_laita_ = ylos_vaihtaja;
         alalaita_ = oikea_vaihtaja;
         vasen_laita_ = alas_vaihtaja;
-        cout<<vasen_laita_ + "  " + ylalaita_<< endl;
-
     }
 }
 
-
-void Pala::kierra_pala(int palan_numero, bool rinnakkain_tulostus) {
+void Pala::kierra_pala() {
     int ylos_vaihtaja = ylalaita_;
     int oikea_vaihtaja = oikea_laita_;
     int alas_vaihtaja = alalaita_;
@@ -122,43 +123,91 @@ void Pala::kierra_pala(int palan_numero, bool rinnakkain_tulostus) {
     oikea_laita_ = ylos_vaihtaja;
     alalaita_ = oikea_vaihtaja;
     vasen_laita_ = alas_vaihtaja;
+}
 
-    //Tassa katsotaan kutsuttiinko kierra metodia rinnakkain -metodissa vai kutsuttiinko sita erikseen.
-    if ( rinnakkain_tulostus == false ){
-        cout << "Palaa " << palan_numero << " kierretty." << endl;
+void Pala::kierra_vierekkain(Pala verrattava){
+    while (vasen_laita_ != verrattava.oikea_laita_){
+        kierra_pala();
     }
 }
 
-//Metodi tulostaa palat rinnakkain jos palan oikealaita vastaa verrattavan palan vasenta laitaa.
-//Jollei, niin kierretaan verrattava pala ympari ja koitetaan muita laitoja. Verrattava pala ei kuitenkaan
-//jaa tahan asentoon.
+void Pala::kierra_allekkain(Pala verrattava){
+    while (ylalaita_!= verrattava.alalaita_){
+        kierra_pala();
+    }
+}
+
+void Pala::kierra_vika(){
+    while ((oikea_laita_ != 0) || (alalaita_ != 0)){
+        int ylos_vaihtaja = ylalaita_;
+        int oikea_vaihtaja = oikea_laita_;
+        int alas_vaihtaja = alalaita_;
+        int vasen_vaihtaja = vasen_laita_;
+
+        string uusi_kryk{""};
+        vector<int> jarjestus {6, 3, 0, 7, 4, 1, 8, 5, 2};
+
+        //Vaihdetaan tarvittavat merkit / ja \ sekä - ja | toisikseen.
+        int indeksi{0};
+        while ( indeksi < 9 ){
+            uusi_kryk.push_back( tarkista_char(kryk_.at(indeksi)) );
+            indeksi++;
+        }
+
+        //Sijoitellaan "jarjestus" vektorin jarjestyksessa jokainen uudenkrykin merkki
+        //kryk_:kiin
+        indeksi = 0;
+        while (indeksi < 9){
+            kryk_.at(indeksi) = uusi_kryk.at(jarjestus[indeksi]);
+            indeksi++;
+        }
+
+        ylalaita_ = vasen_vaihtaja;
+        oikea_laita_ = ylos_vaihtaja;
+        alalaita_ = oikea_vaihtaja;
+        vasen_laita_ = alas_vaihtaja;
+    }
+}
+
+
 bool Pala::vierekkain(Pala verrattava){
     int indeksi{0};
-    while (indeksi < 4){
-
-        if ( oikea_laita_ == verrattava.vasen_laita_ ) {
-            return true;
-        }
-        else {
-            verrattava.kierra_pala(2, true);
-            indeksi++;
-        }
+    if ((oikea_laita_ == verrattava.oikea_laita_) && (alalaita_ == verrattava.alalaita_)
+            && (ylalaita_ == verrattava.ylalaita_) && (vasen_laita_ == verrattava.vasen_laita_)) {
+        return false;
     }
-    return false;
+    else {
+        while (indeksi < 4){
+            if ( (oikea_laita_ == verrattava.vasen_laita_) && (verrattava.vasen_laita_ != 0) ) {
+                return true;
+            }
+            else {
+                verrattava.kierra_pala();
+                indeksi++;
+            }
+        }
+        return false;
+    }
 }
 
-bool Pala::allekkain(Pala allekkain){
+bool Pala::allekkain(Pala verrattava){
     int indeksi{0};
-    while (indeksi < 4){
-
-        if ( alalaita_ == allekkain.ylalaita_ ) {
-            return true;
-        }
-        else {
-            allekkain.kierra_pala(2, true);
-            indeksi++;
-        }
+    if ((oikea_laita_ == verrattava.oikea_laita_) && (alalaita_ == verrattava.alalaita_)
+            && (ylalaita_ == verrattava.ylalaita_) && (vasen_laita_ == verrattava.vasen_laita_)) {
+        return false;
     }
-    return false;
+    else{
+        while (indeksi < 4){
+
+            if ( alalaita_ == verrattava.ylalaita_ ) {
+                return true;
+            }
+            else {
+                verrattava.kierra_pala();
+                indeksi++;
+            }
+        }
+        return false;
+    }
 }
 

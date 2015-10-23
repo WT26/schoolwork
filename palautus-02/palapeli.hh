@@ -14,7 +14,6 @@ class Palapeli {
         Palapeli (deque<Pala> kaikki_palat);
         void tulosta() const;
         //void kierra_pala( int palan_numero, bool rinnakkain_tulostus );
-        bool onko_kulmapala();
         void jarjesta();
         //void rinnakkain( Pala rinnakkainen );
 

@@ -12,20 +12,26 @@ class Pala {
     public:
         Pala (vector<string> palan_tiedot) ;
         void tulosta() const;
-        void kierra_pala( int palan_numero, bool rinnakkain_tulostus );
+        void kierra_pala();
         void kierra_eka();
+        void kierra_vika();
+        void kierra_vierekkain( Pala verrattava );
+        void kierra_allekkain( Pala verrattava );
         bool vierekkain( Pala verrattava );
         bool allekkain ( Pala verrattava );
         bool onko_aloituspala();
         bool onko_kulmapala();
+        int oikea_laita_;
+        int vasen_laita_;
+        int ylalaita_;
+        int alalaita_;
+        string kryk_;
+
 
 
     private:
-        int ylalaita_;
-        int oikea_laita_;
-        int alalaita_;
-        int vasen_laita_;
-        string kryk_;
+
+
 };
 
 #endif // PALA_HH
