@@ -134,9 +134,12 @@ void Pala::kierra_vierekkain(Pala verrattava){
 }
 
 void Pala::kierra_allekkain(Pala verrattava){
+    cout<<ylalaita_<<"yla"<<oikea_laita_<<"oik"<<alalaita_<<"ala"<<vasen_laita_<<"vas"<<endl;
     while (ylalaita_!= verrattava.alalaita_){
         kierra_pala();
     }
+    cout<<ylalaita_<<"yla"<<oikea_laita_<<"oik"<<alalaita_<<"ala"<<vasen_laita_<<"vas"<<endl;
+
 }
 
 bool Pala::onko_reunapala(){
@@ -208,7 +211,6 @@ bool Pala::allekkain(Pala verrattava){
     }
     else{
         while (indeksi < 4){
-
             if ( alalaita_ == verrattava.ylalaita_ ) {
                 return true;
             }

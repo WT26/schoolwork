@@ -22,6 +22,7 @@ void Palapeli::jarjesta() {
     bool jarjestus_valmis = false;
     int kulmapaloja_valmiina{0};
     int jarjestettu_lkm{0};
+    int korkeus_selvilla{0};
 
     while (!jarjestus_valmis){
         if (jarjestettu_lkm == 0){
@@ -32,44 +33,40 @@ void Palapeli::jarjesta() {
                 iter_swap(jarjestaja, pala_jono_.begin());
                 jarjestettu_lkm++;
                 kulmapaloja_valmiina++;
-                cout<<"ensimmainen pala valmis"<<endl;
             }
             else {
                 jarjestaja++;
             }
-        }//pala_jono_.at(jarjestettu_lkm - 1).vierekkain((*jarjestaja))
+        }
         while ((jarjestettu_lkm >= 1) && (kulmapaloja_valmiina == 1)) {
             for(jarjestaja = pala_jono_.begin();jarjestaja != pala_jono_.end();jarjestaja++){
                 if (pala_jono_.at(jarjestettu_lkm - 1).vierekkain((*jarjestaja))){
                     if((*jarjestaja).onko_kulmapala()){
                         kulmapaloja_valmiina++;
                         leveys_ = jarjestettu_lkm + 1;
+                        (*jarjestaja).kierra_vierekkain(pala_jono_.at(jarjestettu_lkm - 1));
+                        iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
+                        jarjestettu_lkm++;
                     }
-                    cout<<(*jarjestaja).kryk_<<endl;
-                    (*jarjestaja).kierra_vierekkain(pala_jono_.at(jarjestettu_lkm - 1));
-                    cout<<(*jarjestaja).kryk_<<endl;
+                    else{
+                        (*jarjestaja).kierra_vierekkain(pala_jono_.at(jarjestettu_lkm - 1));
+                        iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
+                        jarjestettu_lkm++;
 
-                    iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
-                    jarjestettu_lkm++;
-                    cout<<"toinen pala valmis"<<endl;
-                    break;
+                    }
                 }
             }
         }
-
         while (kulmapaloja_valmiina == 2) {
-            int korkeus_selvilla{0};//0=etsitaan alle sopivaa palaa, 1=etsitaan vierekkaisia paloja,
+            //0=etsitaan alle sopivaa palaa, 1=etsitaan vierekkaisia paloja,
                                     //2=uusi kulmapala loytynyt
             if(korkeus_selvilla == 0){
 
                 for(jarjestaja = pala_jono_.begin();jarjestaja != pala_jono_.end();jarjestaja++){
-
-                    if(pala_jono_.at(0).allekkain(*jarjestaja)){
-
+                    if(pala_jono_.at(jarjestettu_lkm - leveys_).allekkain(*jarjestaja)){
                         if((*jarjestaja).onko_kulmapala()){
                             kulmapaloja_valmiina++;
                             (*jarjestaja).kierra_allekkain(pala_jono_.at(jarjestettu_lkm - leveys_));
-                            cout<<"kolme kulmapalaa valmis"<<endl;
                             iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
                             jarjestettu_lkm++;
                             korkeus_selvilla = 2;
@@ -77,6 +74,7 @@ void Palapeli::jarjesta() {
                             break;
                         }
                         else {
+                            (*jarjestaja).kierra_allekkain(pala_jono_.at(jarjestettu_lkm - leveys_));
                             iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
                             jarjestettu_lkm++;
                             korkeus_selvilla = 1;
@@ -86,22 +84,14 @@ void Palapeli::jarjesta() {
                 }
             }
             if(korkeus_selvilla == 1){
-                for(jarjestaja = pala_jono_.begin() + jarjestettu_lkm;jarjestaja != pala_jono_.end();jarjestaja++){
-                    //cout<<pala_jono_.at(jarjestettu_lkm - 1).vasen_laita_<<endl;
-
-                    if (pala_jono_.at(jarjestettu_lkm - 1).vierekkain((*jarjestaja))){
-                        if((*jarjestaja).onko_kulmapala()){
-                            kulmapaloja_valmiina++;
-                            korkeus_selvilla = 2;
-                            korkeus_ = (jarjestettu_lkm + leveys_ - 1) / leveys_;
-                        }
+                for(jarjestaja = pala_jono_.begin();jarjestaja != pala_jono_.end();jarjestaja++){
+                    if (pala_jono_.at(jarjestettu_lkm-1).vierekkain(*jarjestaja)){
                         (*jarjestaja).kierra_vierekkain(pala_jono_.at(jarjestettu_lkm-1));
                         iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
                         jarjestettu_lkm++;
-                        if((*jarjestaja).onko_reunapala()) {
+                        if((pala_jono_.at(jarjestettu_lkm - 1)).onko_reunapala()) {
                             korkeus_selvilla = 0;
                         }
-                        break;
                     }
                 }
             }
@@ -111,7 +101,6 @@ void Palapeli::jarjesta() {
             for(jarjestaja = pala_jono_.begin();jarjestaja != pala_jono_.end();jarjestaja++){
                 if(pala_jono_.at(jarjestettu_lkm - 1).vierekkain(*jarjestaja)){
                     if((*jarjestaja).onko_kulmapala()){
-                        cout<<"4kulmapalaa valmis"<<endl;
                         kulmapaloja_valmiina++;
                         (*jarjestaja).kierra_vika();
                         iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
@@ -120,11 +109,9 @@ void Palapeli::jarjesta() {
                         break;
                     }
                     else {
-                        cout<<pala_jono_.at(jarjestettu_lkm).kryk_<<endl;
                         (*jarjestaja).kierra_vierekkain(pala_jono_.at(jarjestettu_lkm - 1));
                         iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
                         jarjestettu_lkm++;
-                        cout<<"toinen pala valmis"<<endl;
                     }
                 }
             }
