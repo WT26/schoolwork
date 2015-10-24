@@ -17,14 +17,16 @@ Pala::Pala(vector<string> palan_tiedot):
 {
 }
 
-void Pala::tulosta() const{
-    cout << "ylos:" << ylalaita_ << endl;
-    cout << "oikea:" << oikea_laita_ << endl;
-    cout << "alas:" << alalaita_ << endl;
-    cout << "vasen:" << vasen_laita_ << endl;
-    cout << kryk_.at(0) << kryk_.at(1) << kryk_.at(2) << endl;
-    cout << kryk_.at(3) << kryk_.at(4) << kryk_.at(5) << endl;
-    cout << kryk_.at(6) << kryk_.at(7) << kryk_.at(8) << endl;
+void Pala::tulosta_1() const{
+    cout << kryk_.at(0) << kryk_.at(1) << kryk_.at(2);
+}
+
+void Pala::tulosta_2() const{
+    cout << kryk_.at(3) << kryk_.at(4) << kryk_.at(5);
+}
+
+void Pala::tulosta_3() const{
+    cout << kryk_.at(6) << kryk_.at(7) << kryk_.at(8);
 }
 
 bool Pala::onko_aloituspala(){

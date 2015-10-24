@@ -54,6 +54,7 @@ int main()
                     }
                     Palapeli palapeli(pala_jono);
                     palapeli.jarjesta();
+                    palapeli.tulosta();
 
                 }
         }

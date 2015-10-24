@@ -11,7 +11,9 @@ using namespace std;
 class Pala {
     public:
         Pala (vector<string> palan_tiedot) ;
-        void tulosta() const;
+        void tulosta_1() const;
+        void tulosta_2() const;
+        void tulosta_3() const;
         void kierra_pala();
         void kierra_eka();
         void kierra_vika();
