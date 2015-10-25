@@ -13,7 +13,7 @@ class Palapeli {
     public:
         Palapeli (deque<Pala> kaikki_palat);
         void tulosta() const;
-        void jarjesta();
+        bool jarjesta();
 
     private:
         deque<Pala> pala_jono_;

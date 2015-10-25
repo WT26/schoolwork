@@ -25,6 +25,5 @@ OTHER_FILES += \
     handmadeE05.txt \
     handmadeE06.txt \
     handmadeE07.txt \
-    handmadeE08.txt \
-    testi.txt
+    handmadeE08.txt
 

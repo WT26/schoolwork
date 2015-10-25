@@ -36,6 +36,15 @@ bool Pala::onko_ylarivi(){
     }
 }
 
+bool Pala::onko_alarivi(){
+    if (alalaita_ == 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 bool Pala::onko_aloituspala(){
     if (kryk_.size() == 10) {
         return true;

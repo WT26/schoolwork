@@ -13,7 +13,7 @@ Palapeli::Palapeli(deque<Pala> pala_jono):
 {
 }
 
-void Palapeli::jarjesta() {
+bool Palapeli::jarjesta() {
     deque<Pala>::iterator jarjestaja;
     jarjestaja = pala_jono_.begin();
     bool jarjestus_valmis = false;
@@ -47,8 +47,8 @@ void Palapeli::jarjesta() {
                             jarjestettu_lkm++;
                         }
                         else {
-                            cout<<"virhe: palojen reunoissa virheita"<<endl;
-                            return;
+                            cout<<"virhe: palojen yla reunoissa virheita"<<endl;
+                            return false;
                         }
 
                     }
@@ -59,11 +59,9 @@ void Palapeli::jarjesta() {
                             jarjestettu_lkm++;
                         }
                         else {
-                            cout<<"virhe: palojen reunoissa virheita"<<endl;
-                            return;
+                            cout<<"virhe: palojen yla reunoissa virheita"<<endl;
+                            return false;
                         }
-
-
                     }
                 }
             }
@@ -112,22 +110,50 @@ void Palapeli::jarjesta() {
             for(jarjestaja = pala_jono_.begin();jarjestaja != pala_jono_.end();jarjestaja++){
                 if(pala_jono_.at(jarjestettu_lkm - 1).vierekkain(*jarjestaja)){
                     if((*jarjestaja).onko_kulmapala()){
-                        kulmapaloja_valmiina++;
-                        (*jarjestaja).kierra_vika();
-                        iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
-                        jarjestettu_lkm++;
-                        jarjestus_valmis = true;
-                        break;
+                        if(pala_jono_.at(jarjestettu_lkm - leveys_).allekkain(*jarjestaja)){
+                            (*jarjestaja).kierra_vika();
+                            iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
+                            if((*jarjestaja).onko_alarivi()){
+                                kulmapaloja_valmiina++;
+                                jarjestettu_lkm++;
+                                jarjestus_valmis = true;
+                                break;
+                            }
+                            else{
+                                cout<<"virhe: palojen ala reunoissa virheita"<<endl;
+                                return false;
+                            }
+                        }
+                        else {
+                            cout<<"virhe: palojen reunoissa virheita"<<endl;
+                        }
+
+
+
                     }
                     else {
-                        (*jarjestaja).kierra_vierekkain(pala_jono_.at(jarjestettu_lkm - 1));
-                        iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
-                        jarjestettu_lkm++;
+                        if(pala_jono_.at(jarjestettu_lkm - leveys_).allekkain(*jarjestaja)){
+                            (*jarjestaja).kierra_vierekkain(pala_jono_.at(jarjestettu_lkm - 1));
+                            if((*jarjestaja).onko_alarivi()){
+                                iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
+                                jarjestettu_lkm++;
+                            }
+                            else{
+                                cout<<"virhe: palojen ala reunoissa virheita"<<endl;
+
+                                return false;
+                            }
+                        }
+                        else {
+                            cout<<"virhe: palojen reunoissa virheita"<<endl;
+                            return false;
+                        }
                     }
                 }
             }
         }
     }
+    return true;
 }
 
 void Palapeli::tulosta() const{
