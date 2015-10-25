@@ -15,17 +15,21 @@ Pala::Pala(vector<string> palan_tiedot):
 {
 }
 
+
 void Pala::tulosta_1() const{
     cout << kryk_.at(0) << kryk_.at(1) << kryk_.at(2);
 }
+
 
 void Pala::tulosta_2() const{
     cout << kryk_.at(3) << kryk_.at(4) << kryk_.at(5);
 }
 
+
 void Pala::tulosta_3() const{
     cout << kryk_.at(6) << kryk_.at(7) << kryk_.at(8);
 }
+
 
 bool Pala::onko_ylarivi(){
     if (ylalaita_ == 0) {
@@ -36,6 +40,7 @@ bool Pala::onko_ylarivi(){
     }
 }
 
+
 bool Pala::onko_alarivi(){
     if (alalaita_ == 0) {
         return true;
@@ -45,6 +50,7 @@ bool Pala::onko_alarivi(){
     }
 }
 
+
 bool Pala::onko_aloituspala(){
     if (kryk_.size() == 10) {
         return true;
@@ -53,6 +59,7 @@ bool Pala::onko_aloituspala(){
         return false;
     }
 }
+
 
 bool Pala::onko_kulmapala(){
     int nollia{0};
@@ -109,6 +116,7 @@ void Pala::kierra_eka(){
     }
 }
 
+
 void Pala::kierra_pala() {
     int ylos_vaihtaja = ylalaita_;
     int oikea_vaihtaja = oikea_laita_;
@@ -139,17 +147,20 @@ void Pala::kierra_pala() {
     vasen_laita_ = alas_vaihtaja;
 }
 
+
 void Pala::kierra_vierekkain(Pala verrattava){
     while (vasen_laita_ != verrattava.oikea_laita_){
         kierra_pala();
     }
 }
 
+
 void Pala::kierra_allekkain(Pala verrattava){
     while (ylalaita_!= verrattava.alalaita_){
         kierra_pala();
     }
 }
+
 
 bool Pala::onko_reunapala(){
     if ( oikea_laita_ == 0 ) {
@@ -160,7 +171,7 @@ bool Pala::onko_reunapala(){
 }
 
 
-// Kiertaa viimeisen palan oikein pain.
+// Kiertaa viimeisen palan oikeinpain.
 void Pala::kierra_vika(){
     while ((oikea_laita_ != 0) || (alalaita_ != 0)){
         int ylos_vaihtaja = ylalaita_;
@@ -213,6 +224,7 @@ bool Pala::vierekkain(Pala verrattava){
         return false;
     }
 }
+
 
 bool Pala::allekkain(Pala verrattava){
     int indeksi{0};

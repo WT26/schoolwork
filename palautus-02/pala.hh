@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 // Kattava julkisen rajapinnan metodijako, jonka avulla palan jarjestely
 // kay luontevasti.
 class Pala {
