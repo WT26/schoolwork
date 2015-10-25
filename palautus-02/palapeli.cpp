@@ -39,16 +39,30 @@ void Palapeli::jarjesta() {
             for(jarjestaja = pala_jono_.begin();jarjestaja != pala_jono_.end();jarjestaja++){
                 if (pala_jono_.at(jarjestettu_lkm - 1).vierekkain((*jarjestaja))){
                     if((*jarjestaja).onko_kulmapala()){
-                        kulmapaloja_valmiina++;
-                        leveys_ = jarjestettu_lkm + 1;
                         (*jarjestaja).kierra_vierekkain(pala_jono_.at(jarjestettu_lkm - 1));
-                        iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
-                        jarjestettu_lkm++;
+                        if((*jarjestaja).onko_ylarivi()){
+                            kulmapaloja_valmiina++;
+                            leveys_ = jarjestettu_lkm + 1;
+                            iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
+                            jarjestettu_lkm++;
+                        }
+                        else {
+                            cout<<"virhe: palojen reunoissa virheita"<<endl;
+                            return;
+                        }
+
                     }
                     else{
                         (*jarjestaja).kierra_vierekkain(pala_jono_.at(jarjestettu_lkm - 1));
-                        iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
-                        jarjestettu_lkm++;
+                        if((*jarjestaja).onko_ylarivi()){
+                            iter_swap(jarjestaja, pala_jono_.begin() + jarjestettu_lkm);
+                            jarjestettu_lkm++;
+                        }
+                        else {
+                            cout<<"virhe: palojen reunoissa virheita"<<endl;
+                            return;
+                        }
+
 
                     }
                 }

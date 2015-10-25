@@ -27,6 +27,15 @@ void Pala::tulosta_3() const{
     cout << kryk_.at(6) << kryk_.at(7) << kryk_.at(8);
 }
 
+bool Pala::onko_ylarivi(){
+    if (ylalaita_ == 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 bool Pala::onko_aloituspala(){
     if (kryk_.size() == 10) {
         return true;

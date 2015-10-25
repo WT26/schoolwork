@@ -22,6 +22,7 @@ class Pala {
         void kierra_allekkain( Pala verrattava );
         bool vierekkain( Pala verrattava );
         bool allekkain ( Pala verrattava );
+        bool onko_ylarivi();
         bool onko_aloituspala();
         bool onko_kulmapala();
         bool onko_reunapala();

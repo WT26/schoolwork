@@ -51,9 +51,21 @@ int main()
                             cout<<"virhe:"<<endl;
                         }
                     }
-                    Palapeli palapeli(pala_jono);
-                    palapeli.jarjesta();
-                    palapeli.tulosta();
+                    bool aloituspala_loytyy = false;
+                    for(int i{0};i != pala_jono.size(); i++){
+                        if (pala_jono.at(i).onko_aloituspala()){
+                            aloituspala_loytyy = true;
+                        }
+                    }
+                    if (aloituspala_loytyy == true){
+                        Palapeli palapeli(pala_jono);
+                        palapeli.jarjesta();
+                        palapeli.tulosta();
+                    }
+                    else {
+                        cout<<"virhe: aloituspalaa ei loydy"<<endl;
+                    }
+
 
                 }
         }

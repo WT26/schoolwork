@@ -58,12 +58,17 @@ string tarkista_tiedot(string palan_tiedot_string) {
             if (palan_tiedot[4].at(9) == '='){
                 tiedot_sallittuja_merkkien_tarkasteluun = true;
             }
+            else {
+                cout<<"virhe: palan kuviossa vaaria merkkeja"<<endl;
+                return "virhe";
+            }
     }
     else if (palan_tiedot[4].length() == 9){
         tiedot_sallittuja_merkkien_tarkasteluun = true;
     }
     else if (palan_tiedot[4].length() > 10) {
-        tiedot_sallittuja_merkkien_tarkasteluun = false;
+        cout<<"virhe: jossain palassa yli kymmenen merkkia."<<endl;
+        return "virhe";
     }
 
     merkki_iter = sallitut_merkit.begin();
