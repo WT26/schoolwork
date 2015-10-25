@@ -2,8 +2,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
-#include <set>
 
 using namespace std;
 
@@ -39,36 +37,6 @@ vector<string> split(string& merkkijono, char erotinmerkki) {
     tulos.push_back(kentan_sisalto);
 
     return tulos;
-}
-
-//Funktio tarkastaa onko syotettya komentoa olemassa
-vector<string> tarkista_komento(string komento)
-{
-    const vector<string>komentolista{"pala", "tulosta", "kierra", "rinnakkain"};
-    vector<string>tarkistettava_komento;
-
-    tarkistettava_komento = split(komento, ' ');
-
-   //Jos valilyonteja on palapelin kuvassa, yhdistetaan kuva takaisin yhteen
-    if ( tarkistettava_komento.size() > 3 ) {
-        int kuvaan_lisattavat{ tarkistettava_komento.size() - 3 };
-        int indeksi{1};
-        while ( kuvaan_lisattavat != 0 ){
-            tarkistettava_komento[2] = tarkistettava_komento[2] + " " + tarkistettava_komento[2 + indeksi];
-            indeksi++;
-            kuvaan_lisattavat--;
-        }
-    }
-    int tarkistus{0};
-
-    while ( tarkistus < komentolista.size() ){
-
-        if ( tarkistettava_komento[0] == komentolista[tarkistus] ) {
-            return tarkistettava_komento;
-        }
-        tarkistus++;
-    }
-    cout << "Virhe: Syottamaasi komentoa ei loydy" << endl;
 }
 
 
@@ -209,6 +177,8 @@ string tarkista_tiedot(string palan_tiedot_string) {
     }
 }
 
+
+//Tarkistaa ja vaihtaa muutamat viivamerkit toisikseen, jos niita palassa esiintyy
 char tarkista_char(char merkki) {
     if ( merkki == '\\' ) {
         merkki = '/';

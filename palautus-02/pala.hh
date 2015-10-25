@@ -3,11 +3,12 @@
 
 #include <string>
 #include <vector>
-#include <map>
-#include <set>
 
 using namespace std;
 
+
+//kattava julkisen rajapinnan metodijako, jonka avulla palan jarjestely
+//kay luontevasti
 class Pala {
     public:
         Pala (vector<string> palan_tiedot) ;
@@ -24,16 +25,13 @@ class Pala {
         bool onko_aloituspala();
         bool onko_kulmapala();
         bool onko_reunapala();
+
+    private:
         int oikea_laita_;
         int vasen_laita_;
         int ylalaita_;
         int alalaita_;
-        string kryk_;
-
-
-
-    private:
-
+        string kryk_; //lyhenne Kuvan Rivit Yhteen Kirjoitettuna
 
 };
 

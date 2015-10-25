@@ -3,8 +3,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
-#include <set>
 
 using namespace std;
 
@@ -32,14 +30,10 @@ void Pala::tulosta_3() const{
 bool Pala::onko_aloituspala(){
     if (kryk_.size() == 10) {
         return true;
-        cout<<oikea_laita_<<"TOTTTAON WTF"<<endl;
     }
     else {
         return false;
-        cout<<oikea_laita_<<"TEPATOSI WTF"<<endl;
-
     }
-
 }
 
 bool Pala::onko_kulmapala(){
@@ -134,12 +128,9 @@ void Pala::kierra_vierekkain(Pala verrattava){
 }
 
 void Pala::kierra_allekkain(Pala verrattava){
-    cout<<ylalaita_<<"yla"<<oikea_laita_<<"oik"<<alalaita_<<"ala"<<vasen_laita_<<"vas"<<endl;
     while (ylalaita_!= verrattava.alalaita_){
         kierra_pala();
     }
-    cout<<ylalaita_<<"yla"<<oikea_laita_<<"oik"<<alalaita_<<"ala"<<vasen_laita_<<"vas"<<endl;
-
 }
 
 bool Pala::onko_reunapala(){

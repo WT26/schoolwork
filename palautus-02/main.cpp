@@ -12,21 +12,17 @@
 #include <string>
 #include <vector>
 #include <deque>
-#include <map>
-#include <set>
 
 
 using namespace std;
 
 int main()
 {
-    deque<Pala> pala_jono;
+
     int ohjelma_kaynnissa{1};
 
-    set<int> palojen_numerot;
-    //map<int, Pala> pala_hakemisto;
-
     while (ohjelma_kaynnissa == 1) {
+        deque<Pala> pala_jono;
         string tiedoston_nimi{""};
 
         cout << "Luettava tiedosto ";
@@ -51,6 +47,9 @@ int main()
                             vector<string> pala_vektori = split(tarkistettu, ':');
                             pala_jono.push_back(Pala(pala_vektori));
                         }
+                        else {
+                            cout<<"virhe:"<<endl;
+                        }
                     }
                     Palapeli palapeli(pala_jono);
                     palapeli.jarjesta();
@@ -61,41 +60,7 @@ int main()
         catch(exception const){
                 return false;
         }
-
-
-
-/*
-        } elif tiedoston_ni
-
-            if ( komento[0] == "pala" ){
-                int palan_numero;
-                palan_numero = stoi(komento[1]); //Muutetaan pala komennon (palan numero) osa str->int
-                if ( palan_numero != 1 and palan_numero !=2 ) {
-                    cout << "Virhe: Palan numero voi olla vain 1 tai 2" << endl;
-                } else {
-                    if ( palojen_numerot.find( palan_numero ) == palojen_numerot.end() ){
-                        palojen_numerot.insert( palan_numero );
-                        vector<string> palan_tiedot = split( komento[2], ':' );
-
-                        if ( tarkista_tiedot(palan_tiedot) == true ) {
-                            pala_hakemisto.insert( { palan_numero, Pala(palan_tiedot ) } );
-                            cout << "Pala "<< palan_numero << " asetettu." << endl;
-                        }
-
-                     } else { //Jos pala onkin jo hakemistossa, poistetaan vanha ja korvataan uudella
-                        vector<string> palan_tiedot = split( komento[2], ':' );
-
-                            if ( tarkista_tiedot(palan_tiedot) == true ) {
-                            pala_hakemisto.erase( palan_numero );
-                            pala_hakemisto.insert( { palan_numero, Pala( palan_tiedot ) } );
-                            cout << "Pala "<< palan_numero << " asetettu." << endl;
-                            }
-                        }
-                    }
-                }
-
-        }
-        */
     }
+
 }
 
