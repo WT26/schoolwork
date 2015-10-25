@@ -1,6 +1,7 @@
 // TIE-02200 Ohjelmoinnin peruskurssi, syksy 2015
 // Harjoitustehtava 2
-// 246479 joel.alanko@student.tut.fi ()
+// 246479 joel.alanko@student.tut.fi (26)
+// Vapaapaivia kaytetty 7/7
 
 #include "apufunktiot.hh"
 #include "pala.hh"
@@ -21,7 +22,6 @@ int main()
 {
 
     int ohjelma_kaynnissa{1};
-
     while (ohjelma_kaynnissa == 1) {
         deque<Pala> pala_jono;
         string tiedoston_nimi{""};
@@ -41,15 +41,21 @@ int main()
                 if ( not tiedosto_olio ) {
                     cout<<"Virhe: tiedoston nimi vaarin"<<endl;
 
-                } else {
+                }
+                else {
+
+                    // Luetaan tiedosto rivi rivilta, muodostetaan niista jono(deque), jossa on kaikki
+                    // Pala luokkia.
                     string rivi;
                     while (getline(tiedosto_olio, rivi)) {
                         string rivi_string = rivi;
                         string tarkistettu = tarkista_tiedot(rivi_string);
 
-                        //tarkistetaan onko tiedoston tiedot syotetty oikein.
+                        // Tarkistetaan onko tiedoston tiedot syotetty oikein.
                         if (tarkistettu != "virhe") {
                             vector<string> pala_vektori = split(tarkistettu, ':');
+
+                            // Lasketaan kuinka monta kutakin palan laitaa on, ei huomioida nollia.
                             for(int i{0};i != 4;i++){
                                 if(stoi(pala_vektori.at(i)) != 0){
                                     palojen_laitojen_numerot.push_back(stoi(pala_vektori.at(i)));
@@ -58,18 +64,21 @@ int main()
                             pala_jono.push_back(Pala(pala_vektori));
                         }
                     }
+
+                    // Tassa palan laitojen maaralla lasketaan ja tarkistetaan ettei mitaan laitoja ole
+                    // yli kahta.
                     map<int, int> numerojen_lukumaara;
                     for(int i{0};i != palojen_laitojen_numerot.size();i++){
 
                         if(numerojen_lukumaara.count(palojen_laitojen_numerot.at(i))){
                             numerojen_lukumaara[palojen_laitojen_numerot.at(i)]++;
-                            for(int a{0};a!=numerojen_lukumaara.size();a++){
-                            }
                         }
                         else {
                             numerojen_lukumaara[palojen_laitojen_numerot.at(i)] = 1;
                         }
                     }
+
+                    // Tulostetaan virhe jos laitoja enemman kuin kaksi.
                     for(int a{1};a != numerojen_lukumaara.size() + 1;a++){
                         if((numerojen_lukumaara[a] != 2) && (numerojen_lukumaara[a] != 0)
                                 && (numerojen_lukumaara[a] != 1)){
@@ -78,6 +87,8 @@ int main()
                             break;
                         }
                     }
+
+                    // Lasketaan aloituspalojen lukumaaraa ja kulmapalojen lukumaaraa.
                     bool aloituspala_loytyy = false;
                     int aloitus_paloja{0};
                     int kulma_paloja{0};
@@ -90,6 +101,9 @@ int main()
                             kulma_paloja++;
                         }
                     }
+
+                    // Tarkistetaan ettei aloituspaloja tai kulmapaloja ole vaaraa maaraa,
+                    // muuten tulostuu virhe.
                     if (aloituspala_loytyy == true){
                         if(aloitus_paloja == 1){
                             if(kulma_paloja == 4){

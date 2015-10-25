@@ -5,8 +5,8 @@
 
 using namespace std;
 
-//Funktio jakaa merkkijonon annetun erotinmerkin kohdalta palautettavaan vektoriin.
-//Kyseinen funktio on sama kuin viikkoharjoituksessa oltiin annettu
+// Funktio jakaa merkkijonon annetun erotinmerkin kohdalta palautettavaan vektoriin.
+// Kyseinen funktio on sama kuin viikkoharjoituksessa oltiin annettu.
 vector<string> split(string& merkkijono, char erotinmerkki) {
     vector<string> tulos;
 
@@ -23,11 +23,9 @@ vector<string> split(string& merkkijono, char erotinmerkki) {
         } else {
             // Kentan erotinmerkki tuli vastaan, talloin muuttujaan
             // «kentan_sisalto» on kertynyt edeltavan kentan teksti.
-
             tulos.push_back(kentan_sisalto);
             kentan_sisalto = "";
         }
-
         ++tutkittava_kohta;
     }
 
@@ -40,8 +38,8 @@ vector<string> split(string& merkkijono, char erotinmerkki) {
 }
 
 
-//Funktio tarkistaa onko kaikki annetut palan tiedot oikein:
-//onko kuvassa kaytetty oikeita merkkeja ja onko laidat positiivisia kokonaislukuja
+// Funktio tarkistaa onko kaikki annetut palan tiedot oikein:
+// onko kuvassa kaytetty oikeita merkkeja ja onko laidat positiivisia kokonaislukuja
 string tarkista_tiedot(string palan_tiedot_string) {
     vector<string> palan_tiedot = split( palan_tiedot_string, ':' );
     vector<char>::iterator merkki_iter;
@@ -75,8 +73,8 @@ string tarkista_tiedot(string palan_tiedot_string) {
     int indeksi{0};
 
     if (tiedot_sallittuja_merkkien_tarkasteluun == true) {
-        //Ensimmainen looppi kay lapi annetut yhdeksan merkkia,
-        //toinen vertaa naita merkkeja sallittujen merkkien vectoriin.
+        // Ensimmainen looppi kay lapi annetut yhdeksan merkkia,
+        // toinen vertaa naita merkkeja sallittujen merkkien vectoriin.
         while ( indeksi < palan_tiedot[4].length() ) {
             int vaara_merkki{0};
 
@@ -101,8 +99,8 @@ string tarkista_tiedot(string palan_tiedot_string) {
 
         }
 
-        //Tama vaihe tarkistaa palan laidat, niiden on oltava positiivisia kokonaislukuja
-        //Tarkistaa myos onko nollia kaksi ja jos on, niiden on oltava vierekkaiset
+        // Tarkistaa palan laidat, niiden on oltava positiivisia kokonaislukuja.
+        // Tarkistaa myos onko nollia kaksi ja jos on, niiden on oltava vierekkaiset.
         try {
             int nollat{0};
             int numero_1 = stoi(palan_tiedot[0]);
@@ -145,7 +143,7 @@ string tarkista_tiedot(string palan_tiedot_string) {
             }
 
 
-
+            // Tarkastellaan nollien lukumaaria ja tulostetaan tarvittaessa virheilmoitus.
             if ( (numero_1 >= 0) && (numero_2 >= 0) && (numero_3 >= 0) && (numero_4 >= 0) ) {
                 if (nollat_vierekkain == true) {
                     string pala_str = palan_tiedot[0] + ":" + palan_tiedot[1] + ":" + palan_tiedot[2]
@@ -163,11 +161,13 @@ string tarkista_tiedot(string palan_tiedot_string) {
 
                 }
                 else {
-                    cout<<"Virhe: Jossain palassa enemman kuin 2 nollaa tai nollat eivat ole vierekkaiset nollat"<<endl;
+                    cout<<"Virhe: Jossain palassa enemman kuin 2 nollaa tai nollat
+                          "eivat ole vierekkaiset nollat"<<endl;
                     return "virhe";
                 }
 
-            } else {
+            }
+            else {
                 cout << "Virhe: Palan laidat eivat olleet positiivisia kokonaislukuja" << endl;
                 return "virhe";
             }

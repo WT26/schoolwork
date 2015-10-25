@@ -7,8 +7,8 @@
 using namespace std;
 
 
-//kattava julkisen rajapinnan metodijako, jonka avulla palan jarjestely
-//kay luontevasti
+// Kattava julkisen rajapinnan metodijako, jonka avulla palan jarjestely
+// kay luontevasti.
 class Pala {
     public:
         Pala (vector<string> palan_tiedot) ;

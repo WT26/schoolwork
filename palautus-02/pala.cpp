@@ -159,6 +159,8 @@ bool Pala::onko_reunapala(){
     }
 }
 
+
+// Kiertaa viimeisen palan oikein pain.
 void Pala::kierra_vika(){
     while ((oikea_laita_ != 0) || (alalaita_ != 0)){
         int ylos_vaihtaja = ylalaita_;
