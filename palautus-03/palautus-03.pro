@@ -2,22 +2,19 @@ TEMPLATE = app
 CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
+CONFIG += C++11
 
-SOURCES += main.cpp \
-    ../../palautus-03/kayttoliittyma.cpp \
-    ../../palautus-03/main.cpp \
-    ../../palautus-03/paivays.cpp \
-    ../../palautus-03/paivyri.cpp \
-    ../../palautus-03/paivyriohjelma.cpp
-
-SUBDIRS += \
-    ../../palautus-03/palautus-03.pro
+SOURCES += \
+    kayttoliittyma.cpp \
+    paivays.cpp \
+    paivyri.cpp \
+    paivyriohjelma.cpp
 
 OTHER_FILES += \
-    ../../palautus-03/palautus-03.pro.user
+    palautus-03.pro.user
 
 HEADERS += \
-    ../../palautus-03/kayttoliittyma.hh \
-    ../../palautus-03/paivays.hh \
-    ../../palautus-03/paivyri.hh
+    kayttoliittyma.hh \
+    paivays.hh \
+    paivyri.hh
 
