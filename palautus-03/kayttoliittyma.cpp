@@ -107,7 +107,10 @@ namespace {
             return;
         }
 
-        cout << "Testi: [" << tiedoston_nimi<< "]"  << endl;
+
+        if ( not lue_paivyritiedosto(tiedoston_nimi, paiv) ) {
+            cout<<"Virhe: tiedostoa ei saatu luettua."<<endl;
+        }
 
         // Tässä luetaan tiedostosta «tiedoston_nimi» päivämäärät ja
         // tapahtumat ja lisätään ne «paiv»-rakenteeseen siellä
@@ -126,6 +129,7 @@ namespace {
             return;
         }
 
+        paiv.talleta_tiedosto(tiedoston_nimi);
         cout << "Testi: [" << tiedoston_nimi << "]" << endl;
 
         // Tässä talletetaan kaikki «paiv»-rakenteessa olevat tapahtumat

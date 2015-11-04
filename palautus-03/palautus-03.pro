@@ -14,7 +14,9 @@ SOURCES += \
 OTHER_FILES += \
     palautus-03.pro.user \
     mun-kalenteri.txt \
-    tyhja.txt
+    tyhja.txt \
+    lisattavaa.txt \
+    testi.txt
 
 HEADERS += \
     kayttoliittyma.hh \

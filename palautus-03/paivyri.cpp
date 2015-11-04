@@ -1,5 +1,6 @@
 #include "paivyri.hh"
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <deque>
 #include <map>
@@ -111,6 +112,30 @@ bool Paivyri::poista_tyhja_paivays(const string paivamaara) {
     else {
         cout<<"debug moi"<<endl;
         return false;
+    }
+}
+
+bool Paivyri::talleta_tiedosto(const string paivyritiedoston_nimi){
+    ofstream tiedosto_olio{paivyritiedoston_nimi};
+
+    map<Paivays, deque<string>>::iterator map_iter;
+    deque<string>::iterator deque_iter;
+
+    map_iter = paivyridata_.begin();
+    deque_iter = map_iter->second.begin();
+
+    while (map_iter != paivyridata_.end()){
+
+        deque_iter = map_iter->second.begin();
+
+        // Tulostetaan kaikki paivamaaralle kirjatut tapahtumat.
+        while(deque_iter != map_iter->second.end()){
+            tiedosto_olio<< map_iter->first.merkkijonoksi()<<":";
+            tiedosto_olio<<*deque_iter<<"\n";
+            deque_iter++;
+        }
+
+        map_iter++;
     }
 }
 
