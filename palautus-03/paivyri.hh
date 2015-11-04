@@ -13,6 +13,9 @@ class Paivyri {
     Paivyri();
     bool lisaa_tapahtuma(const string& paivamaara, const string& kuvaus);
     bool tulosta_paivyridata();
+    bool tulosta_merkinnat(const string paivamaara);
+    bool poista_tapahtuma(const string paivamaara);
+    bool poista_tyhja_paivays(const string paivamaara);
 
     // Muita metodifunktioiden esittelyitä puuttuu tästä.
 

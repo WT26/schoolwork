@@ -67,8 +67,52 @@ bool Paivyri::tulosta_paivyridata(){
     return true;
 }
 
+bool Paivyri::tulosta_merkinnat(const string paivamaara) {
+    if (paivyridata_.find(paivamaara) == paivyridata_.end()){
+        return false;
+    }
+    else {
+        map<Paivays, deque<string>>::iterator map_iter;
+        deque<string>::iterator deque_iter;
 
+        map_iter = paivyridata_.find(paivamaara);
+        cout<< map_iter->first.merkkijonoksi()<<endl;
+        deque_iter = map_iter->second.begin();
 
+        while(deque_iter != map_iter->second.end()){
+            cout<<"    "<<*deque_iter<<endl;
+            deque_iter++;
+        }
+     return true;
+    }
+}
+
+bool Paivyri::poista_tapahtuma(const string paivamaara) {
+    if (paivyridata_.find(paivamaara) == paivyridata_.end()){
+        cout<<"Paivamaarana ei ole poistettavaa merkintaa."<<endl;
+        return false;
+    }
+    else{
+        map<Paivays, deque<string>>::iterator map_iter;
+        deque<string>::iterator deque_iter;
+
+        map_iter = paivyridata_.find(paivamaara);
+        deque_iter = map_iter->second.begin();
+        map_iter->second.pop_front();
+    }
+}
+
+bool Paivyri::poista_tyhja_paivays(const string paivamaara) {
+    if (paivyridata_.find(paivamaara) != paivyridata_.end()) {
+        cout<<"debug"<<endl;
+        paivyridata_.erase(paivamaara);
+        return true;
+    }
+    else {
+        cout<<"debug moi"<<endl;
+        return false;
+    }
+}
 
 
 // Muita Paivyri-luokan metodifunktioiden määrittelyjä puuttuu tästä.

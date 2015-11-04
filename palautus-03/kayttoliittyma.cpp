@@ -1,8 +1,10 @@
 #include "paivyri.hh"
+#include "apufunktiot.hh"
 #include <iostream>
 #include <cstdio>
 #include <string>
 #include <sstream>
+#include <vector>
 
 using namespace std;
 
@@ -18,10 +20,8 @@ namespace {
         }
 
         if(!paiv.tulosta_paivyridata()){
-            cout << "Virhe: Paivyrissa ei ole merkintoja" << endl;
+            cout << "Paivyri on tyhja." << endl;
         }
-
-        // Tässä pitää tulostaa päivyristä «paiv» kaikki tapahtumat.
     }
 
 
@@ -40,8 +40,9 @@ namespace {
             return;
         }
 
-        cout << "Testi: [" << paivamaara << "]" << endl;
-
+        if(!paiv.tulosta_merkinnat(paivamaara)){
+            cout << "Paivamaaralle ei ole tehty merkintoja." << endl;
+        }
         // Tässä pitää tulostaa «paivamaara»:n tapahtumat «paiv»:stä.
     }
 
@@ -63,10 +64,9 @@ namespace {
             return;
         }
 
-        cout << "Testi: [" << paivamaara << "|" << tapahtuma << "]" << endl;
+        // Lisataan syotetty paivamaara ja silloin tapahtunut tapahtuma.
+        paiv.lisaa_tapahtuma(paivamaara, tapahtuma);
 
-        // Tässä pitää lisätä päivyriin «paiv» annetulle
-        // «paivamaara»:lle annettu «tapahtuma».
     }
 
 
@@ -85,7 +85,11 @@ namespace {
             return;
         }
 
-        cout << "Testi: [" << paivamaara << "]" << endl;
+        paiv.poista_tapahtuma(paivamaara);
+
+        // Poistaa tarvittaessa tyhja paivays.
+        paiv.poista_tyhja_paivays(paivamaara);
+
 
         // Tässä poistetaan «paivamaara»:ltä vanhin merkintä, eli siis
         // jäljellä olevista se, joka on ollut rakenteessa kauimmin.
