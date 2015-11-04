@@ -40,25 +40,31 @@ bool Paivyri::lisaa_tapahtuma(const string& paivamaara, const string& kuvaus) {
 
 bool Paivyri::tulosta_paivyridata(){
 
-    map<Paivays, deque<string>>::iterator map_iter;
-    deque<string>::iterator deque_iter;
-
-    map_iter = paivyridata_.begin();
-
-    // Kaydaan lapi kaikki Paivaykset ja tulostetaan paivamaara.
-    while (map_iter != paivyridata_.end()){
-        cout<< map_iter->first.merkkijonoksi()<<endl;
-
-        deque_iter = map_iter->second.begin();
-
-        // Tulostetaan kaikki paivamaaralle kirjatut tapahtumat.
-        while(deque_iter != map_iter->second.end()){
-            cout<<"    "<<*deque_iter<<endl;
-            deque_iter++;
-        }
-
-        map_iter++;
+    if (paivyridata_.begin() == paivyridata_.end()){
+        return false;
     }
+    else {
+        map<Paivays, deque<string>>::iterator map_iter;
+        deque<string>::iterator deque_iter;
+
+        map_iter = paivyridata_.begin();
+
+        // Kaydaan lapi kaikki Paivaykset ja tulostetaan paivamaara.
+        while (map_iter != paivyridata_.end()){
+            cout<< map_iter->first.merkkijonoksi()<<endl;
+
+            deque_iter = map_iter->second.begin();
+
+            // Tulostetaan kaikki paivamaaralle kirjatut tapahtumat.
+            while(deque_iter != map_iter->second.end()){
+                cout<<"    "<<*deque_iter<<endl;
+                deque_iter++;
+            }
+
+            map_iter++;
+        }
+    }
+    return true;
 }
 
 

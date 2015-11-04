@@ -17,17 +17,9 @@ namespace {
             return;
         }
 
-        paiv.tulosta_paivyridata();
-        map<Paivays, deque<string>>::iterator map_iter;
-        deque<string>::iterator deque_iter;
-        map_iter->first;
-
-        /*
-        while(map_iter != paiv.paivyridata_.end()){
-            cout<<map_iter<<endl;
+        if(!paiv.tulosta_paivyridata()){
+            cout << "Virhe: Paivyrissa ei ole merkintoja" << endl;
         }
-
-        */
 
         // Tässä pitää tulostaa päivyristä «paiv» kaikki tapahtumat.
     }
