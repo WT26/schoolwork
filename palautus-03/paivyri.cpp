@@ -11,31 +11,56 @@ Paivyri::Paivyri() {
 
 bool Paivyri::lisaa_tapahtuma(const string& paivamaara, const string& kuvaus) {
 
+    Paivays lisattava_paivays;
+    string oikeassa_formaatissa = lisattava_paivays.merkkijonoksi(paivamaara);
 
-    Paivays lisattava_paivays = Paivays(paivamaara);
+    //DEBUG
+    cout<<paivamaara<<" paivamaara"<<endl;
+    cout<<oikeassa_formaatissa<<" oikeassa formaatissa"<<endl;
+
+    lisattava_paivays = Paivays(oikeassa_formaatissa);
 
     // Tutkitaanko onko kyseista paivaysta paivyrissa
     if (paivyridata_.find(lisattava_paivays) != paivyridata_.end()){
-        paivyridata_[paivamaara].push_back(kuvaus);
+        paivyridata_[oikeassa_formaatissa].push_back(kuvaus);
     }
 
     else {
+
         deque<string> lisattava_jono;
         lisattava_jono.push_back(kuvaus);
         //paivyridata_[paivamaara] = deque<string>;
-        paivyridata_[paivamaara].push_back(kuvaus);
-    }
-    //DEBUG
-    cout<<paivamaara<<endl;
-    cout<<kuvaus<<endl;
-    const string& paivamaara2 = "23.6.2016";
-    cout<<paivyridata_[paivamaara2].at(0)<<endl;
+        paivyridata_[oikeassa_formaatissa].push_back(kuvaus);
 
-    // Lisätään «paivamaara»:lle tapahtuma «kuvaus» luokan
-    // private-osassa olevaan säiliöön.
+    }
 
     return true;
 }
+
+
+bool Paivyri::tulosta_paivyridata(){
+
+    map<Paivays, deque<string>>::iterator map_iter;
+    deque<string>::iterator deque_iter;
+
+    map_iter = paivyridata_.begin();
+
+    // Kaydaan lapi kaikki Paivaykset ja tulostetaan paivamaara.
+    while (map_iter != paivyridata_.end()){
+        cout<< map_iter->first.merkkijonoksi()<<endl;
+
+        deque_iter = map_iter->second.begin();
+
+        // Tulostetaan kaikki paivamaaralle kirjatut tapahtumat.
+        while(deque_iter != map_iter->second.end()){
+            cout<<"    "<<*deque_iter<<endl;
+            deque_iter++;
+        }
+
+        map_iter++;
+    }
+}
+
 
 
 

@@ -252,11 +252,9 @@ string Paivays::merkkijonoksi(string formaatti) const {
             if ( korvauskohta == string::npos ) {
                 break;
             }
-
             formaatti.replace(korvauskohta, korvattava.length(), korvaaja);
         }
     }
-
     return formaatti;
 }
 
