@@ -11,7 +11,8 @@ SOURCES += \
     paivyriohjelma.cpp
 
 OTHER_FILES += \
-    palautus-03.pro.user
+    palautus-03.pro.user \
+    mun-kalenteri.txt
 
 HEADERS += \
     kayttoliittyma.hh \

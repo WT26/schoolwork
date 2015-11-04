@@ -17,7 +17,7 @@ namespace {
             return;
         }
 
-        cout << "Testi: tulosta_toiminto" << endl;
+
 
         // Tässä pitää tulostaa päivyristä «paiv» kaikki tapahtumat.
     }
