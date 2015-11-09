@@ -9,30 +9,29 @@
 
 using namespace std;
 
+// Rakentaja metodi.
 Paivyri::Paivyri() {
 }
 
+// Lisataan uusi tapahtuma Paivyriin.
 bool Paivyri::lisaa_tapahtuma(const string& paivamaara, const string& kuvaus) {
 
+    // Luodaan uusi Paivays.
     Paivays lisattava_paivays;
     string lisatty = lisaa_nollat(lisattava_paivays.merkkijonoksi(paivamaara));
-    cout<< lisatty<<" lisatty"<<endl;
-
-    //string oikeassa_formaatissa = lisattava_paivays.merkkijonoksi(paivamaara) ;
-    //cout<< oikeassa_formaatissa << " oikeassa form"<<endl;
 
     lisattava_paivays = Paivays(lisatty);
 
-    // Tutkitaanko onko kyseista paivaysta paivyrissa
+    // Tutkitaanko onko kyseista paivaysta paivyrissa. Jos se on, ei
+    // luoda uutta.
     if (paivyridata_.find(lisatty) != paivyridata_.end()){
         paivyridata_[lisatty].push_back(kuvaus);
     }
 
     else {
-
+    // Ja tassa luodaan uusi ellei sita ole viela olemassa.
         deque<string> lisattava_jono;
         lisattava_jono.push_back(kuvaus);
-        //paivyridata_[paivamaara] = deque<string>;
         paivyridata_[lisatty].push_back(kuvaus);
 
     }
@@ -40,6 +39,7 @@ bool Paivyri::lisaa_tapahtuma(const string& paivamaara, const string& kuvaus) {
 }
 
 
+// Metodi tulostaa paivyridatan.
 bool Paivyri::tulosta_paivyridata(){
 
     if (paivyridata_.begin() == paivyridata_.end()){
@@ -53,8 +53,8 @@ bool Paivyri::tulosta_paivyridata(){
 
         // Kaydaan lapi kaikki Paivaykset ja tulostetaan paivamaara.
         while (map_iter != paivyridata_.end()){
-            cout<<  lisaa_nollat(map_iter->first.merkkijonoksi())<<endl;
 
+            cout<<  lisaa_nollat(map_iter->first.merkkijonoksi())<<endl;
             deque_iter = map_iter->second.begin();
 
             // Tulostetaan kaikki paivamaaralle kirjatut tapahtumat.
@@ -69,6 +69,8 @@ bool Paivyri::tulosta_paivyridata(){
     return true;
 }
 
+
+// Tulostaa vain tietyn paivamaaran tapahtumat (komento nayta)
 bool Paivyri::tulosta_merkinnat(const string paivamaara) {
     if (paivyridata_.find(paivamaara) == paivyridata_.end()){
         return false;
@@ -89,6 +91,7 @@ bool Paivyri::tulosta_merkinnat(const string paivamaara) {
     }
 }
 
+// Poistaa tietylta paivamaaralta ensimmaisen tapahtuman.
 bool Paivyri::poista_tapahtuma(const string paivamaara) {
     if (paivyridata_.find(paivamaara) == paivyridata_.end()){
         cout<<"Paivamaarana ei ole poistettavaa merkintaa."<<endl;
@@ -104,6 +107,7 @@ bool Paivyri::poista_tapahtuma(const string paivamaara) {
     }
 }
 
+// Poistaa tyhjan Paivayksen.
 bool Paivyri::poista_tyhja_paivays(const string paivamaara) {
     if (paivyridata_.find(paivamaara) == paivyridata_.end()) {
         paivyridata_.erase(paivamaara);
@@ -114,6 +118,7 @@ bool Paivyri::poista_tyhja_paivays(const string paivamaara) {
     }
 }
 
+// Tallettaa Paivyrin tiedot .txt tiedostoon.
 bool Paivyri::talleta_tiedosto(const string paivyritiedoston_nimi){
     ofstream tiedosto_olio{paivyritiedoston_nimi};
 
@@ -127,7 +132,7 @@ bool Paivyri::talleta_tiedosto(const string paivyritiedoston_nimi){
 
         deque_iter = map_iter->second.begin();
 
-        // Tulostetaan kaikki paivamaaralle kirjatut tapahtumat.
+        // Talletetaan kaikki paivamaaralle kirjatut tapahtumat.
         while(deque_iter != map_iter->second.end()){
             tiedosto_olio<< map_iter->first.merkkijonoksi()<<":";
             tiedosto_olio<<*deque_iter<<"\n";
@@ -138,8 +143,14 @@ bool Paivyri::talleta_tiedosto(const string paivyritiedoston_nimi){
     }
 }
 
+// Metodi lisaa paivamaaran eteen tarvittaessa etunollat.
 const string Paivyri::lisaa_nollat(const string paivamaara){
+
+    // Vectori ppkkvvvv sisaltaa paivamaaran tiedot: paiva on vectorin ensimmainen
+    // stringi, kuukausi toinen ja vuosi kolmas. Nain saadaan muuttamalla vectoria kohdassa
+    // nolla muutettua paivaa(lisataan eteen tarvittaessa nolla) etc.
     vector<string> ppkkvvvv = split(paivamaara,'.');
+
     // Paivaan lisataan tarvittaessa nolla.
     if(ppkkvvvv.at(0).length() < 2) {
         string lisattava_pp = "0" + ppkkvvvv.at(0);
