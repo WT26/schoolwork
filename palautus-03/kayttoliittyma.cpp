@@ -131,16 +131,12 @@ namespace {
         }
 
         paiv.talleta_tiedosto(tiedoston_nimi);
-        cout << "Testi: [" << tiedoston_nimi << "]" << endl;
-
-        // Tässä talletetaan kaikki «paiv»-rakenteessa olevat tapahtumat
-        // tiedostoon «tiedoston_nimi», jonka on oltava talletuksen
-        // jälkeen sellaisessa muodossa, että se voidaan syöttää
-        // ohjelmalle uudelleen käynnistysvaiheessa tai lue-komennolla.
     }
-
 }
 
+// Kayttoliittyma jolla komennoin ohjataan Paivyrin toimintaa.
+// Mahdollisia komentoja ovat tulosta, nayta, lisaa, poista, lue ja
+// talleta.
 void kayttoliittyma(Paivyri& paivyri) {
     string syoterivi;
     while ( true ) {

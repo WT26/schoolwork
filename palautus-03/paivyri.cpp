@@ -105,13 +105,16 @@ bool Paivyri::poista_tapahtuma(const string paivamaara) {
         deque_iter = map_iter->second.begin();
         map_iter->second.pop_front();
     }
+    return true;
 }
 
 // Poistaa tyhjan Paivayksen.
 bool Paivyri::poista_tyhja_paivays(const string paivamaara) {
-    if (paivyridata_.find(paivamaara) == paivyridata_.end()) {
+    if (paivyridata_[paivamaara].size() == 0) {
         paivyridata_.erase(paivamaara);
+
         return true;
+
     }
     else {
         return false;
@@ -141,6 +144,7 @@ bool Paivyri::talleta_tiedosto(const string paivyritiedoston_nimi){
 
         map_iter++;
     }
+    return true;
 }
 
 // Metodi lisaa paivamaaran eteen tarvittaessa etunollat.
@@ -167,6 +171,3 @@ const string Paivyri::lisaa_nollat(const string paivamaara){
     const string nollat_lisatty = ppkkvvvv.at(0)+ "." + ppkkvvvv.at(1) + "." + ppkkvvvv.at(2);
     return nollat_lisatty;
 }
-
-
-// Muita Paivyri-luokan metodifunktioiden määrittelyjä puuttuu tästä.
