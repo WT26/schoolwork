@@ -17,8 +17,8 @@ class Paivyri {
     bool poista_tapahtuma(const string paivamaara);
     bool poista_tyhja_paivays(const string paivamaara);
     bool lue_tiedosto();
-
     bool talleta_tiedosto(const string paivyritiedoston_nimi);
+    const string lisaa_nollat(const string paivamaara);
 
     // Muita metodifunktioiden esittelyitä puuttuu tästä.
 

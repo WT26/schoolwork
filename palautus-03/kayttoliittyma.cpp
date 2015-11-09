@@ -11,6 +11,8 @@ using namespace std;
 
 namespace {
 
+
+    // Funktio tulostaa paivyrin metodin avulla kaikki Paivyrin tiedot.
     void tulosta_toiminto(Paivyri& paiv, istringstream& loppurivi) {
         loppurivi >> ws;
 
@@ -24,7 +26,7 @@ namespace {
         }
     }
 
-
+    // Funktio tulostaa paivyrin metodin avulla yhden paivamaaran tiedot.
     void nayta_toiminto(Paivyri& paiv, istringstream& loppurivi) {
         string paivamaara;
 
@@ -43,10 +45,10 @@ namespace {
         if(!paiv.tulosta_merkinnat(paivamaara)){
             cout << "Paivamaaralle ei ole tehty merkintoja." << endl;
         }
-        // Tässä pitää tulostaa «paivamaara»:n tapahtumat «paiv»:stä.
     }
 
 
+    // Funktio lisaa Paivyriin tietylle paivamaaralle kuvauksen.
     void lisaa_toiminto(Paivyri& paiv, istringstream& loppurivi) {
         string paivamaara;
         string tapahtuma;
@@ -70,6 +72,9 @@ namespace {
     }
 
 
+    // Funktio poistaa Paivyrista tietylta paivamaaralta tapahtumia,
+    // ja jos se on poistamassa viimeista tapahtumaa, koko paivamaara
+    // katoaa Paivyrista.
     void poista_toiminto(Paivyri& paiv, istringstream& loppurivi) {
         string paivamaara;
 
@@ -85,17 +90,17 @@ namespace {
             return;
         }
 
+        // Kutsutaan poistavat metodit.
         paiv.poista_tapahtuma(paivamaara);
 
         // Poistaa tarvittaessa tyhja paivays.
         paiv.poista_tyhja_paivays(paivamaara);
 
-
-        // Tässä poistetaan «paivamaara»:ltä vanhin merkintä, eli siis
-        // jäljellä olevista se, joka on ollut rakenteessa kauimmin.
     }
 
 
+    // Lukee .txt tiedoston ja lisaa siella olevat Paivaykset jo auki
+    // olevaan Paivyriin.
     void lue_toiminto(Paivyri& paiv, istringstream& loppurivi) {
         string tiedoston_nimi;
 
@@ -111,13 +116,9 @@ namespace {
         if ( not lue_paivyritiedosto(tiedoston_nimi, paiv) ) {
             cout<<"Virhe: tiedostoa ei saatu luettua."<<endl;
         }
-
-        // Tässä luetaan tiedostosta «tiedoston_nimi» päivämäärät ja
-        // tapahtumat ja lisätään ne «paiv»-rakenteeseen siellä
-        // entuudestaan olevien tapahtumien lisäksi.
     }
 
-
+    // Tallettaa Paivyrin nykyisessa muodossa .txt tiedostoon.
     void talleta_toiminto(Paivyri& paiv, istringstream& loppurivi) {
         string tiedoston_nimi;
 

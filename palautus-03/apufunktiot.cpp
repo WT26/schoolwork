@@ -8,6 +8,8 @@
 
 using namespace std;
 
+
+// Muuttaa stringin unsignediksi.
 bool string_unsignediksi(const string& mjono, unsigned int& tulos) {
     const string NUMEROMERKIT{"0123456789"};
 

@@ -177,11 +177,12 @@ string Paivays::merkkijonoksi(string formaatti) const {
         { "%{VUOSI}",  to_string(vuosi_) },
     };
 
-
     muunnokset.insert( { "%{PAIVA2}", muunnokset.at("%{PAIVA}") } );
+
     if ( muunnokset.at("%{PAIVA2}").length() < 2 ) {
         muunnokset.at("%{PAIVA2}").insert(0, "0");
     }
+
 
     muunnokset.insert( { "%{KUU2}", muunnokset.at("%{KUU}") } );
     if ( muunnokset.at("%{KUU2}").length() < 2 ) {
