@@ -1,4 +1,5 @@
 #include "paivays.hh"
+#include "apufunktiot.hh"
 #include <iostream>
 #include <string>
 #include <map>
@@ -38,55 +39,8 @@ namespace {
         }
     }
 
-
-    // Loput tässä namespacessa määritellyt funktiot kannattaisi ehkä
-    // laittaa erilliseen apufunktiomoduuliin.  Mutta tässä ne on
-    // valmiin koodin yksinkertaistamiseksi laitettu paivays-moduulin
-    // yksityiseen rajapintaan.  Mikäli niiden käyttöön ilmenee
-    // tarvetta muissa moduuleissa, ne voi hyvin siirtää erilliseen
-    // apumoduuliin.
-
-
-    bool string_unsignediksi(const string& mjono, unsigned int& tulos) {
-        const string NUMEROMERKIT{"0123456789"};
-
-        if ( mjono.find_first_not_of(NUMEROMERKIT) != string::npos ) {
-            return false;
-        }
-
-        tulos = stoi(mjono);
-
-        return true;
-    }
-
-
-    // Vanha tuttu split.
-    vector<string> split(const string& merkkijono, char erotinmerkki) {
-        vector<string> tulos;
-
-        string::size_type tutkittava_kohta{0};
-        string kentan_sisalto{""};
-
-        while ( tutkittava_kohta < merkkijono.length() ) {
-
-            if ( merkkijono.at(tutkittava_kohta) != erotinmerkki ) {
-                kentan_sisalto.push_back( merkkijono.at(tutkittava_kohta) );
-
-            } else {
-
-                tulos.push_back(kentan_sisalto);
-                kentan_sisalto = "";
-            }
-
-            ++tutkittava_kohta;
-        }
-
-        tulos.push_back(kentan_sisalto);
-
-        return tulos;
-    }
-
 }
+
 
 
 Paivays::Paivays(): paiva_{0}, kuu_{0}, vuosi_{0} {
@@ -133,8 +87,8 @@ bool Paivays::aseta(unsigned int paiva, unsigned int kuu, unsigned int vuosi) {
 // Paluuarvo on true, mikäli parametri on virheetön päivämäärä,
 // muutoin paluuarvo on false.
 bool Paivays::aseta(const string& paivays) {
-    vector<string> kentat{ split(paivays, '.') };
-    if ( kentat.size() != 3 ) {
+    Lista kentat{ split(paivays, '.') };
+    if ( kentat.listan_pituus() != 3 ) {
         return false;
     }
 
@@ -142,9 +96,9 @@ bool Paivays::aseta(const string& paivays) {
     unsigned int kk;
     unsigned int vvvv;
 
-    if ( not string_unsignediksi(kentat.at(0), pp)
-         or not string_unsignediksi(kentat.at(1), kk)
-         or not string_unsignediksi(kentat.at(2), vvvv) ) {
+    if ( not string_unsignediksi(kentat.kohdassa(0), pp)
+         or not string_unsignediksi(kentat.kohdassa(1), kk)
+         or not string_unsignediksi(kentat.kohdassa(2), vvvv) ) {
 
         return false;
     }

@@ -21,7 +21,7 @@ public:
 
     void tulosta() const;
     void tulosta_tapahtumat(Paivays paivays) const;
-    void tallenna() const;
+    void tallenna(const string paivyritiedoston_nimi) const;
 private:
     struct Kirjaston_alkio {
         Paivays paivays;

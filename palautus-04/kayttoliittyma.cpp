@@ -93,9 +93,6 @@ namespace {
         // Kutsutaan poistavat metodit.
         paiv.poista_tapahtuma(paivamaara);
 
-        // Poistaa tarvittaessa tyhja paivays.
-        paiv.poista_tyhja_paivays(paivamaara);
-
     }
 
 

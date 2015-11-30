@@ -18,10 +18,10 @@ bool Paivyri::lisaa_tapahtuma(const string& paivamaara, const string& kuvaus) {
     // Luodaan uusi Paivays.
     Paivays lisattava_paivays;
     string lisatty = lisaa_nollat(lisattava_paivays.merkkijonoksi(paivamaara));
-    cout<<"moi"<<endl;
 
+    cout<<lisatty<<endl;
     lisattava_paivays = Paivays(lisatty);
-
+    cout<<"moi"<<endl;
     // Tutkitaanko onko kyseista paivaysta paivyrissa. Jos se on, ei
     // luoda uutta.
     paivyridata_.lisaa_alkio(lisattava_paivays, kuvaus);
@@ -80,6 +80,9 @@ bool Paivyri::poista_tapahtuma(const string paivamaara) {
 
 // Tallettaa Paivyrin tiedot .txt tiedostoon.
 bool Paivyri::talleta_tiedosto(const string paivyritiedoston_nimi){
+
+    paivyridata_.tallenna(paivyritiedoston_nimi);
+    /*
     ofstream tiedosto_olio{paivyritiedoston_nimi};
 
     map<Paivays, deque<string>>::iterator map_iter;
@@ -100,7 +103,7 @@ bool Paivyri::talleta_tiedosto(const string paivyritiedoston_nimi){
         }
 
         map_iter++;
-    }
+    }*/
     return true;
 }
 
