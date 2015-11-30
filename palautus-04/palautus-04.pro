@@ -5,8 +5,14 @@ CONFIG -= qt
 CONFIG += c++11
 
 SOURCES += \
-    paivays.cpp
+    paivays.cpp \
+    apufunktiot.cpp \
+    kayttoliittyma.cpp \
+    paivyri.cpp
 
 HEADERS += \
-    paivays.hh
+    paivays.hh \
+    apufunktiot.hh \
+    kayttoliittyma.hh \
+    paivyri.hh
 
