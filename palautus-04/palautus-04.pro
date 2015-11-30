@@ -21,3 +21,9 @@ HEADERS += \
     lista.hh \
     kirjasto.hh
 
+OTHER_FILES += \
+    mun-kalenteri.txt \
+    lisattavaa.txt \
+    testi.txt \
+    tyhja.txt
+
