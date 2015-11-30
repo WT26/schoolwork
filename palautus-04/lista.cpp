@@ -23,13 +23,10 @@ void Lista::lisaa_alkio_loppuun(const string &lisattava_string){
     }
 }
 
-bool Lista::poista_alkio_alusta(string &poistettu_string) {
+bool Lista::poista_alkio_alusta() {
     if ( onko_tyhja() ){
         return false;
     }
-
-    shared_ptr<Listan_alkio> poistettavan_osoite{ ensimmaisen_osoite_ };
-    poistettu_string = poistettavan_osoite->alkio;
 
     if ( ensimmaisen_osoite_ == viimeisen_osoite_ ){
         ensimmaisen_osoite_ = nullptr;

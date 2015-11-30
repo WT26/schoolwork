@@ -16,7 +16,7 @@ public:
 
     void lisaa_alkio(Paivays lisattavan_paivays,const string &tapahtuma);
 
-    bool poista_alkio_alusta(Paivays paivays);
+    bool poista_tapahtuma(Paivays paivays);
     bool onko_tyhja() const;
 
     void tulosta() const;
@@ -29,6 +29,5 @@ private:
 
     shared_ptr<Kirjaston_alkio> ensimmaisen_osoite_;
     shared_ptr<Kirjaston_alkio> viimeisen_osoite_;
-    shared_ptr<Kirjaston_alkio> edeltajan_osoite_;
 };
 #endif // KIRJASTO_HH

@@ -13,7 +13,7 @@ public:
 
     void lisaa_alkio_loppuun(const string& lisattava_string);
 
-    bool poista_alkio_alusta(string& poistettu_string);
+    bool poista_alkio_alusta();
     bool onko_tyhja() const;
 
 

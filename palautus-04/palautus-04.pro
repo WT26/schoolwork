@@ -10,7 +10,8 @@ SOURCES += \
     kayttoliittyma.cpp \
     paivyri.cpp \
     lista.cpp \
-    kirjasto.cpp
+    kirjasto.cpp \
+    paivyriohjelma.cpp
 
 HEADERS += \
     paivays.hh \
