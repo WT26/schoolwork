@@ -51,10 +51,10 @@ bool Lista::onko_tyhja() const {
 
 void Lista::tulosta() const {
     shared_ptr<Listan_alkio> tulostettavan_osoite { ensimmaisen_osoite_ };
-    int jarjestysnumero{1};
 
     while (tulostettavan_osoite != nullptr) {
-        cout<< jarjestysnumero << ". " << tulostettavan_osoite->alkio <<endl;
+        cout<<tulostettavan_osoite->alkio<<endl;
+        tulostettavan_osoite->seuraavan_osoite;
     }
 }
 

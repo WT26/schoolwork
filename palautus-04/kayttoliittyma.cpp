@@ -42,7 +42,7 @@ namespace {
             return;
         }
 
-        if(!paiv.tulosta_merkinnat(paivamaara)){
+        if(!paiv.tulosta_paivamaaran_tapahtumat(paivamaara)){
             cout << "Paivamaaralle ei ole tehty merkintoja." << endl;
         }
     }

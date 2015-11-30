@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 #include "lista.hh"
-#include <map>
+#include "kirjasto.hh"
 
 using namespace std;
 
@@ -18,22 +18,13 @@ bool Paivyri::lisaa_tapahtuma(const string& paivamaara, const string& kuvaus) {
     // Luodaan uusi Paivays.
     Paivays lisattava_paivays;
     string lisatty = lisaa_nollat(lisattava_paivays.merkkijonoksi(paivamaara));
+    cout<<"moi"<<endl;
 
     lisattava_paivays = Paivays(lisatty);
 
     // Tutkitaanko onko kyseista paivaysta paivyrissa. Jos se on, ei
     // luoda uutta.
-    if (paivyridata_.find(lisatty) != paivyridata_.end()){
-        paivyridata_[lisatty].push_back(kuvaus);
-    }
-
-    else {
-    // Ja tassa luodaan uusi ellei sita ole viela olemassa.
-        deque<string> lisattava_jono;
-        lisattava_jono.push_back(kuvaus);
-        paivyridata_[lisatty].push_back(kuvaus);
-
-    }
+    paivyridata_.lisaa_alkio(lisattava_paivays, kuvaus);
     return true;
 }
 
@@ -41,9 +32,8 @@ bool Paivyri::lisaa_tapahtuma(const string& paivamaara, const string& kuvaus) {
 // Metodi tulostaa paivyridatan.
 bool Paivyri::tulosta_paivyridata(){
 
-    if (paivyridata_.begin() == paivyridata_.end()){
-        return false;
-    }
+    paivyridata_.tulosta();
+/*
     else {
         map<Paivays, deque<string>>::iterator map_iter;
         deque<string>::iterator deque_iter;
@@ -64,60 +54,28 @@ bool Paivyri::tulosta_paivyridata(){
 
             map_iter++;
         }
-    }
+    }*/
     return true;
 }
 
 
 // Tulostaa vain tietyn paivamaaran tapahtumat (komento nayta)
-bool Paivyri::tulosta_merkinnat(const string paivamaara) {
-    if (paivyridata_.find(paivamaara) == paivyridata_.end()){
-        return false;
-    }
-    else {
-        map<Paivays, deque<string>>::iterator map_iter;
-        deque<string>::iterator deque_iter;
+bool Paivyri::tulosta_paivamaaran_tapahtumat(const string paivamaara) {
 
-        map_iter = paivyridata_.find(paivamaara);
-        cout<<lisaa_nollat(map_iter->first.merkkijonoksi())<<endl;
-        deque_iter = map_iter->second.begin();
+    Paivays tulostettava_paivays(paivamaara);
+    paivyridata_.tulosta_tapahtumat(tulostettava_paivays);
 
-        while(deque_iter != map_iter->second.end()){
-            cout<<"    "<<*deque_iter<<endl;
-            deque_iter++;
-        }
-     return true;
-    }
+    return true;
+
 }
 
 // Poistaa tietylta paivamaaralta ensimmaisen tapahtuman.
 bool Paivyri::poista_tapahtuma(const string paivamaara) {
-    if (paivyridata_.find(paivamaara) == paivyridata_.end()){
-        cout<<"Paivamaarana ei ole poistettavaa merkintaa."<<endl;
-        return false;
-    }
-    else{
-        map<Paivays, deque<string>>::iterator map_iter;
-        deque<string>::iterator deque_iter;
 
-        map_iter = paivyridata_.find(paivamaara);
-        deque_iter = map_iter->second.begin();
-        map_iter->second.pop_front();
-    }
+    Paivays poistettava_paivamaara(paivamaara);
+    paivyridata_.poista_tapahtuma(poistettava_paivamaara);
+
     return true;
-}
-
-// Poistaa tyhjan Paivayksen.
-bool Paivyri::poista_tyhja_paivays(const string paivamaara) {
-    if (paivyridata_[paivamaara].size() == 0) {
-        paivyridata_.erase(paivamaara);
-
-        return true;
-
-    }
-    else {
-        return false;
-    }
 }
 
 // Tallettaa Paivyrin tiedot .txt tiedostoon.

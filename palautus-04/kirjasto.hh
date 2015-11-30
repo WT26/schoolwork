@@ -20,6 +20,8 @@ public:
     bool onko_tyhja() const;
 
     void tulosta() const;
+    void tulosta_tapahtumat(Paivays paivays) const;
+    void tallenna() const;
 private:
     struct Kirjaston_alkio {
         Paivays paivays;

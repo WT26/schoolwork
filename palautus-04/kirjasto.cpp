@@ -2,6 +2,7 @@
 #include "paivays.hh"
 #include "lista.hh"
 #include <iostream>
+#include <fstream>
 #include <string>
 
 
@@ -87,17 +88,20 @@ bool Kirjasto::poista_tapahtuma(Paivays paivays) {
     }
 
     shared_ptr<Kirjaston_alkio> poistettavan_osoite{ ensimmaisen_osoite_ };
+    shared_ptr<Kirjaston_alkio> edeltavan_osoite;
 
     while( poistettavan_osoite->paivays != paivays) {
+        edeltavan_osoite = poistettavan_osoite;
         poistettavan_osoite = poistettavan_osoite->seuraavan_osoite;
     }
 
     if( poistettavan_osoite->paivays == paivays ) {
         if ( poistettavan_osoite->lista.poista_alkio_alusta() == true){
             return true;
-
         }
         else {
+            edeltavan_osoite->seuraavan_osoite
+                    = poistettavan_osoite->seuraavan_osoite;
             return false;
         }
     }
@@ -115,13 +119,37 @@ bool Kirjasto::onko_tyhja() const {
     }
 }
 
-
-/*
 void Kirjasto::tulosta() const {
     shared_ptr<Kirjaston_alkio> tulostettavan_osoite { ensimmaisen_osoite_ };
 
     while (tulostettavan_osoite != nullptr) {
-        cout<< jarjestysnumero << ". " << tulostettavan_osoite->alkio <<endl;
+        tulostettavan_osoite->paivays.tulosta();
+        tulostettavan_osoite->lista.tulosta();
+        tulostettavan_osoite->seuraavan_osoite;
     }
 }
-*/
+
+void Kirjasto::tulosta_tapahtumat(Paivays paivays) const {
+    shared_ptr<Kirjaston_alkio> tulostettavan_osoite { ensimmaisen_osoite_ };
+
+    while ( tulostettavan_osoite->paivays != paivays ){
+        tulostettavan_osoite->seuraavan_osoite;
+    }
+    tulostettavan_osoite->paivays.tulosta();
+    tulostettavan_osoite->lista.tulosta();
+}
+
+void Kirjasto::tallenna(const string paivyritiedoston_nimi) const {
+    ofstream tiedosto_olio{paivyritiedoston_nimi};
+    shared_ptr<Kirjaston_alkio> tallennettavan_osoite { ensimmaisen_osoite_ };
+
+    while (tallennettavan_osoite != nullptr){
+        int laskija{0};
+        tiedosto_olio<<tallennettavan_osoite->paivays.merkkijonoksi();
+        while(laskija = tallennettavan_osoite->lista.listan_pituus()){
+            tiedosto_olio<<tallennettavan_osoite->lista.kohdassa(laskija);
+
+        }
+    }
+}
+
