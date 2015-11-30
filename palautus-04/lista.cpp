@@ -23,6 +23,8 @@ void Lista::lisaa_alkio_loppuun(const string &lisattava_string){
     }
 }
 
+
+
 bool Lista::poista_alkio_alusta() {
     if ( onko_tyhja() ){
         return false;
@@ -53,5 +55,36 @@ void Lista::tulosta() const {
 
     while (tulostettavan_osoite != nullptr) {
         cout<< jarjestysnumero << ". " << tulostettavan_osoite->alkio <<endl;
+    }
+}
+
+string Lista::kohdassa(int alkion_numero) {
+    shared_ptr<Listan_alkio> palautettavan_osoite { ensimmaisen_osoite_ };
+    int laskija{0};
+
+    while ( laskija != alkion_numero ){
+        palautettavan_osoite = palautettavan_osoite->seuraavan_osoite;
+        laskija++;
+    }
+
+    return palautettavan_osoite->alkio;
+
+}
+
+int Lista::listan_pituus() {
+    if (ensimmaisen_osoite_ == nullptr){
+        int pituus{0};
+        return pituus;
+    }
+    else {
+        shared_ptr<Listan_alkio> laskijan_osoite { ensimmaisen_osoite_ };
+        int pituus{0};
+
+        while ( laskijan_osoite != nullptr ) {
+            laskijan_osoite = laskijan_osoite->seuraavan_osoite;
+            pituus++;
+        }
+        pituus++;
+        return pituus;
     }
 }

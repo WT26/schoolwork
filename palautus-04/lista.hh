@@ -16,6 +16,9 @@ public:
     bool poista_alkio_alusta();
     bool onko_tyhja() const;
 
+    int listan_pituus();
+
+    string kohdassa(int alkion_numero);
 
     void tulosta() const;
 private:

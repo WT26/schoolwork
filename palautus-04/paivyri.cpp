@@ -146,30 +146,38 @@ bool Paivyri::talleta_tiedosto(const string paivyritiedoston_nimi){
     return true;
 }
 
-/*
+
 // Metodi lisaa paivamaaran eteen tarvittaessa etunollat.
 const string Paivyri::lisaa_nollat(const string paivamaara){
 
-    // Vectori ppkkvvvv sisaltaa paivamaaran tiedot: paiva on vectorin ensimmainen
-    // stringi, kuukausi toinen ja vuosi kolmas. Nain saadaan muuttamalla vectoria kohdassa
-    // nolla muutettua paivaa(lisataan eteen tarvittaessa nolla) etc.
+    // Lista ppkkvvvv sisaltaa paivamaaran tiedot: paiva on listan ensimmainen
+    // stringi, kuukausi toinen ja vuosi kolmas.
     Lista ppkkvvvv = split(paivamaara,'.');
 
+    bool jokin_vaihtui{false};
+    string lisattava_pp;
+    string lisattava_kk;
+
     // Paivaan lisataan tarvittaessa nolla.
-    if(ppkkvvvv.at(0).length() < 2) {
-        string lisattava_pp = "0" + ppkkvvvv.at(0);
-        ppkkvvvv.insert(ppkkvvvv.begin(), lisattava_pp);
-        ppkkvvvv.erase(ppkkvvvv.begin() + 1);
+    if(ppkkvvvv.kohdassa(0).length() < 2) {
+        lisattava_pp = "0" + ppkkvvvv.kohdassa(0);
+        jokin_vaihtui = true;
     }
 
     // Kuukauteen lisataan tarvittaessa nolla.
-    if(ppkkvvvv.at(1).length() < 2) {
-        string lisattava_kk = "0" + ppkkvvvv.at(1);
-        ppkkvvvv.insert(ppkkvvvv.begin()+ 1, lisattava_kk);
-        ppkkvvvv.erase(ppkkvvvv.begin() + 2);
+    if(ppkkvvvv.kohdassa(1).length() < 2) {
+        lisattava_kk = "0" + ppkkvvvv.kohdassa(1);
+        jokin_vaihtui = true;
     }
-    const string nollat_lisatty = ppkkvvvv.at(0)+ "." + ppkkvvvv.at(1) + "." + ppkkvvvv.at(2);
-    return nollat_lisatty;
+
+    if( jokin_vaihtui == true) {
+        const string nollat_lisatty = lisattava_pp + "."
+                + lisattava_kk + "." + ppkkvvvv.kohdassa(2);
+        return nollat_lisatty;
+    }
+    else {
+        return paivamaara;
+    }
 }
-*/
+
 
