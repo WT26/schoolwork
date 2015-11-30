@@ -8,11 +8,15 @@ SOURCES += \
     paivays.cpp \
     apufunktiot.cpp \
     kayttoliittyma.cpp \
-    paivyri.cpp
+    paivyri.cpp \
+    lista.cpp \
+    kirjasto.cpp
 
 HEADERS += \
     paivays.hh \
     apufunktiot.hh \
     kayttoliittyma.hh \
-    paivyri.hh
+    paivyri.hh \
+    lista.hh \
+    kirjasto.hh
 
