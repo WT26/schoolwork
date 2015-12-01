@@ -15,7 +15,13 @@ void Lista::lisaa_alkio_loppuun(const string &lisattava_string){
     };
     if ( onko_tyhja() ){
         ensimmaisen_osoite_ = uuden_osoite;
+        ensimmaisen_osoite_->seuraavan_osoite = nullptr;
         viimeisen_osoite_ = uuden_osoite;
+    }
+    if( listan_pituus() == 1){
+        ensimmaisen_osoite_->seuraavan_osoite = uuden_osoite;
+        viimeisen_osoite_ = uuden_osoite;
+        viimeisen_osoite_->seuraavan_osoite = nullptr;
     }
     else {
         viimeisen_osoite_->seuraavan_osoite = uuden_osoite;
@@ -49,12 +55,12 @@ bool Lista::onko_tyhja() const {
     }
 }
 
-void Lista::tulosta() const {
+void Lista::tulosta() {
     shared_ptr<Listan_alkio> tulostettavan_osoite { ensimmaisen_osoite_ };
 
     while (tulostettavan_osoite != nullptr) {
         cout<<tulostettavan_osoite->alkio<<endl;
-        tulostettavan_osoite->seuraavan_osoite;
+        tulostettavan_osoite = tulostettavan_osoite->seuraavan_osoite;
     }
 }
 
@@ -71,7 +77,7 @@ string Lista::kohdassa(int alkion_numero) {
 
 }
 
-int Lista::listan_pituus() {
+int Lista::listan_pituus(){
     if (ensimmaisen_osoite_ == nullptr){
         int pituus{0};
         return pituus;
@@ -84,7 +90,6 @@ int Lista::listan_pituus() {
             laskijan_osoite = laskijan_osoite->seuraavan_osoite;
             pituus++;
         }
-        pituus++;
         return pituus;
     }
 }

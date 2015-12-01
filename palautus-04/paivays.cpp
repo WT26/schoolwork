@@ -200,6 +200,7 @@ bool operator>=(const Paivays& vasemmalla, const Paivays& oikealla) {
 // Jos siis esimerkiksi päivämäärä on kesäkuun 7 vuonna 2013,
 // ja formaatti-parametrin arvo on "p:%{PAIVA2},k:%{KUU},v:%{VUOSI}",
 // palauttaisi metodi merkkijonon "p:07,k:6,v:2013".
+/*
 string Paivays::merkkijonoksi(string formaatti) const {
     map<string, string> muunnokset {
         { "%{PAIVA}",  to_string(paiva_) },
@@ -240,11 +241,94 @@ string Paivays::merkkijonoksi(string formaatti) const {
     }
 
     return formaatti;
+
+}*/
+string Paivays::merkkijonoksi() const {
+    // Lista ppkkvvvv sisaltaa paivamaaran tiedot: paiva on listan ensimmainen
+    // stringi, kuukausi toinen ja vuosi kolmas.
+    string paivamaara = to_string(paiva_) + "."
+            + to_string(kuu_) + "." + to_string(vuosi_);
+    Lista ppkkvvvv;
+    ppkkvvvv.lisaa_alkio_loppuun(to_string(paiva_));
+    ppkkvvvv.lisaa_alkio_loppuun(to_string(kuu_));
+    ppkkvvvv.lisaa_alkio_loppuun(to_string(vuosi_));
+
+
+    bool jokin_vaihtui{false};
+    string lisattava_pp = ppkkvvvv.kohdassa(0);
+    string lisattava_kk = ppkkvvvv.kohdassa(1);
+
+    // Paivaan lisataan tarvittaessa nolla.
+    if(ppkkvvvv.kohdassa(0).length() < 2) {
+        lisattava_pp = "0" + ppkkvvvv.kohdassa(0);
+        jokin_vaihtui = true;
+    }
+
+    // Kuukauteen lisataan tarvittaessa nolla.
+    if(ppkkvvvv.kohdassa(1).length() < 2) {
+        lisattava_kk = "0" + ppkkvvvv.kohdassa(1);
+        jokin_vaihtui = true;
+    }
+
+    if( jokin_vaihtui == true) {
+        const string nollat_lisatty = lisattava_pp + "."
+                + lisattava_kk + "." + ppkkvvvv.kohdassa(2);
+        return nollat_lisatty;
+    }
+    else {
+        return paivamaara;
+    }
+
+    /*
+    map<string, string> muunnokset {
+        { "%{PAIVA}",  to_string(paiva_) },
+        { "%{KUU}",    to_string(kuu_) },
+        { "%{VUOSI}",  to_string(vuosi_) },
+    };
+
+
+    muunnokset.insert( { "%{PAIVA2}", muunnokset.at("%{PAIVA}") } );
+    if ( muunnokset.at("%{PAIVA2}").length() < 2 ) {
+        muunnokset.at("%{PAIVA2}").insert(0, "0");
+    }
+
+    muunnokset.insert( { "%{KUU2}", muunnokset.at("%{KUU}") } );
+    if ( muunnokset.at("%{KUU2}").length() < 2 ) {
+        muunnokset.at("%{KUU2}").insert(0, "0");
+    }
+
+
+    for ( auto muunnos : muunnokset ) {
+
+        // Viitteitä voi käyttää ohjelmakoodin selkeyttämiseen.
+        // Seuraavassa annetaan väliaikainen lisänimi
+        // muunnos.first:ille ja muunnos.second:ille, jotta niiden
+        // käyttötarkoitus on helpompi ymmärtää.
+
+        const string& korvattava{ muunnos.first };
+        const string& korvaaja{ muunnos.second };
+
+        while ( true ) {
+            string::size_type korvauskohta{ formaatti.find(korvattava) };
+            if ( korvauskohta == string::npos ) {
+                break;
+            }
+
+            formaatti.replace(korvauskohta, korvattava.length(), korvaaja);
+        }
+    }
+
+    return formaatti;
+    */
 }
 
-
+/*
 void Paivays::tulosta(const string& formaatti) const {
     cout << merkkijonoksi(formaatti) << endl;
+}
+*/
+void Paivays::tulosta() const {
+    cout << merkkijonoksi() << endl;
 }
 
 //-----------------------------------------------------------------------------

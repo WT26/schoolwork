@@ -15,12 +15,13 @@ Kirjasto::Kirjasto():
 
 
 void Kirjasto::lisaa_alkio(Paivays lisattavan_paivays,const string &tapahtuma){
-    shared_ptr<Kirjaston_alkio> uuden_osoite;
-    uuden_osoite->paivays = lisattavan_paivays;
-
+    Lista uusi_lista;
+    shared_ptr<Kirjaston_alkio> uuden_osoite
+    { new Kirjaston_alkio{lisattavan_paivays, uusi_lista, nullptr}};
     if ( onko_tyhja() ){
         Lista uusi_lista;
         uusi_lista.lisaa_alkio_loppuun(tapahtuma);
+
 
         uuden_osoite->lista = uusi_lista;
         uuden_osoite->seuraavan_osoite = nullptr;
@@ -119,24 +120,36 @@ bool Kirjasto::onko_tyhja() const {
     }
 }
 
-void Kirjasto::tulosta() const {
-    shared_ptr<Kirjaston_alkio> tulostettavan_osoite { ensimmaisen_osoite_ };
+bool Kirjasto::tulosta() {
+    if(ensimmaisen_osoite_ == nullptr){
+        return false;
+    }
+    else {
+        shared_ptr<Kirjaston_alkio>
+                tulostettavan_osoite { ensimmaisen_osoite_ };
 
-    while (tulostettavan_osoite != nullptr) {
-        tulostettavan_osoite->paivays.tulosta();
-        tulostettavan_osoite->lista.tulosta();
-        tulostettavan_osoite->seuraavan_osoite;
+        while (tulostettavan_osoite != nullptr) {
+            tulostettavan_osoite->paivays.tulosta();
+            tulostettavan_osoite->lista.tulosta();
+            tulostettavan_osoite = tulostettavan_osoite->seuraavan_osoite;
+        }
     }
 }
 
-void Kirjasto::tulosta_tapahtumat(Paivays paivays) const {
-    shared_ptr<Kirjaston_alkio> tulostettavan_osoite { ensimmaisen_osoite_ };
-
-    while ( tulostettavan_osoite->paivays != paivays ){
-        tulostettavan_osoite->seuraavan_osoite;
+bool Kirjasto::tulosta_tapahtumat(Paivays paivays) const {
+    if(ensimmaisen_osoite_ == nullptr){
+        return false;
     }
-    tulostettavan_osoite->paivays.tulosta();
-    tulostettavan_osoite->lista.tulosta();
+    else {
+        cout<<"debug"<<endl;
+        shared_ptr<Kirjaston_alkio> tulostettavan_osoite { ensimmaisen_osoite_ };
+        while ( tulostettavan_osoite->paivays != paivays ){
+            tulostettavan_osoite = tulostettavan_osoite->seuraavan_osoite;
+        }
+        tulostettavan_osoite->paivays.tulosta();
+        tulostettavan_osoite->lista.tulosta();
+        return true;
+    }
 }
 
 void Kirjasto::tallenna(const string paivyritiedoston_nimi) const {
@@ -150,6 +163,23 @@ void Kirjasto::tallenna(const string paivyritiedoston_nimi) const {
             tiedosto_olio<<tallennettavan_osoite->lista.kohdassa(laskija);
 
         }
+    }
+}
+
+int Kirjasto::kirjaston_pituus() {
+    if (ensimmaisen_osoite_ == nullptr){
+        int pituus{0};
+        return pituus;
+    }
+    else {
+        shared_ptr<Kirjaston_alkio> laskijan_osoite { ensimmaisen_osoite_ };
+        int pituus{0};
+
+        while ( laskijan_osoite != nullptr ) {
+            laskijan_osoite = laskijan_osoite->seuraavan_osoite;
+            pituus++;
+        }
+        return pituus;
     }
 }
 

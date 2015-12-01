@@ -19,9 +19,11 @@ public:
     bool poista_tapahtuma(Paivays paivays);
     bool onko_tyhja() const;
 
-    void tulosta() const;
-    void tulosta_tapahtumat(Paivays paivays) const;
+    bool tulosta();
+    bool tulosta_tapahtumat(Paivays paivays) const;
     void tallenna(const string paivyritiedoston_nimi) const;
+
+    int kirjaston_pituus();
 private:
     struct Kirjaston_alkio {
         Paivays paivays;

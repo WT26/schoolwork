@@ -18,8 +18,10 @@ class Paivays {
 
     bool operator<(const Paivays& oikealla) const;
 
-    string merkkijonoksi(string formaatti = "%{PAIVA}.%{KUU}.%{VUOSI}") const;
-    void tulosta(const string& formaatti = "%{PAIVA}.%{KUU}.%{VUOSI}") const;
+    string merkkijonoksi() const;
+    //string merkkijonoksi(string formaatti) const;
+    //void tulosta(const string& formaatti = "%{PAIVA}.%{KUU}.%{VUOSI}") const;
+    void tulosta() const;
 
   private:
     unsigned int paiva_;

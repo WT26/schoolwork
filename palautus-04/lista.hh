@@ -20,7 +20,7 @@ public:
 
     string kohdassa(int alkion_numero);
 
-    void tulosta() const;
+    void tulosta();
 private:
     struct Listan_alkio {
         string alkio;

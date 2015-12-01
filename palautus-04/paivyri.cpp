@@ -17,11 +17,9 @@ bool Paivyri::lisaa_tapahtuma(const string& paivamaara, const string& kuvaus) {
 
     // Luodaan uusi Paivays.
     Paivays lisattava_paivays;
-    string lisatty = lisaa_nollat(lisattava_paivays.merkkijonoksi(paivamaara));
-
+    string lisatty = lisaa_nollat(paivamaara);
     cout<<lisatty<<endl;
     lisattava_paivays = Paivays(lisatty);
-    cout<<"moi"<<endl;
     // Tutkitaanko onko kyseista paivaysta paivyrissa. Jos se on, ei
     // luoda uutta.
     paivyridata_.lisaa_alkio(lisattava_paivays, kuvaus);
@@ -31,8 +29,13 @@ bool Paivyri::lisaa_tapahtuma(const string& paivamaara, const string& kuvaus) {
 
 // Metodi tulostaa paivyridatan.
 bool Paivyri::tulosta_paivyridata(){
-
-    paivyridata_.tulosta();
+    if(paivyridata_.kirjaston_pituus() == 0) {
+        return false;
+    }
+    else {
+        paivyridata_.tulosta();
+        return true;
+    }
 /*
     else {
         map<Paivays, deque<string>>::iterator map_iter;
@@ -55,12 +58,12 @@ bool Paivyri::tulosta_paivyridata(){
             map_iter++;
         }
     }*/
-    return true;
 }
 
 
 // Tulostaa vain tietyn paivamaaran tapahtumat (komento nayta)
 bool Paivyri::tulosta_paivamaaran_tapahtumat(const string paivamaara) {
+    cout<<"yolloo"<<endl;
 
     Paivays tulostettava_paivays(paivamaara);
     paivyridata_.tulosta_tapahtumat(tulostettava_paivays);
@@ -116,8 +119,8 @@ const string Paivyri::lisaa_nollat(const string paivamaara){
     Lista ppkkvvvv = split(paivamaara,'.');
 
     bool jokin_vaihtui{false};
-    string lisattava_pp;
-    string lisattava_kk;
+    string lisattava_pp = ppkkvvvv.kohdassa(0);
+    string lisattava_kk = ppkkvvvv.kohdassa(1);
 
     // Paivaan lisataan tarvittaessa nolla.
     if(ppkkvvvv.kohdassa(0).length() < 2) {
