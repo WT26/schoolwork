@@ -3,9 +3,13 @@
 
 #include "paivays.hh"
 #include "lista.hh"
-
 #include <string>
 #include <memory>
+
+// Kirjasto-luokka. Luokka on tehty STL:lan Mapin kaltaiseksi, siina luodaan
+// structissa jokaiselle alkiolle paivays ja sita vastaava lista. Kirjasto
+// toimii linkitetyn listan tavoin shared-pointtereilla. Listaa pidetaan
+// ensimmaisesta ja viimeisesta osoitteesta.
 
 using namespace std;
 

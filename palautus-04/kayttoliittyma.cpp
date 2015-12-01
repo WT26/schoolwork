@@ -90,7 +90,7 @@ namespace {
             return;
         }
 
-        // Kutsutaan poistavat metodit.
+        // Kutsutaan poistava metodi.
         if(paiv.poista_tapahtuma(paivamaara) == false){
             cout << "Paivamaarana ei ole poistettavaa merkintaa" << endl;
         }

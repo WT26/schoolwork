@@ -1,6 +1,11 @@
 #include "lista.hh"
 #include <iostream>
 
+// Lista-luokka. Luokka on tehty STL vektorin/dequen kaltaiseksi.
+// Lista on linkitetty lista johon voi sijoittaa vain stringeja. Public-osiossa
+// on kaikki tarvittavat metodit Listan kasittelyyn ja muokkaukseen, Private-
+// osiossa tallessa tarvittavat muistiosoitteet.
+
 using namespace std;
 
 Lista::Lista():
@@ -9,6 +14,8 @@ Lista::Lista():
 {
 }
 
+
+// Metodi lisaa listan loppuun uuden alkion.
 void Lista::lisaa_alkio_loppuun(const string &lisattava_string){
     shared_ptr<Listan_alkio> uuden_osoite{
         new Listan_alkio{lisattava_string, nullptr}
@@ -30,7 +37,7 @@ void Lista::lisaa_alkio_loppuun(const string &lisattava_string){
 }
 
 
-
+// Metodi poistaa alusta yhden alkion.
 bool Lista::poista_alkio_alusta() {
     if ( onko_tyhja() ){
         return false;
@@ -52,6 +59,8 @@ bool Lista::poista_alkio_alusta() {
     }
 }
 
+
+// Metodi tarkistaa onko listassa yhtaan alkioita ja palauttaa boolean arvon.
 bool Lista::onko_tyhja() const {
     if ( ensimmaisen_osoite_ == nullptr ) {
         return true;
@@ -61,6 +70,9 @@ bool Lista::onko_tyhja() const {
     }
 }
 
+
+// Metodi tulostaa listan kaikki alkiot. Metodi tulostaa myos nelja valilyontia
+// alkioiden eteen kuten ohjeissa oltiin maaritelty.
 void Lista::tulosta() {
     shared_ptr<Listan_alkio> tulostettavan_osoite { ensimmaisen_osoite_ };
 
@@ -70,6 +82,9 @@ void Lista::tulosta() {
     }
 }
 
+
+// Metodi palauttaa tietyn alkion parametrissa saadusta kohdasta.
+// (Kuten .at STL-sailioista)
 string Lista::kohdassa(int alkion_numero) {
     shared_ptr<Listan_alkio> palautettavan_osoite { ensimmaisen_osoite_ };
     int laskija{0};
@@ -83,6 +98,9 @@ string Lista::kohdassa(int alkion_numero) {
 
 }
 
+
+// Metodi palauttaa kokonaisluvun Listan Alkioiden maarasta eli listan
+// pituuden.
 int Lista::listan_pituus(){
     if (ensimmaisen_osoite_ == nullptr){
         int pituus{0};

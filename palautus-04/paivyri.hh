@@ -5,6 +5,8 @@
 #include "kirjasto.hh"
 #include <string>
 
+// 
+
 using namespace std;
 
 class Paivyri {

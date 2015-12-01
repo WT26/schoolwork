@@ -4,7 +4,8 @@
 #include "paivyri.hh"
 #include "lista.hh"
 #include <string>
-#include <vector>
+
+// Apufunktioita, joita hyodynnetaan muissa moduuleissa.
 
 using namespace std;
 

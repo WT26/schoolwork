@@ -2,12 +2,13 @@
 #include "apufunktiot.hh"
 #include <iostream>
 #include <string>
-#include <map>
-#include <vector>
 #include <stdexcept>  // invalid_argument-poikkeustyyppi.
 
-using namespace std;
+// Paivays-luokka, annettua koodia. Paivaysta on hitusen muutettu, jottei
+// STL sailioita tarvitse kayttaa. Muutos tapahtui merkkijonoksi ja tulosta
+// metodeissa. Muuten samanlainen. Paivays on siis paivamaara.
 
+using namespace std;
 
 namespace {
 
@@ -186,73 +187,21 @@ bool operator>=(const Paivays& vasemmalla, const Paivays& oikealla) {
 }
 
 
-// merkkijonoksi-metodin avulla Paivays-tyyppinen olio saadaan
-// muutettua merkkijonoesitykseen.  Tulos perustuu formaatti-merkkijonon
-// arvoon. Paluuarvona saatava merkkijono riippuu formaatista siten,
-// että jokainen:
-//
-//    %{PAIVA}  korvattu päivänumerolla
-//    %{PAIVA2} korvattu päivänumerolla (täydennetty nollilla 2:n pituiseksi)
-//    %{KUU}    korvattu kuun numerolla
-//    %{KUU2}   korvattu kuun numerolla (täydennetty nollilla 2:n pituiseksi)
-//    %{VUOSI}  korvattu vuoden numerolla
-//
-// Jos siis esimerkiksi päivämäärä on kesäkuun 7 vuonna 2013,
-// ja formaatti-parametrin arvo on "p:%{PAIVA2},k:%{KUU},v:%{VUOSI}",
-// palauttaisi metodi merkkijonon "p:07,k:6,v:2013".
-/*
-string Paivays::merkkijonoksi(string formaatti) const {
-    map<string, string> muunnokset {
-        { "%{PAIVA}",  to_string(paiva_) },
-        { "%{KUU}",    to_string(kuu_) },
-        { "%{VUOSI}",  to_string(vuosi_) },
-    };
-
-
-    muunnokset.insert( { "%{PAIVA2}", muunnokset.at("%{PAIVA}") } );
-    if ( muunnokset.at("%{PAIVA2}").length() < 2 ) {
-        muunnokset.at("%{PAIVA2}").insert(0, "0");
-    }
-
-    muunnokset.insert( { "%{KUU2}", muunnokset.at("%{KUU}") } );
-    if ( muunnokset.at("%{KUU2}").length() < 2 ) {
-        muunnokset.at("%{KUU2}").insert(0, "0");
-    }
-
-
-    for ( auto muunnos : muunnokset ) {
-
-        // Viitteitä voi käyttää ohjelmakoodin selkeyttämiseen.
-        // Seuraavassa annetaan väliaikainen lisänimi
-        // muunnos.first:ille ja muunnos.second:ille, jotta niiden
-        // käyttötarkoitus on helpompi ymmärtää.
-
-        const string& korvattava{ muunnos.first };
-        const string& korvaaja{ muunnos.second };
-
-        while ( true ) {
-            string::size_type korvauskohta{ formaatti.find(korvattava) };
-            if ( korvauskohta == string::npos ) {
-                break;
-            }
-
-            formaatti.replace(korvauskohta, korvattava.length(), korvaaja);
-        }
-    }
-
-    return formaatti;
-
-}*/
+// Metodi kutsuttaessa antaa Paivayksen paivamaaran stringina.
 string Paivays::merkkijonoksi() const {
-    // Lista ppkkvvvv sisaltaa paivamaaran tiedot: paiva on listan ensimmainen
-    // stringi, kuukausi toinen ja vuosi kolmas.
+
+
+    // string paivamaara on palautettava paivamaara ilman tarvetta
+    // lisata nollia.
     string paivamaara = to_string(paiva_) + "."
             + to_string(kuu_) + "." + to_string(vuosi_);
-    Lista ppkkvvvv;
-    ppkkvvvv.lisaa_alkio_loppuun(to_string(paiva_));
-    ppkkvvvv.lisaa_alkio_loppuun(to_string(kuu_));
-    ppkkvvvv.lisaa_alkio_loppuun(to_string(vuosi_));
 
+    // Lista ppkkvvvv sisaltaa paivamaaran tiedot: paiva on listan ensimmainen
+    // stringi, kuukausi toinen ja vuosi kolmas.
+    Lista ppkkvvvv;
+    ppkkvvvv.lisaa_alkio_loppuun( to_string(paiva_) );
+    ppkkvvvv.lisaa_alkio_loppuun( to_string(kuu_) );
+    ppkkvvvv.lisaa_alkio_loppuun( to_string(vuosi_) );
 
     bool jokin_vaihtui{false};
     string lisattava_pp = ppkkvvvv.kohdassa(0);
@@ -270,6 +219,7 @@ string Paivays::merkkijonoksi() const {
         jokin_vaihtui = true;
     }
 
+    // Palautetaan paivamaarat joko sellaisenaan, tai nollat lisattyina.
     if( jokin_vaihtui == true) {
         const string nollat_lisatty = lisattava_pp + "."
                 + lisattava_kk + "." + ppkkvvvv.kohdassa(2);
@@ -278,55 +228,10 @@ string Paivays::merkkijonoksi() const {
     else {
         return paivamaara;
     }
-
-    /*
-    map<string, string> muunnokset {
-        { "%{PAIVA}",  to_string(paiva_) },
-        { "%{KUU}",    to_string(kuu_) },
-        { "%{VUOSI}",  to_string(vuosi_) },
-    };
-
-
-    muunnokset.insert( { "%{PAIVA2}", muunnokset.at("%{PAIVA}") } );
-    if ( muunnokset.at("%{PAIVA2}").length() < 2 ) {
-        muunnokset.at("%{PAIVA2}").insert(0, "0");
-    }
-
-    muunnokset.insert( { "%{KUU2}", muunnokset.at("%{KUU}") } );
-    if ( muunnokset.at("%{KUU2}").length() < 2 ) {
-        muunnokset.at("%{KUU2}").insert(0, "0");
-    }
-
-
-    for ( auto muunnos : muunnokset ) {
-
-        // Viitteitä voi käyttää ohjelmakoodin selkeyttämiseen.
-        // Seuraavassa annetaan väliaikainen lisänimi
-        // muunnos.first:ille ja muunnos.second:ille, jotta niiden
-        // käyttötarkoitus on helpompi ymmärtää.
-
-        const string& korvattava{ muunnos.first };
-        const string& korvaaja{ muunnos.second };
-
-        while ( true ) {
-            string::size_type korvauskohta{ formaatti.find(korvattava) };
-            if ( korvauskohta == string::npos ) {
-                break;
-            }
-
-            formaatti.replace(korvauskohta, korvattava.length(), korvaaja);
-        }
-    }
-
-    return formaatti;
-    */
 }
 
-/*
-void Paivays::tulosta(const string& formaatti) const {
-    cout << merkkijonoksi(formaatti) << endl;
-}
-*/
+
+// Metodi tulostaa naytolle Paivayksen stringina.
 void Paivays::tulosta() const {
     cout << merkkijonoksi() << endl;
 }
