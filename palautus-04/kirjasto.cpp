@@ -32,6 +32,7 @@ void Kirjasto::lisaa_alkio(Paivays lisattavan_paivays,const string &tapahtuma){
 
     //listan alkuun
     else if ( lisattavan_paivays < ensimmaisen_osoite_->paivays ) {
+
         Lista uusi_lista;
         uusi_lista.lisaa_alkio_loppuun(tapahtuma);
 
@@ -43,11 +44,13 @@ void Kirjasto::lisaa_alkio(Paivays lisattavan_paivays,const string &tapahtuma){
 
     //sama paivays kuin listan alussa
     else if ( lisattavan_paivays == ensimmaisen_osoite_->paivays ){
+
         ensimmaisen_osoite_->lista.lisaa_alkio_loppuun(tapahtuma);
     }
 
     //listan loppuun
     else if ( lisattavan_paivays > viimeisen_osoite_->paivays) {
+
         Lista uusi_lista;
         uusi_lista.lisaa_alkio_loppuun(tapahtuma);
 
@@ -59,10 +62,12 @@ void Kirjasto::lisaa_alkio(Paivays lisattavan_paivays,const string &tapahtuma){
     }
     //sama paivays kuin listan lopussa
     else if ( lisattavan_paivays == viimeisen_osoite_->paivays){
+
         viimeisen_osoite_->lista.lisaa_alkio_loppuun(tapahtuma);
     }
 
     else {
+
         shared_ptr<Kirjaston_alkio> edeltajan_osoite{ensimmaisen_osoite_};
         while( edeltajan_osoite->seuraavan_osoite->
                paivays <= lisattavan_paivays) {
@@ -74,9 +79,14 @@ void Kirjasto::lisaa_alkio(Paivays lisattavan_paivays,const string &tapahtuma){
                     ->lista.lisaa_alkio_loppuun(tapahtuma);
         }
         else{
+            Lista uusi_lista;
+            uusi_lista.lisaa_alkio_loppuun(tapahtuma);
+
+            uuden_osoite->lista = uusi_lista;
             uuden_osoite->seuraavan_osoite
                     = edeltajan_osoite->seuraavan_osoite;
             edeltajan_osoite->seuraavan_osoite = uuden_osoite;
+
         }
     }
 }
@@ -101,8 +111,12 @@ bool Kirjasto::poista_tapahtuma(Paivays paivays) {
             return true;
         }
         else {
-            edeltavan_osoite->seuraavan_osoite
-                    = poistettavan_osoite->seuraavan_osoite;
+            if(poistettavan_osoite == ensimmaisen_osoite_){
+                ensimmaisen_osoite_ = ensimmaisen_osoite_->seuraavan_osoite;
+                return false;
+            }
+            poistettavan_osoite = poistettavan_osoite->seuraavan_osoite;
+            edeltavan_osoite->seuraavan_osoite = poistettavan_osoite;
             return false;
         }
     }

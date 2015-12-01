@@ -43,7 +43,13 @@ bool Lista::poista_alkio_alusta() {
     else {
         ensimmaisen_osoite_ = ensimmaisen_osoite_->seuraavan_osoite;
     }
-    return true;
+    if ( onko_tyhja() ){
+        return false;
+    }
+    else{
+        return true;
+
+    }
 }
 
 bool Lista::onko_tyhja() const {
@@ -59,7 +65,7 @@ void Lista::tulosta() {
     shared_ptr<Listan_alkio> tulostettavan_osoite { ensimmaisen_osoite_ };
 
     while (tulostettavan_osoite != nullptr) {
-        cout<<tulostettavan_osoite->alkio<<endl;
+        cout<<"     "<<tulostettavan_osoite->alkio<<endl;
         tulostettavan_osoite = tulostettavan_osoite->seuraavan_osoite;
     }
 }

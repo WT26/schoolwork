@@ -18,7 +18,6 @@ bool Paivyri::lisaa_tapahtuma(const string& paivamaara, const string& kuvaus) {
     // Luodaan uusi Paivays.
     Paivays lisattava_paivays;
     string lisatty = lisaa_nollat(paivamaara);
-    cout<<lisatty<<endl;
     lisattava_paivays = Paivays(lisatty);
     // Tutkitaanko onko kyseista paivaysta paivyrissa. Jos se on, ei
     // luoda uutta.
