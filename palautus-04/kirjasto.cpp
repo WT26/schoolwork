@@ -120,6 +120,19 @@ bool Kirjasto::onko_tyhja() const {
     }
 }
 
+bool Kirjasto::onko_paivaysta(Paivays paivays){
+    shared_ptr<Kirjaston_alkio>
+            tutkittavan_osoite { ensimmaisen_osoite_ };
+    while(tutkittavan_osoite != nullptr){
+
+        if(tutkittavan_osoite->paivays == paivays){
+            return true;
+        }
+        tutkittavan_osoite = tutkittavan_osoite->seuraavan_osoite;
+    }
+    return false;
+}
+
 bool Kirjasto::tulosta() {
     if(ensimmaisen_osoite_ == nullptr){
         return false;
@@ -141,7 +154,6 @@ bool Kirjasto::tulosta_tapahtumat(Paivays paivays) const {
         return false;
     }
     else {
-        cout<<"debug"<<endl;
         shared_ptr<Kirjaston_alkio> tulostettavan_osoite { ensimmaisen_osoite_ };
         while ( tulostettavan_osoite->paivays != paivays ){
             tulostettavan_osoite = tulostettavan_osoite->seuraavan_osoite;

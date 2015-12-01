@@ -63,13 +63,16 @@ bool Paivyri::tulosta_paivyridata(){
 
 // Tulostaa vain tietyn paivamaaran tapahtumat (komento nayta)
 bool Paivyri::tulosta_paivamaaran_tapahtumat(const string paivamaara) {
-    cout<<"yolloo"<<endl;
 
     Paivays tulostettava_paivays(paivamaara);
-    paivyridata_.tulosta_tapahtumat(tulostettava_paivays);
 
-    return true;
-
+    if(paivyridata_.onko_paivaysta(tulostettava_paivays) == true){
+        paivyridata_.tulosta_tapahtumat(tulostettava_paivays);
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 // Poistaa tietylta paivamaaralta ensimmaisen tapahtuman.

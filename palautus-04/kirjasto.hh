@@ -18,6 +18,7 @@ public:
 
     bool poista_tapahtuma(Paivays paivays);
     bool onko_tyhja() const;
+    bool onko_paivaysta(Paivays paivays);
 
     bool tulosta();
     bool tulosta_tapahtumat(Paivays paivays) const;
