@@ -91,8 +91,9 @@ namespace {
         }
 
         // Kutsutaan poistavat metodit.
-        paiv.poista_tapahtuma(paivamaara);
-
+        if(paiv.poista_tapahtuma(paivamaara) == false){
+            cout << "Paivamaarana ei ole poistettavaa merkintaa" << endl;
+        }
     }
 
 

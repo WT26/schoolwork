@@ -167,14 +167,17 @@ bool Kirjasto::tulosta_tapahtumat(Paivays paivays) const {
 void Kirjasto::tallenna(const string paivyritiedoston_nimi) const {
     ofstream tiedosto_olio{paivyritiedoston_nimi};
     shared_ptr<Kirjaston_alkio> tallennettavan_osoite { ensimmaisen_osoite_ };
-
     while (tallennettavan_osoite != nullptr){
         int laskija{0};
-        tiedosto_olio<<tallennettavan_osoite->paivays.merkkijonoksi();
-        while(laskija = tallennettavan_osoite->lista.listan_pituus()){
+        while(laskija < tallennettavan_osoite->lista.listan_pituus()){
+            tiedosto_olio<<tallennettavan_osoite->paivays.merkkijonoksi();
+            tiedosto_olio<<":";
             tiedosto_olio<<tallennettavan_osoite->lista.kohdassa(laskija);
-
+            tiedosto_olio<<"\n";
+            laskija++;
         }
+        tallennettavan_osoite = tallennettavan_osoite->seuraavan_osoite;
+
     }
 }
 

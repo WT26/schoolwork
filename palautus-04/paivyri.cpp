@@ -77,11 +77,16 @@ bool Paivyri::tulosta_paivamaaran_tapahtumat(const string paivamaara) {
 
 // Poistaa tietylta paivamaaralta ensimmaisen tapahtuman.
 bool Paivyri::poista_tapahtuma(const string paivamaara) {
-
     Paivays poistettava_paivamaara(paivamaara);
-    paivyridata_.poista_tapahtuma(poistettava_paivamaara);
 
-    return true;
+    if(paivyridata_.onko_paivaysta(poistettava_paivamaara) == true){
+        paivyridata_.poista_tapahtuma(poistettava_paivamaara);
+        return true;
+    }
+    else{
+        return false;
+    }
+
 }
 
 // Tallettaa Paivyrin tiedot .txt tiedostoon.
