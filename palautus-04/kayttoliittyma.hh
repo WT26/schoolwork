@@ -3,6 +3,8 @@
 
 #include "paivyri.hh"
 
+// Kayttoliittyma, jota ohjataan komennoilla.
+
 using namespace std;
 
 void kayttoliittyma(Paivyri& paivyri);

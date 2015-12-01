@@ -4,6 +4,11 @@
 #include <string>
 #include <memory>
 
+// Lista-luokka. Luokka on tehty STL vektorin/dequen kaltaiseksi.
+// Lista on linkitetty lista johon voi sijoittaa vain stringeja. Public-osiossa
+// on kaikki tarvittavat metodit Listan kasittelyyn ja muokkaukseen, Private-
+// osiossa tallessa tarvittavat muistiosoitteet.
+
 using namespace std;
 
 class Lista

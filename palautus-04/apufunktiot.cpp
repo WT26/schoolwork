@@ -5,6 +5,7 @@
 #include <string>
 #include "lista.hh"
 
+// Apufunktioita, joita hyodynnetaan muissa moduuleissa.
 
 using namespace std;
 
@@ -23,7 +24,8 @@ bool string_unsignediksi(const string& mjono, unsigned int& tulos) {
 }
 
 
-// Vanha tuttu split.
+// Split funktio, nyt toteutettuna kayttaen Lista-luokkaa vectorin sijaan.
+// Muuten toimii tismalleen samanlailla.
 Lista split(const string& merkkijono, char erotinmerkki) {
     Lista tulos;
 

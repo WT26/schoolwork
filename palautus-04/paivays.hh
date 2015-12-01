@@ -3,6 +3,10 @@
 
 #include <string>
 
+// Paivays-luokka, annettua koodia. Paivaysta on hitusen muutettu, jottei
+// STL sailioita tarvitse kayttaa. Muutos tapahtui merkkijonoksi ja tulosta
+// metodeissa. Muuten samanlainen.
+
 using namespace std;
 
 class Paivays {
@@ -19,8 +23,6 @@ class Paivays {
     bool operator<(const Paivays& oikealla) const;
 
     string merkkijonoksi() const;
-    //string merkkijonoksi(string formaatti) const;
-    //void tulosta(const string& formaatti = "%{PAIVA}.%{KUU}.%{VUOSI}") const;
     void tulosta() const;
 
   private:
