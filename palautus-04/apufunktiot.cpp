@@ -53,7 +53,8 @@ Lista split(const string& merkkijono, char erotinmerkki) {
 
 // Luetaan parametrina annetun tiedoston nimen ja muodostaa tiedoston tietojen
 // perusteella uuden Paivyrin tai lisaa vanhaan Paivyriin lisaa tietoja.
-bool lue_paivyritiedosto(const string& paivyritiedoston_nimi, Paivyri& paivyri) {
+bool lue_paivyritiedosto(const string& paivyritiedoston_nimi,
+                         Paivyri& paivyri) {
     ifstream tiedosto_olio{paivyritiedoston_nimi};
     if ( not tiedosto_olio ) {
         cout << "Virhe: paivyritiedostoa ei saanut avattua." << endl;

@@ -9,7 +9,8 @@
 
 using namespace std;
 
-bool lue_paivyritiedosto(const string& paivyritiedoston_nimi, Paivyri& paivyri);
+bool lue_paivyritiedosto(const string& paivyritiedoston_nimi,
+                         Paivyri& paivyri);
 
 Lista split(const string& merkkijono, char erotinmerkki);
 

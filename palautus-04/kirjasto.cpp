@@ -195,7 +195,8 @@ bool Kirjasto::tulosta_tapahtumat(Paivays paivays) const {
         return false;
     }
     else {
-        shared_ptr<Kirjaston_alkio> tulostettavan_osoite { ensimmaisen_osoite_ };
+        shared_ptr<Kirjaston_alkio> tulostettavan_osoite
+            { ensimmaisen_osoite_ };
         while ( tulostettavan_osoite->paivays != paivays ){
             tulostettavan_osoite = tulostettavan_osoite->seuraavan_osoite;
         }
@@ -247,4 +248,3 @@ int Kirjasto::kirjaston_pituus() {
         return pituus;
     }
 }
-

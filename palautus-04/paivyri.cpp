@@ -17,6 +17,7 @@ using namespace std;
 Paivyri::Paivyri() {
 }
 
+
 // Lisataan uusi tapahtuma Paivyriin.
 bool Paivyri::lisaa_tapahtuma(const string& paivamaara, const string& kuvaus) {
 
@@ -58,6 +59,7 @@ bool Paivyri::tulosta_paivamaaran_tapahtumat(const string paivamaara) {
     }
 }
 
+
 // Poistaa tietylta paivamaaralta ensimmaisen tapahtuman.
 bool Paivyri::poista_tapahtuma(const string paivamaara) {
     Paivays poistettava_paivamaara(paivamaara);
@@ -71,6 +73,7 @@ bool Paivyri::poista_tapahtuma(const string paivamaara) {
     }
 
 }
+
 
 // Tallettaa Paivyrin tiedot .txt tiedostoon.
 bool Paivyri::talleta_tiedosto(const string paivyritiedoston_nimi){
@@ -112,5 +115,3 @@ const string Paivyri::lisaa_nollat(const string paivamaara){
         return paivamaara;
     }
 }
-
-

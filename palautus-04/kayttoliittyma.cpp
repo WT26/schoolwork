@@ -132,6 +132,7 @@ namespace {
     }
 }
 
+
 // Kayttoliittyma jolla komennoin ohjataan Paivyrin toimintaa.
 // Mahdollisia komentoja ovat tulosta, nayta, lisaa, poista, lue ja
 // talleta.
