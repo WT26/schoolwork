@@ -46,6 +46,7 @@ bool Paivyri::tulosta_paivyridata(){
 // Tulostaa vain tietyn paivamaaran tapahtumat (komento "nayta").
 bool Paivyri::tulosta_paivamaaran_tapahtumat(const string paivamaara) {
 
+
     Paivays tulostettava_paivays(paivamaara);
 
     if( paivyridata_.onko_paivaysta(tulostettava_paivays) == true ){

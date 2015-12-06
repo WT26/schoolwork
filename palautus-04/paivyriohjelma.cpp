@@ -2,7 +2,6 @@
 // Harjoitustehtava 4
 // 246479 joel.alanko@student.tut.fi (15h)
 
-
 #include "paivyri.hh"
 #include "kayttoliittyma.hh"
 #include "apufunktiot.hh"

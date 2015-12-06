@@ -62,6 +62,7 @@ Paivays::Paivays(unsigned int paiva, unsigned int kuu, unsigned int vuosi) {
 
 
 Paivays::Paivays(const string& paivays) {
+    cout<<"moppi"<<endl;
     if ( not aseta(paivays) ) {
         throw invalid_argument("virheellinen paivamaara");
     }

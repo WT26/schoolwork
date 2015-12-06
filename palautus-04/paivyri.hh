@@ -5,7 +5,10 @@
 #include "kirjasto.hh"
 #include <string>
 
-// 
+// Paivyri luokka pitaa kirjaa paivyridatasta. Paivyri luokka myos tekee
+// kayttajan antamat komennot datalle. Paivyridata koostuu Kirjastosta,
+// jossa on Paivaysluokan tapaiset paivamaarat, ja niita vastaavat
+// tapahtuma Listat.
 
 using namespace std;
 
