@@ -1,11 +1,10 @@
 #ifndef KAYTTOLIITTYMA_HH
 #define KAYTTOLIITTYMA_HH
 
+#include "paivyri.hh"
 
-class kayttoliittyma
-{
-public:
-    kayttoliittyma();
-};
+using namespace std;
 
-#endif // KAYTTOLIITTYMA_HH
+void kayttoliittyma(Paivyri& paivyri);
+
+#endif

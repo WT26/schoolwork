@@ -1,11 +1,12 @@
 #ifndef KAYTTOLIITTYMA_HH
 #define KAYTTOLIITTYMA_HH
 
+#include "paivyri.hh"
 
-class kayttoliittyma
-{
-public:
-    kayttoliittyma();
-};
+// Kayttoliittyma, jota ohjataan komennoilla.
+
+using namespace std;
+
+void kayttoliittyma(Paivyri& paivyri);
 
 #endif // KAYTTOLIITTYMA_HH
