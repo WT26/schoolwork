@@ -11,8 +11,25 @@ void lue_muunnoskaaviot(){
     kaaviot.open("saannot.txt");
 
     if (kaaviot.is_open()){
+
+        // Kaydaan lapi jokainen tiedoston rivi erikseen.
         while (getline (kaaviot, rivi)){
-            cout<<rivi<<endl;
+
+            // Kaydaan lapi jokainen rivilla oleva kirjain erikseen
+            // ja tarkastetaan onko ne sopivia.
+            for(char& c : rivi) {
+                if (tarkista_rivin_vaihto(c) == false){
+                    if (onko_valilyonti(c) == true){
+                        break;
+                    }
+                    else {
+                        cout << rivi << endl;
+                    }
+                }
+                else {
+                    break;
+                }
+            }
         }
         kaaviot.close();
     }
@@ -21,3 +38,22 @@ void lue_muunnoskaaviot(){
     }
 }
 
+
+bool tarkista_rivin_vaihto(char c){
+    if (c == '#' || c == '\n'){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+
+bool onko_valilyonti(char c){
+    if (c == ' '){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
