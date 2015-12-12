@@ -1,4 +1,5 @@
 #include "apufunktiot.hh"
+#include "yksikko.hh"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -18,7 +19,6 @@ void lue_muunnoskaaviot(){
             string lahtoyksikko;
             double lisattava{0};
 
-
             if (tarkista_rivi(rivi)){
                 string valilyonniton = poista_valilyonnit(rivi);
 
@@ -37,10 +37,28 @@ void lue_muunnoskaaviot(){
                 // 1.0    ja    K-273.15
                 vector<string> rivin_loppuosa = split(kaavio[1], '*');
                 double suhde = stod(rivin_loppuosa[0]);
-
+                lahtoyksikko = rivin_loppuosa[1];
                 if (onko_lisattavaa(rivin_loppuosa[1])){
+                    for(char& c : rivin_loppuosa[1]){
+                        if (c == '+' || c == '-'){
+                            vector<string> lahtoyksikko_ja_lisattava =
+                                    split(rivin_loppuosa[1], c);
 
+                            lahtoyksikko = lahtoyksikko_ja_lisattava[0];
+                            if(c == '-'){
+                                lisattava =
+                                        -stod(lahtoyksikko_ja_lisattava[1]);
+                            }
+                            else{
+                                lisattava = stod(lahtoyksikko_ja_lisattava[1]);
+                            }
+                        }
+                    }
                 }
+                cout<<"Kohdeyksikko: "<<kohdeyksikko<<"  Lahtoyksikko: "<<
+                      lahtoyksikko<<"  suhde: "<<suhde<<"  lisattavaa: "<<
+                      lisattava<<endl;
+                lisaa_kaava(kohdeyksikko, lahtoyksikko, suhde, lisattava);
             }
         }
         kaaviot.close();
@@ -137,3 +155,5 @@ bool onko_lisattavaa(string rivi){
         return false;
     }
 }
+
+

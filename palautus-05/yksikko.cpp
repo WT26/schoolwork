@@ -1,5 +1,6 @@
 #include "yksikko.hh"
 
-Yksikko::Yksikko()
+Yksikko::Yksikko(string nimi)
 {
+    nimi_ = nimi;
 }
