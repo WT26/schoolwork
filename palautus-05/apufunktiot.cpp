@@ -16,20 +16,32 @@ void lue_muunnoskaaviot(){
         while (getline (kaaviot, rivi)){
             string kohdeyksikko;
             string lahtoyksikko;
-            double suhde;
             double lisattava{0};
 
 
             if (tarkista_rivi(rivi)){
                 string valilyonniton = poista_valilyonnit(rivi);
 
+                // Splitataan kaavio kohdasta '='.
+                // Esim C<=1.0*K-273.15  muuttuu
+                // C<    ja    1.0*K-273.15
                 vector<string> kaavio = split(valilyonniton, '=');
 
+                kohdeyksikko = kaavio[0];
+                // Poistetaan kohdeyksikon lopusta merkki '<'.
+                kohdeyksikko.pop_back();
 
+
+                // Nyt splitataan kaavion jalki osa kohdasta '*'
+                // Esim 1.0*K-273.15   muuttuu
+                // 1.0    ja    K-273.15
+                vector<string> rivin_loppuosa = split(kaavio[1], '*');
+                double suhde = stod(rivin_loppuosa[0]);
+
+                if (onko_lisattavaa(rivin_loppuosa[1])){
+
+                }
             }
-            // Kaydaan lapi jokainen rivilla oleva kirjain erikseen
-            // ja tarkastetaan onko ne sopivia.
-
         }
         kaaviot.close();
     }
@@ -105,7 +117,7 @@ bool tarkista_rivi(string rivi){
 }
 
 
-string poista_tietty_merkki(string rivi, char poistettava_merkki){
+string poista_valilyonnit(string rivi){
     string valilyonniton_rivi;
 
     for(char& c : rivi) {
@@ -116,3 +128,12 @@ string poista_tietty_merkki(string rivi, char poistettava_merkki){
     return valilyonniton_rivi;
 }
 
+
+bool onko_lisattavaa(string rivi){
+    if (rivi.find('-') || rivi.find('+')){
+        return true;
+    }
+    else {
+        return false;
+    }
+}

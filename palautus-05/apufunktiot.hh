@@ -11,6 +11,7 @@ void lue_muunnoskaaviot();
 bool tarkista_rivin_vaihto(char c);
 bool onko_valilyonti(char c);
 bool tarkista_rivi(string rivi);
+bool onko_lisattavaa(string rivi);
 
 string poista_valilyonnit(string rivi);
 
