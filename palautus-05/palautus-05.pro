@@ -13,11 +13,16 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        paaikkuna.cpp
+        paaikkuna.cpp \
+    apufunktiot.cpp \
+    yksikko.cpp
 
-HEADERS  += paaikkuna.hh
+HEADERS  += paaikkuna.hh \
+    apufunktiot.hh \
+    yksikko.hh
 
 FORMS    += paaikkuna.ui
 
 OTHER_FILES += \
     saannot.txt
+CONFIG += C++11
