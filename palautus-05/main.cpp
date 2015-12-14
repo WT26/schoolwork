@@ -1,5 +1,7 @@
 #include "paaikkuna.hh"
 #include "apufunktiot.hh"
+#include "yksikko.hh"
+
 #include <QApplication>
 #include <iostream>
 
@@ -7,7 +9,10 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    lue_muunnoskaaviot();
+    vector<Yksikko> muunnoskaaviot = lue_muunnoskaaviot();
+
+
+    muunnoskaaviot.at(F)
 
     QApplication a(argc, argv);
     Paaikkuna w;

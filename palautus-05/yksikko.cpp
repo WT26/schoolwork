@@ -22,3 +22,8 @@ void Yksikko::lisaa_kohdeyksikko(string lahtoyksikko, double suhde,
                                  double lisattava, bool suunta){
     kohdeyksikot_.lisaa_alkio(lahtoyksikko, suhde, lisattava, suunta);
 }
+
+
+void Yksikko::tulosta_kohdeyksikot(){
+
+}

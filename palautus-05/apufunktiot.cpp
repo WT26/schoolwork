@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void lue_muunnoskaaviot(){
+vector<Yksikko> lue_muunnoskaaviot(){
     string rivi;
     ifstream kaaviot;
     vector<Yksikko> kaikki_yksikot;
@@ -188,13 +188,16 @@ vector<Yksikko> lisaa_kaava(string kohdeyksikko, string lahtoyksikko,
         uudet_kohdeyksikot.lisaa_alkio(lahtoyksikko, suhde, lisattava,
                                        true);
         Yksikko uusi_kohdeyksikko(kohdeyksikko, uudet_kohdeyksikot);
+
+        // Lisataan luotu Yksikko vectoriin.
+        kaikki_yksikot.push_back(uusi_kohdeyksikko);
     }
     else{
         // Tassa paivitetaan jo olemassaolevan yksikon "kohdeyksikot"
         // listaa.
         for(auto indeksi : kaikki_yksikot){
             if(indeksi.vertaa_yksikon_nimea(kohdeyksikko)){
-                kaikki_yksikot.at(indeksi).lisaa_kohdeyksikko(lahtoyksikko,
+                indeksi.lisaa_kohdeyksikko(lahtoyksikko,
                                                 suhde, lisattava, true);
                 break;
             }
@@ -208,16 +211,20 @@ vector<Yksikko> lisaa_kaava(string kohdeyksikko, string lahtoyksikko,
         uudet_kohdeyksikot02.lisaa_alkio(kohdeyksikko, suhde, lisattava,
                                          false);
         Yksikko uusi_lahtoyksikko(lahtoyksikko, uudet_kohdeyksikot02);
+
+        // Lisataan luotu Yksikko vectoriin.
+        kaikki_yksikot.push_back(uusi_lahtoyksikko);
     }
     else{
         // Tassa paivitetaan jo olemassaolevan lahtoyksikon "kohdeyksikot"
         // listaa.
         for(auto indeksi : kaikki_yksikot){
             if(indeksi.vertaa_yksikon_nimea(lahtoyksikko)){
-                kaikki_yksikot.at(indeksi).lisaa_kohdeyksikko(lahtoyksikko,
-                                                suhde, lisattava, true);
+                indeksi.lisaa_kohdeyksikko(lahtoyksikko, suhde, lisattava,
+                                           true);
                 break;
             }
         }
     }
+    return kaikki_yksikot;
 }
