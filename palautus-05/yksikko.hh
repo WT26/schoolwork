@@ -1,21 +1,21 @@
 #ifndef YKSIKKO_HH
 #define YKSIKKO_HH
 
+#include <kohdeyksikot.hh>
 #include <string>
-#include <memory>
 
 using namespace std;
 
 class Yksikko
 {
 public:
-    Yksikko();
-    ~Yksikko();
+    Yksikko(string kohdeyksikon_nimi, Kohdeyksikot kohdeyksikko);
 
+    bool vertaa_yksikon_nimea(string verrattava);
     // void tulosta();
 private:
     string nimi_;
-    //Mahdolliset_muutokset mahdolliset_muutokset_;
+    Kohdeyksikot kohdeyksikot_;
 };
 
 #endif // YKSIKKO_HH

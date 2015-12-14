@@ -3,6 +3,7 @@
 # Project created by QtCreator 2015-12-12T12:03:58
 #
 #-------------------------------------------------
+CONFIG += C++11
 
 QT       += core gui
 
@@ -15,14 +16,15 @@ TEMPLATE = app
 SOURCES += main.cpp\
         paaikkuna.cpp \
     apufunktiot.cpp \
-    yksikko.cpp
+    yksikko.cpp \
+    kohdeyksikot.cpp
 
 HEADERS  += paaikkuna.hh \
     apufunktiot.hh \
-    yksikko.hh
+    yksikko.hh \
+    kohdeyksikot.hh
 
 FORMS    += paaikkuna.ui
 
 OTHER_FILES += \
     saannot.txt
-CONFIG += C++11

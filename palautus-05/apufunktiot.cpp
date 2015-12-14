@@ -1,4 +1,5 @@
 #include "apufunktiot.hh"
+#include "kohdeyksikot.hh"
 #include "yksikko.hh"
 #include <iostream>
 #include <fstream>
@@ -9,6 +10,7 @@ using namespace std;
 void lue_muunnoskaaviot(){
     string rivi;
     ifstream kaaviot;
+    vector<Yksikko> kaikki_yksikot;
     kaaviot.open("saannot.txt");
 
     if (kaaviot.is_open()){
@@ -58,7 +60,8 @@ void lue_muunnoskaaviot(){
                 cout<<"Kohdeyksikko: "<<kohdeyksikko<<"  Lahtoyksikko: "<<
                       lahtoyksikko<<"  suhde: "<<suhde<<"  lisattavaa: "<<
                       lisattava<<endl;
-                lisaa_kaava(kohdeyksikko, lahtoyksikko, suhde, lisattava);
+                kaikki_yksikot = lisaa_kaava(kohdeyksikko, lahtoyksikko, suhde,
+                                             lisattava, kaikki_yksikot);
             }
         }
         kaaviot.close();
@@ -157,3 +160,27 @@ bool onko_lisattavaa(string rivi){
 }
 
 
+vector<Yksikko> lisaa_kaava(string kohdeyksikko, string lahtoyksikko, double suhde,
+                 double lisattava, vector<Yksikko> kaikki_yksikot){
+
+    for(auto i : kaikki_yksikot){
+        i.vertaa_yksikon_nimea(kohdeyksikko);
+    }
+    // Luodaan kaksi "Kohdeyksikot" listaa. Toinen saadulle Kohdeyksikolle,
+    // ja toinen Lahtoyksikolle.
+    Kohdeyksikot uudet_kohdeyksikot;
+    uudet_kohdeyksikot.lisaa_alkio(lahtoyksikko, suhde, lisattava,
+                                   true);
+    Yksikko uusi_kohdeyksikko(kohdeyksikko, uudet_kohdeyksikot);
+
+
+    // Tassa luodaan toinen lista.
+    Kohdeyksikot uudet_kohdeyksikot02;
+    uudet_kohdeyksikot02.lisaa_alkio(kohdeyksikko, suhde, lisattava,
+                                     false);
+    Yksikko uusi_lahtoyksikko(lahtoyksikko, uudet_kohdeyksikot02);
+
+    // Lisataan listat vectoriin, jossa on kaikki yksikot.
+    kaikki_yksikot.push_back(uusi_kohdeyksikko);
+    kaikki_yksikot.push_back(uusi_lahtoyksikko);
+}
