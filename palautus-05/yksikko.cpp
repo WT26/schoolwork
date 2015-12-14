@@ -16,3 +16,9 @@ bool Yksikko::vertaa_yksikon_nimea(string verrattava){
         return false;
     }
 }
+
+
+void Yksikko::lisaa_kohdeyksikko(string lahtoyksikko, double suhde,
+                                 double lisattava, bool suunta){
+    kohdeyksikot_.lisaa_alkio(lahtoyksikko, suhde, lisattava, suunta);
+}

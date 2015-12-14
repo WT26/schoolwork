@@ -12,6 +12,8 @@ public:
     Yksikko(string kohdeyksikon_nimi, Kohdeyksikot kohdeyksikko);
 
     bool vertaa_yksikon_nimea(string verrattava);
+    void lisaa_kohdeyksikko(string lahtoyksikko, double suhde,
+                            double lisattava, bool suunta);
     // void tulosta();
 private:
     string nimi_;
