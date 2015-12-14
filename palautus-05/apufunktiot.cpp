@@ -177,7 +177,7 @@ vector<Yksikko> lisaa_kaava(string kohdeyksikko, string lahtoyksikko,
 
     for(auto indeksi : kaikki_yksikot){
         if(indeksi.vertaa_yksikon_nimea(lahtoyksikko)){
-            kohdeyksikko_olemassa = true;
+            lahtoyksikko_olemassa = true;
         }
     }
 
@@ -205,7 +205,7 @@ vector<Yksikko> lisaa_kaava(string kohdeyksikko, string lahtoyksikko,
     }
 
 
-    if(lahtoyksikko_olemassa){
+    if(!lahtoyksikko_olemassa){
         // Tassa luodaan uusi lista uudelle yksikolle.
         Kohdeyksikot uudet_kohdeyksikot02;
         uudet_kohdeyksikot02.lisaa_alkio(kohdeyksikko, suhde, lisattava,
@@ -220,11 +220,12 @@ vector<Yksikko> lisaa_kaava(string kohdeyksikko, string lahtoyksikko,
         // listaa.
         for(auto indeksi : kaikki_yksikot){
             if(indeksi.vertaa_yksikon_nimea(lahtoyksikko)){
-                indeksi.lisaa_kohdeyksikko(lahtoyksikko, suhde, lisattava,
+                indeksi.lisaa_kohdeyksikko(kohdeyksikko, suhde, lisattava,
                                            true);
                 break;
             }
         }
     }
+    kaikki_yksikot.at(0).tulosta_kohdeyksikot();
     return kaikki_yksikot;
 }

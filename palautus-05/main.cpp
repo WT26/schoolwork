@@ -11,8 +11,7 @@ int main(int argc, char *argv[])
 {
     vector<Yksikko> muunnoskaaviot = lue_muunnoskaaviot();
 
-
-    muunnoskaaviot.at(F)
+    muunnoskaaviot.at(1).tulosta_kohdeyksikot();
 
     QApplication a(argc, argv);
     Paaikkuna w;

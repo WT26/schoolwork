@@ -18,6 +18,8 @@ public:
 
     int listan_pituus();
 
+    bool tulosta();
+
 private:
     struct Yksikko_alkio {
         string yksikko;

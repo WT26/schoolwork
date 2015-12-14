@@ -1,5 +1,6 @@
 #include "yksikko.hh"
 #include "kohdeyksikot.hh"
+#include <iostream>
 
 Yksikko::Yksikko(string kohdeyksikon_nimi, Kohdeyksikot kohdeyksikko){
 
@@ -25,5 +26,5 @@ void Yksikko::lisaa_kohdeyksikko(string lahtoyksikko, double suhde,
 
 
 void Yksikko::tulosta_kohdeyksikot(){
-
+    kohdeyksikot_.tulosta();
 }

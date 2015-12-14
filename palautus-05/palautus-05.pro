@@ -27,4 +27,5 @@ HEADERS  += paaikkuna.hh \
 FORMS    += paaikkuna.ui
 
 OTHER_FILES += \
-    saannot.txt
+    saannot.txt \
+    testi.txt

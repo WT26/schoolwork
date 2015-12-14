@@ -1,11 +1,14 @@
 #include "kohdeyksikot.hh"
+
+#include <iostream>
 #include <string>
 
 using namespace std;
 
-Kohdeyksikot::Kohdeyksikot(){
-    ensimmaisen_osoite_ = nullptr;
-    viimeisen_osoite_ = nullptr;
+Kohdeyksikot::Kohdeyksikot():
+ensimmaisen_osoite_{nullptr},
+viimeisen_osoite_{nullptr}
+{
 }
 
 Kohdeyksikot::~Kohdeyksikot(){
@@ -25,7 +28,7 @@ bool Kohdeyksikot::lisaa_alkio(string lisattava_string, double suhde,
         ensimmaisen_osoite_->seuraavan_osoite = nullptr;
         viimeisen_osoite_ = uuden_osoite;
     }
-    if( listan_pituus() == 1){
+    else if( listan_pituus() == 1){
         ensimmaisen_osoite_->seuraavan_osoite = uuden_osoite;
         viimeisen_osoite_ = uuden_osoite;
         viimeisen_osoite_->seuraavan_osoite = nullptr;
@@ -63,5 +66,20 @@ int Kohdeyksikot::listan_pituus(){
             pituus++;
         }
         return pituus;
+    }
+}
+
+
+bool Kohdeyksikot::tulosta(){
+    if(ensimmaisen_osoite_ == nullptr){
+        return false;
+    }
+    else {
+        shared_ptr<Yksikko_alkio> tulostettavan_osoite { ensimmaisen_osoite_ };
+        while(tulostettavan_osoite != nullptr){
+            cout<<"yksikko "<<tulostettavan_osoite->yksikko<<"\n";
+            tulostettavan_osoite = tulostettavan_osoite->seuraavan_osoite;
+        }
+        return true;
     }
 }
