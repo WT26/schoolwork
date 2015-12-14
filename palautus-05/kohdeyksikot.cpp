@@ -11,12 +11,6 @@ viimeisen_osoite_{nullptr}
 {
 }
 
-Kohdeyksikot::~Kohdeyksikot(){
-    ensimmaisen_osoite_ = nullptr;
-    viimeisen_osoite_ = nullptr;
-}
-
-
     // Metodi lisaa listan loppuun uuden alkion.
 bool Kohdeyksikot::lisaa_alkio(string lisattava_string, double suhde,
                                double lisattava, bool suunta){
@@ -25,7 +19,6 @@ bool Kohdeyksikot::lisaa_alkio(string lisattava_string, double suhde,
     };
     if ( onko_tyhja() ){
         ensimmaisen_osoite_ = uuden_osoite;
-        ensimmaisen_osoite_->seuraavan_osoite = nullptr;
         viimeisen_osoite_ = uuden_osoite;
     }
     else if( listan_pituus() == 1){

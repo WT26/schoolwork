@@ -11,7 +11,7 @@ vector<Yksikko> lue_muunnoskaaviot(){
     string rivi;
     ifstream kaaviot;
     vector<Yksikko> kaikki_yksikot;
-    kaaviot.open("saannot.txt");
+    kaaviot.open("testi.txt");
 
     if (kaaviot.is_open()){
 
