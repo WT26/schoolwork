@@ -9,8 +9,6 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    vector<Yksikko> muunnoskaaviot;
-    muunnoskaaviot = lue_muunnoskaaviot();
 
     QApplication a(argc, argv);
     Paaikkuna w;

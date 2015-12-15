@@ -11,7 +11,7 @@ vector<Yksikko> lue_muunnoskaaviot(){
     string rivi;
     ifstream kaaviot;
     vector<Yksikko> kaikki_yksikot;
-    kaaviot.open("testi.txt");
+    kaaviot.open("saannot.txt");
 
     if (kaaviot.is_open()){
 
@@ -70,6 +70,7 @@ vector<Yksikko> lue_muunnoskaaviot(){
     else {
         cout << "Virhe: Kaavio tiedostoa ei saatu luettua." << endl;
     }
+    return kaikki_yksikot;
 }
 
 

@@ -38,6 +38,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="muunna_button">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -97,6 +100,9 @@
     </property>
    </widget>
    <widget class="QComboBox" name="kohdeyksikot_dropdown">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>230</x>

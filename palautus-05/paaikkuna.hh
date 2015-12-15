@@ -2,6 +2,8 @@
 #define PAAIKKUNA_HH
 
 #include <QMainWindow>
+#include <vector>
+#include "yksikko.hh"
 
 namespace Ui {
 class Paaikkuna;
@@ -17,6 +19,7 @@ public:
 
 private:
     Ui::Paaikkuna *ui;
+    vector<Yksikko> muunnoskaaviot_;
 };
 
 #endif // PAAIKKUNA_HH

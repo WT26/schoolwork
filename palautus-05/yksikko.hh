@@ -17,7 +17,7 @@ public:
     void lisaa_kohdeyksikko(string lahtoyksikko, double suhde,
                             double lisattava, bool suunta);
     void tulosta_kohdeyksikot();
-    void tulosta_yksikon_nimi();
+    string tulosta_yksikon_nimi();
 
     int kohdeyksikkojen_maara();
 private:

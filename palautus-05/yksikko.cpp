@@ -9,8 +9,8 @@ Yksikko::Yksikko(string kohdeyksikon_nimi){
 }
 
 
-void Yksikko::tulosta_yksikon_nimi(){
-    cout<<nimi_<<endl;
+string Yksikko::tulosta_yksikon_nimi(){
+    return nimi_;
 }
 
 
