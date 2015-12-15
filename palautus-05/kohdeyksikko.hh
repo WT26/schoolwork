@@ -11,7 +11,7 @@ public:
     Kohdeyksikko(string yksikon_nimi, double suhde, double lisattava,
                  bool suunta);
 
-    void tulosta();
+    string tulosta();
 private:
     string yksikko_;
     double suhde_;

@@ -14,6 +14,11 @@ string Yksikko::tulosta_yksikon_nimi(){
 }
 
 
+string Yksikko::tulosta_kohdeyksikot_kohdassa(int i){
+    return kohdeyksikot_[i].tulosta();
+}
+
+
 bool Yksikko::vertaa_yksikon_nimea(string verrattava){
     if (verrattava == nimi_){
         return true;

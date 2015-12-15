@@ -23,12 +23,15 @@
       <height>27</height>
      </rect>
     </property>
+    <property name="readOnly">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="lopeta_button">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>190</y>
+      <x>280</x>
+      <y>200</y>
       <width>101</width>
       <height>27</height>
      </rect>
@@ -43,7 +46,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>140</x>
       <y>130</y>
       <width>101</width>
       <height>27</height>
@@ -56,7 +59,7 @@
    <widget class="QLabel" name="lahto_label">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>120</x>
       <y>10</y>
       <width>101</width>
       <height>17</height>
@@ -69,8 +72,8 @@
    <widget class="QLabel" name="kohde_label">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>10</y>
+      <x>0</x>
+      <y>70</y>
       <width>101</width>
       <height>17</height>
      </rect>
@@ -82,19 +85,22 @@
    <widget class="QLineEdit" name="tulos_yksikko">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>90</y>
+      <x>140</x>
+      <y>160</y>
       <width>101</width>
       <height>27</height>
      </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QComboBox" name="muutettavat_dropdown">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>120</x>
       <y>30</y>
-      <width>85</width>
+      <width>101</width>
       <height>27</height>
      </rect>
     </property>
@@ -105,9 +111,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>30</y>
-      <width>101</width>
+      <x>0</x>
+      <y>90</y>
+      <width>221</width>
       <height>27</height>
      </rect>
     </property>
@@ -115,14 +121,56 @@
    <widget class="QLabel" name="tulos_label">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>90</y>
+      <x>90</x>
+      <y>160</y>
       <width>41</width>
       <height>17</height>
      </rect>
     </property>
     <property name="text">
      <string>Tulos:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="valitse_lahto">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>30</y>
+      <width>71</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Valitse</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="valitse_kohde">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>90</y>
+      <width>71</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Valitse</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="maara_label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>10</y>
+      <width>72</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Maara:</string>
     </property>
    </widget>
   </widget>

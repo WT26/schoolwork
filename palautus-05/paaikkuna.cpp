@@ -20,9 +20,41 @@ Paaikkuna::Paaikkuna(QWidget *parent) :
         ui->muutettavat_dropdown->addItem(qnimi);
         indeksi++;
     }
+
+
+    ui->muutettavat_dropdown->currentText();
 }
 
 Paaikkuna::~Paaikkuna()
 {
     delete ui;
 }
+
+void Paaikkuna::on_valitse_lahto_clicked()
+{
+    ui->kohdeyksikot_dropdown->setEnabled(true);
+
+    for(int tyhjentaja{0};tyhjentaja != ui->kohdeyksikot_dropdown->count();tyhjentaja++){
+        ui->kohdeyksikot_dropdown->removeItem(tyhjentaja);
+    }
+
+    int index{0};
+    QString q_etsittava = ui->muutettavat_dropdown->currentText();
+    string etsittava = q_etsittava.toUtf8().constData();
+    while(index != muunnoskaaviot_.size()){
+        if(muunnoskaaviot_[index].vertaa_yksikon_nimea(etsittava)){
+
+
+            for (int i{0};i != muunnoskaaviot_[index].kohdeyksikkojen_maara();i++){
+                string kohde = muunnoskaaviot_[index].tulosta_kohdeyksikot_kohdassa(i);
+                QString qkohde = QString::fromStdString(kohde);
+
+                for(auto tulostaja: muunnoskaaviot_[index].tulosta_kohdeyksikot_kohdassa(i));
+                ui->kohdeyksikot_dropdown->addItem(qkohde);
+            }
+        }
+        index++;
+    }
+}
+
+

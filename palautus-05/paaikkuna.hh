@@ -17,6 +17,9 @@ public:
     explicit Paaikkuna(QWidget *parent = 0);
     ~Paaikkuna();
 
+private slots:
+    void on_valitse_lahto_clicked();
+
 private:
     Ui::Paaikkuna *ui;
     vector<Yksikko> muunnoskaaviot_;

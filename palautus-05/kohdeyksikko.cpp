@@ -12,6 +12,6 @@ Kohdeyksikko::Kohdeyksikko(string yksikon_nimi, double suhde, double lisattava,
 }
 
 
-void Kohdeyksikko::tulosta(){
-    cout<<"Yksiko  nimi = "<<yksikko_<<endl;
+string Kohdeyksikko::tulosta(){
+    return yksikko_;
 }

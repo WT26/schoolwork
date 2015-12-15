@@ -18,6 +18,7 @@ public:
                             double lisattava, bool suunta);
     void tulosta_kohdeyksikot();
     string tulosta_yksikon_nimi();
+    string tulosta_kohdeyksikot_kohdassa(int kohta);
 
     int kohdeyksikkojen_maara();
 private:
