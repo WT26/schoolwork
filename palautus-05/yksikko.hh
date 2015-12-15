@@ -1,24 +1,28 @@
 #ifndef YKSIKKO_HH
 #define YKSIKKO_HH
 
-#include <kohdeyksikot.hh>
+#include <kohdeyksikko.hh>
 #include <string>
+#include <vector>
 
 using namespace std;
 
 class Yksikko
 {
 public:
-    Yksikko(string kohdeyksikon_nimi, Kohdeyksikot kohdeyksikko);
+    Yksikko(string kohdeyksikon_nimi);
 
     bool vertaa_yksikon_nimea(string verrattava);
 
     void lisaa_kohdeyksikko(string lahtoyksikko, double suhde,
                             double lisattava, bool suunta);
     void tulosta_kohdeyksikot();
+    void tulosta_yksikon_nimi();
+
+    int kohdeyksikkojen_maara();
 private:
     string nimi_;
-    Kohdeyksikot kohdeyksikot_;
+    vector<Kohdeyksikko> kohdeyksikot_;
 };
 
 #endif // YKSIKKO_HH

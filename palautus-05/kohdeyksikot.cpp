@@ -19,16 +19,28 @@ bool Kohdeyksikot::lisaa_alkio(string lisattava_string, double suhde,
     };
     if ( onko_tyhja() ){
         ensimmaisen_osoite_ = uuden_osoite;
+        ensimmaisen_osoite_->seuraavan_osoite = nullptr;
         viimeisen_osoite_ = uuden_osoite;
+        viimeisen_osoite_->seuraavan_osoite = nullptr;
+        return true;
     }
     else if( listan_pituus() == 1){
         ensimmaisen_osoite_->seuraavan_osoite = uuden_osoite;
         viimeisen_osoite_ = uuden_osoite;
         viimeisen_osoite_->seuraavan_osoite = nullptr;
+        return true;
     }
     else {
+        cout<<viimeisen_osoite_->yksikko<<" on vikan yksikko"<<endl;
+        cout<<ensimmaisen_osoite_->yksikko<<" on ekan yksikko"<<endl;
+        cout<<uuden_osoite->yksikko<<" on uuden yksikko"<<endl;
         viimeisen_osoite_->seuraavan_osoite = uuden_osoite;
+        uuden_osoite->seuraavan_osoite = nullptr;
         viimeisen_osoite_ = uuden_osoite;
+        cout<<viimeisen_osoite_->yksikko<<" on vikan yksikko"<<endl;
+        cout<<ensimmaisen_osoite_->yksikko<<" on ekan yksikko"<<endl;
+        cout<<uuden_osoite->yksikko<<" on uuden yksikko"<<endl;
+        return true;
     }
 }
 

@@ -1,5 +1,5 @@
 #include "apufunktiot.hh"
-#include "kohdeyksikot.hh"
+#include "kohdeyksikko.hh"
 #include "yksikko.hh"
 #include <iostream>
 #include <fstream>
@@ -20,6 +20,7 @@ vector<Yksikko> lue_muunnoskaaviot(){
             string kohdeyksikko;
             string lahtoyksikko;
             double lisattava{0};
+            double suhde;
 
             if (tarkista_rivi(rivi)){
                 string valilyonniton = poista_valilyonnit(rivi);
@@ -38,7 +39,7 @@ vector<Yksikko> lue_muunnoskaaviot(){
                 // Esim 1.0*K-273.15   muuttuu
                 // 1.0    ja    K-273.15
                 vector<string> rivin_loppuosa = split(kaavio[1], '*');
-                double suhde = stod(rivin_loppuosa[0]);
+                suhde = stod(rivin_loppuosa[0]);
                 lahtoyksikko = rivin_loppuosa[1];
                 if (onko_lisattavaa(rivin_loppuosa[1])){
                     for(char& c : rivin_loppuosa[1]){
@@ -56,12 +57,12 @@ vector<Yksikko> lue_muunnoskaaviot(){
                             }
                         }
                     }
+                    cout<<"Kohdeyksikko: "<<kohdeyksikko<<"  Lahtoyksikko: "<<
+                          lahtoyksikko<<"  suhde: "<<suhde<<"  lisattavaa: "<<
+                          lisattava<<endl;
+                    kaikki_yksikot = lisaa_kaava(kohdeyksikko, lahtoyksikko, suhde,
+                                                 lisattava, kaikki_yksikot);
                 }
-                cout<<"Kohdeyksikko: "<<kohdeyksikko<<"  Lahtoyksikko: "<<
-                      lahtoyksikko<<"  suhde: "<<suhde<<"  lisattavaa: "<<
-                      lisattava<<endl;
-                kaikki_yksikot = lisaa_kaava(kohdeyksikko, lahtoyksikko, suhde,
-                                             lisattava, kaikki_yksikot);
             }
         }
         kaaviot.close();
@@ -184,10 +185,9 @@ vector<Yksikko> lisaa_kaava(string kohdeyksikko, string lahtoyksikko,
     // Luodaan tai paivitetaan parametrin kohdeyksikon "kohdeyksikot" listaa.
     if(!kohdeyksikko_olemassa){
         // Tassa luodaan uusi lista uudelle yksikolle.
-        Kohdeyksikot uudet_kohdeyksikot;
-        uudet_kohdeyksikot.lisaa_alkio(lahtoyksikko, suhde, lisattava,
-                                       true);
-        Yksikko uusi_kohdeyksikko(kohdeyksikko, uudet_kohdeyksikot);
+        Yksikko uusi_kohdeyksikko(kohdeyksikko);
+        uusi_kohdeyksikko.lisaa_kohdeyksikko(lahtoyksikko, suhde, lisattava,
+                                             true);
 
         // Lisataan luotu Yksikko vectoriin.
         kaikki_yksikot.push_back(uusi_kohdeyksikko);
@@ -195,22 +195,22 @@ vector<Yksikko> lisaa_kaava(string kohdeyksikko, string lahtoyksikko,
     else{
         // Tassa paivitetaan jo olemassaolevan yksikon "kohdeyksikot"
         // listaa.
-        for(auto indeksi : kaikki_yksikot){
-            if(indeksi.vertaa_yksikon_nimea(kohdeyksikko)){
-                indeksi.lisaa_kohdeyksikko(lahtoyksikko,
+        int indeksi{0};
+        while(indeksi != kaikki_yksikot.size()){
+            if(kaikki_yksikot[indeksi].vertaa_yksikon_nimea(kohdeyksikko)){
+                kaikki_yksikot[indeksi].lisaa_kohdeyksikko(lahtoyksikko,
                                                 suhde, lisattava, true);
-                break;
             }
+            indeksi++;
         }
     }
 
 
     if(!lahtoyksikko_olemassa){
         // Tassa luodaan uusi lista uudelle yksikolle.
-        Kohdeyksikot uudet_kohdeyksikot02;
-        uudet_kohdeyksikot02.lisaa_alkio(kohdeyksikko, suhde, lisattava,
-                                         false);
-        Yksikko uusi_lahtoyksikko(lahtoyksikko, uudet_kohdeyksikot02);
+        Yksikko uusi_lahtoyksikko(lahtoyksikko);
+        uusi_lahtoyksikko.lisaa_kohdeyksikko(kohdeyksikko, suhde, lisattava,
+                                             false);
 
         // Lisataan luotu Yksikko vectoriin.
         kaikki_yksikot.push_back(uusi_lahtoyksikko);
@@ -218,14 +218,15 @@ vector<Yksikko> lisaa_kaava(string kohdeyksikko, string lahtoyksikko,
     else{
         // Tassa paivitetaan jo olemassaolevan lahtoyksikon "kohdeyksikot"
         // listaa.
-        for(auto indeksi : kaikki_yksikot){
-            if(indeksi.vertaa_yksikon_nimea(lahtoyksikko)){
-                indeksi.lisaa_kohdeyksikko(kohdeyksikko, suhde, lisattava,
-                                           true);
-                break;
+        int indeksi{0};
+        while(indeksi != kaikki_yksikot.size()){
+            if(kaikki_yksikot[indeksi].vertaa_yksikon_nimea(lahtoyksikko)){
+                kaikki_yksikot[indeksi].lisaa_kohdeyksikko(kohdeyksikko,
+                                                suhde, lisattava, false);
             }
+            indeksi++;
         }
     }
-    kaikki_yksikot.at(0).tulosta_kohdeyksikot();
+
     return kaikki_yksikot;
 }

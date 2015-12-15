@@ -10,7 +10,6 @@ class Kohdeyksikot
 {
 public:
     Kohdeyksikot();
-    ~Kohdeyksikot();
 
     bool onko_tyhja() const;
     bool lisaa_alkio(string lahtoyksikko, double suhde, double lisattava,

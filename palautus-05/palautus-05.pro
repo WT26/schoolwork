@@ -17,12 +17,12 @@ SOURCES += main.cpp\
         paaikkuna.cpp \
     apufunktiot.cpp \
     yksikko.cpp \
-    kohdeyksikot.cpp
+    kohdeyksikko.cpp
 
 HEADERS  += paaikkuna.hh \
     apufunktiot.hh \
     yksikko.hh \
-    kohdeyksikot.hh
+    kohdeyksikko.hh
 
 FORMS    += paaikkuna.ui
 

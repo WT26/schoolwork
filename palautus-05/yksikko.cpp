@@ -1,11 +1,16 @@
 #include "yksikko.hh"
-#include "kohdeyksikot.hh"
+#include "kohdeyksikko.hh"
 #include <iostream>
 
-Yksikko::Yksikko(string kohdeyksikon_nimi, Kohdeyksikot kohdeyksikko){
+Yksikko::Yksikko(string kohdeyksikon_nimi){
 
     nimi_ = kohdeyksikon_nimi;
-    kohdeyksikot_= kohdeyksikko;
+    kohdeyksikot_;
+}
+
+
+void Yksikko::tulosta_yksikon_nimi(){
+    cout<<nimi_<<endl;
 }
 
 
@@ -19,12 +24,24 @@ bool Yksikko::vertaa_yksikon_nimea(string verrattava){
 }
 
 
+int Yksikko::kohdeyksikkojen_maara(){
+    int lukumaara;
+    lukumaara = kohdeyksikot_.size();
+    return lukumaara;
+}
+
+
 void Yksikko::lisaa_kohdeyksikko(string lahtoyksikko, double suhde,
                                  double lisattava, bool suunta){
-    kohdeyksikot_.lisaa_alkio(lahtoyksikko, suhde, lisattava, suunta);
+    Kohdeyksikko uusi_kohdeyksikko(lahtoyksikko, suhde, lisattava, suunta);
+    kohdeyksikot_.push_back(uusi_kohdeyksikko);
 }
 
 
 void Yksikko::tulosta_kohdeyksikot(){
-    kohdeyksikot_.tulosta();
+    int indeksi{0};
+    while(indeksi != kohdeyksikot_.size()){
+        kohdeyksikot_[indeksi].tulosta();
+        indeksi++;
+    }
 }
