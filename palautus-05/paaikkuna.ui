@@ -15,10 +15,13 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QLineEdit" name="muutettava_yksikko">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>30</y>
+      <x>60</x>
+      <y>130</y>
       <width>113</width>
       <height>27</height>
      </rect>
@@ -46,7 +49,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>180</x>
       <y>130</y>
       <width>101</width>
       <height>27</height>
@@ -59,7 +62,7 @@
    <widget class="QLabel" name="lahto_label">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>0</x>
       <y>10</y>
       <width>101</width>
       <height>17</height>
@@ -82,25 +85,12 @@
      <string>Kohdeyksikko</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="tulos_yksikko">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>160</y>
-      <width>101</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
-    </property>
-   </widget>
    <widget class="QComboBox" name="muutettavat_dropdown">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>0</x>
       <y>30</y>
-      <width>101</width>
+      <width>221</width>
       <height>27</height>
      </rect>
     </property>
@@ -121,8 +111,8 @@
    <widget class="QLabel" name="tulos_label">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>160</y>
+      <x>10</x>
+      <y>180</y>
       <width>41</width>
       <height>17</height>
      </rect>
@@ -163,14 +153,27 @@
    <widget class="QLabel" name="maara_label">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>10</y>
+      <x>10</x>
+      <y>130</y>
       <width>72</width>
       <height>17</height>
      </rect>
     </property>
     <property name="text">
      <string>Maara:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="tulos_maara_label">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>180</y>
+      <width>63</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
     </property>
    </widget>
   </widget>

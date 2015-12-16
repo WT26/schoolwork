@@ -17,8 +17,14 @@ public:
     explicit Paaikkuna(QWidget *parent = 0);
     ~Paaikkuna();
 
+    void muunna_luku();
+
 private slots:
     void on_valitse_lahto_clicked();
+
+    void on_valitse_kohde_clicked();
+
+    void on_muunna_button_clicked();
 
 private:
     Ui::Paaikkuna *ui;

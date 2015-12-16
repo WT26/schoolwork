@@ -1,7 +1,7 @@
 #ifndef YKSIKKO_HH
 #define YKSIKKO_HH
 
-#include <kohdeyksikko.hh>
+#include "kohdeyksikko.hh"
 #include <string>
 #include <vector>
 
@@ -21,6 +21,10 @@ public:
     string tulosta_kohdeyksikot_kohdassa(int kohta);
 
     int kohdeyksikkojen_maara();
+
+    vector<string> yksikot_stringiksi(vector<Yksikko> kaikki_yksikot);
+    vector<string> keraa_kohdeyksikot(vector<string> loytyy_listasta, vector<Yksikko> kaikki_yksikot, vector<string> lapi_kaydyt);
+    vector<string> paivita_lapikaydyt(vector<string> lapikaydyt);
 private:
     string nimi_;
     vector<Kohdeyksikko> kohdeyksikot_;

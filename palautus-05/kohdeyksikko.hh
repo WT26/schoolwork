@@ -2,6 +2,7 @@
 #define KOHDEYKSIKKO_HH
 
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -12,6 +13,8 @@ public:
                  bool suunta);
 
     string tulosta();
+
+    vector<string> keraa_kohdeyksikot(vector<string> loytyy_listasta);
 private:
     string yksikko_;
     double suhde_;
