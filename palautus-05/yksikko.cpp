@@ -102,6 +102,20 @@ vector<string> Yksikko::keraa_kohdeyksikot(vector<string> loytyy_listasta, vecto
 }
 
 
-vector<string>Yksikko::paivita_lapikaydyt(vector<string> lapi_kaydyt){
+double Yksikko::etsi_kohteen_suhde(double suhde_maara, string kohde, vector<Yksikko> kaikki_yksikot){
+    for(int indeksi{0};indeksi != kohdeyksikot_.size();indeksi++){
+        if(kohdeyksikot_[indeksi].vertaa_nimea(kohde)){
+            suhde_maara = kohdeyksikot_[indeksi].palauta_suhde();
+            return suhde_maara;
+        }
+    }
+    indeksi = 0;
+    for(indeksi;indeksi != kohdeyksikot_.size();indeksi++){
+        for(int i{0};i != kaikki_yksikot.size(); i++){
+            if((kaikki_yksikot[i].vertaa_yksikon_nimea(kohdeyksikot_[indeksi].tulosta() )
+                && () )){
 
+            }
+        }
+    }
 }

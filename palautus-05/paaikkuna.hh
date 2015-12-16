@@ -29,6 +29,7 @@ private slots:
 private:
     Ui::Paaikkuna *ui;
     vector<Yksikko> muunnoskaaviot_;
+    vector<string> kohdeyksikot_;
 };
 
 #endif // PAAIKKUNA_HH

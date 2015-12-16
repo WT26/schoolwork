@@ -35,3 +35,18 @@ vector<string> Kohdeyksikko::keraa_kohdeyksikot(vector<string> loytyy_listasta){
         return loytyy_listasta;
     }
 }
+
+
+bool Kohdeyksikko::vertaa_nimea(string nimi){
+    if(nimi = yksikko_){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+
+double Kohdeyksikko::palauta_suhde(){
+
+}

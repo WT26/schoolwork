@@ -12,6 +12,7 @@ Paaikkuna::Paaikkuna(QWidget *parent) :
 {
     ui->setupUi(this);
     muunnoskaaviot_ = lue_muunnoskaaviot();
+    kohdeyksikot_;
 
     int indeksi{0};
     while(indeksi != muunnoskaaviot_.size()){
@@ -54,6 +55,7 @@ void Paaikkuna::on_valitse_lahto_clicked()
         }
         index++;
     }
+    kohdeyksikot_ = loytyy_listasta;
     for(int i{0};i != loytyy_listasta.size();i++){
         QString lisattava = QString::fromStdString(loytyy_listasta[i]);
         if(lisattava != ui->muutettavat_dropdown->currentText()){
@@ -89,5 +91,13 @@ void Paaikkuna::on_muunna_button_clicked()
 
 void Paaikkuna::muunna_luku(string luku, string lahto, string kohde){
 
+    double suhde_maara;
+    int indeksi{0};
+    while(indeksi != muunnoskaaviot_.size()){
+        if (muunnoskaaviot_[indeksi].vertaa_yksikon_nimea(lahto)){
+            suhde_maara = muunnoskaaviot_[indeksi].etsi_kohteen_suhde(suhde_maara, kohde, kohdeyksikot_);
 
+
+        }
+    }
 }
