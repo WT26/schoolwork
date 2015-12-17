@@ -2,6 +2,7 @@
 #include "ui_paaikkuna.h"
 #include "apufunktiot.hh"
 #include "yksikko.hh"
+#include <sstream>
 #include <iostream>
 
 #include <vector>
@@ -33,16 +34,18 @@ Paaikkuna::~Paaikkuna()
 
 void Paaikkuna::on_valitse_lahto_clicked()
 {
+    ui->haku_label->setText("Haetaan kaikki mahdolliset kohdeyksikot..");
     ui->kohdeyksikot_dropdown->setEnabled(true);
     ui->muunna_button->setEnabled(false);
     ui->muutettava_yksikko->setEnabled(false);
     ui->valitse_kohde->setEnabled(true);
+    qApp->processEvents();
 
     for(int tyhjentaja{0};tyhjentaja != ui->kohdeyksikot_dropdown->count();tyhjentaja++){
         ui->kohdeyksikot_dropdown->removeItem(tyhjentaja);
     }
 
-    int index{0};
+    unsigned int index{0};
     QString q_etsittava = ui->muutettavat_dropdown->currentText();
     string etsittava = q_etsittava.toUtf8().constData();
     vector<string> loytyy_listasta;
@@ -62,6 +65,7 @@ void Paaikkuna::on_valitse_lahto_clicked()
             ui->kohdeyksikot_dropdown->addItem(lisattava);
         }
     }
+    ui->haku_label->setText("");
 }
 
 
@@ -81,7 +85,9 @@ void Paaikkuna::on_muunna_button_clicked()
         QString q_kohde = ui->kohdeyksikot_dropdown->currentText();
         string kohde = q_kohde.toUtf8().constData();
 
-        muunna_luku(ui->muutettava_yksikko->text(), lahto, kohde);
+        QString q_luku = ui->muutettava_yksikko->text();
+        string luku = q_luku.toUtf8().constData();
+        muunna_luku(luku, lahto, kohde);
     }
     else {
         cout<<"Virhe: muutettava kohta on tyhja."<<endl;
@@ -90,14 +96,21 @@ void Paaikkuna::on_muunna_button_clicked()
 
 
 void Paaikkuna::muunna_luku(string luku, string lahto, string kohde){
-
-    double suhde_maara;
+    double suhde_maara{1};
     int indeksi{0};
+    vector<string> lapi_kaydyt;
     while(indeksi != muunnoskaaviot_.size()){
         if (muunnoskaaviot_[indeksi].vertaa_yksikon_nimea(lahto)){
-            suhde_maara = muunnoskaaviot_[indeksi].etsi_kohteen_suhde(suhde_maara, kohde, kohdeyksikot_);
+            suhde_maara = muunnoskaaviot_[indeksi].etsi_kohteen_suhde(suhde_maara, lahto, kohde, muunnoskaaviot_, lapi_kaydyt);
+            double d_luku = stod(luku);
+            double tulos = d_luku * suhde_maara;
+            QString lisattava = QString::number(tulos);
+            lisattava += " " + QString::fromStdString(kohde);
 
+            ui->tulos_maara_label->setText(lisattava);
 
+            break;
         }
+        indeksi++;
     }
 }

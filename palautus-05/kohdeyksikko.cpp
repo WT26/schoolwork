@@ -37,8 +37,8 @@ vector<string> Kohdeyksikko::keraa_kohdeyksikot(vector<string> loytyy_listasta){
 }
 
 
-bool Kohdeyksikko::vertaa_nimea(string nimi){
-    if(nimi = yksikko_){
+bool Kohdeyksikko::vertaa_nimea(string verrattava){
+    if(verrattava == yksikko_){
         return true;
     }
     else{
@@ -48,5 +48,12 @@ bool Kohdeyksikko::vertaa_nimea(string nimi){
 
 
 double Kohdeyksikko::palauta_suhde(){
-
+    if (suunta_ == true){
+        double palautettava = 1 / suhde_;
+        return palautettava;
+    }
+    else{
+        double palautettava = 1 * suhde_;
+        return palautettava;
+    }
 }

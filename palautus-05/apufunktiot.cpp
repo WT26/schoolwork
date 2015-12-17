@@ -1,6 +1,7 @@
 #include "apufunktiot.hh"
 #include "kohdeyksikko.hh"
 #include "yksikko.hh"
+#include "stdlib.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -20,7 +21,7 @@ vector<Yksikko> lue_muunnoskaaviot(){
             string kohdeyksikko;
             string lahtoyksikko;
             double lisattava{0};
-            double suhde;
+            double suhde{1.0};
 
             if (tarkista_rivi(rivi)){
                 string valilyonniton = poista_valilyonnit(rivi);
@@ -39,7 +40,13 @@ vector<Yksikko> lue_muunnoskaaviot(){
                 // Esim 1.0*K-273.15   muuttuu
                 // 1.0    ja    K-273.15
                 vector<string> rivin_loppuosa = split(kaavio[1], '*');
-                suhde = stod(rivin_loppuosa[0]);
+
+                // std::stringing funktio "stod" muutti stringing "1.123"
+                // double "1" joten vaihdetaan pisteet pilkuiksi jolloin
+                // doubleksi tuleekin haluttu "1.123"
+                string str_suhde = piste_pilkuksi(rivin_loppuosa[0]);
+                suhde = stold(str_suhde);
+                cout<<suhde<<endl;
                 lahtoyksikko = rivin_loppuosa[1];
                 if (onko_lisattavaa(rivin_loppuosa[1])){
                     for(char& c : rivin_loppuosa[1]){
@@ -230,4 +237,18 @@ vector<Yksikko> lisaa_kaava(string kohdeyksikko, string lahtoyksikko,
     }
 
     return kaikki_yksikot;
+}
+
+
+string piste_pilkuksi(string desimaali){
+    string uusi_desimaali;
+    for(auto c : desimaali){
+        if(c == '.'){
+            uusi_desimaali += ",";
+        }
+        else {
+            uusi_desimaali += c;
+        }
+    }
+    return uusi_desimaali;
 }

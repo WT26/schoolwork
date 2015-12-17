@@ -17,7 +17,7 @@ public:
     explicit Paaikkuna(QWidget *parent = 0);
     ~Paaikkuna();
 
-    void muunna_luku();
+    void muunna_luku(string luku, string lahto, string kohde);
 
 private slots:
     void on_valitse_lahto_clicked();

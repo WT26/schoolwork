@@ -22,9 +22,10 @@ public:
 
     int kohdeyksikkojen_maara();
 
+    double etsi_kohteen_suhde(double suhde_maara, string lahto, string kohde, vector<Yksikko> kaikki_yksikot, vector<string>lapi_kaydyt);
+
     vector<string> yksikot_stringiksi(vector<Yksikko> kaikki_yksikot);
     vector<string> keraa_kohdeyksikot(vector<string> loytyy_listasta, vector<Yksikko> kaikki_yksikot, vector<string> lapi_kaydyt);
-    vector<string> paivita_lapikaydyt(vector<string> lapikaydyt);
 private:
     string nimi_;
     vector<Kohdeyksikko> kohdeyksikot_;

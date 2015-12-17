@@ -102,20 +102,44 @@ vector<string> Yksikko::keraa_kohdeyksikot(vector<string> loytyy_listasta, vecto
 }
 
 
-double Yksikko::etsi_kohteen_suhde(double suhde_maara, string kohde, vector<Yksikko> kaikki_yksikot){
-    for(int indeksi{0};indeksi != kohdeyksikot_.size();indeksi++){
-        if(kohdeyksikot_[indeksi].vertaa_nimea(kohde)){
-            suhde_maara = kohdeyksikot_[indeksi].palauta_suhde();
-            return suhde_maara;
+double Yksikko::etsi_kohteen_suhde(double suhde_maara, string lahto, string kohde, vector<Yksikko> kaikki_yksikot, vector<string> lapi_kaydyt){
+    cout<<"taalla"<<endl;
+    bool onko_jo_keratty{false};
+    for(int etsija{0};etsija != lapi_kaydyt.size();etsija++){
+        if (lapi_kaydyt[etsija] == nimi_) {
+            onko_jo_keratty = true;
+            break;
         }
     }
-    indeksi = 0;
-    for(indeksi;indeksi != kohdeyksikot_.size();indeksi++){
-        for(int i{0};i != kaikki_yksikot.size(); i++){
-            if((kaikki_yksikot[i].vertaa_yksikon_nimea(kohdeyksikot_[indeksi].tulosta() )
-                && () )){
-
+    cout<<"myos taalla"<<endl;
+    if (onko_jo_keratty == false){
+        for(int indeksi{0};indeksi != kohdeyksikot_.size();indeksi++){
+            if(kohdeyksikot_[indeksi].vertaa_nimea(kohde)){
+                cout<<"loytyi!"<<endl;
+                suhde_maara = suhde_maara * kohdeyksikot_[indeksi].palauta_suhde();
+                return suhde_maara;
             }
         }
+
+        lapi_kaydyt.push_back(lahto);
+        int indeksi = 0;
+        for(indeksi;indeksi != kohdeyksikot_.size();indeksi++){
+            for(int i{0};i != kaikki_yksikot.size(); i++){
+                for(int i2{0};i2 != lapi_kaydyt.size();i2++){
+
+                    if((kaikki_yksikot[i].vertaa_yksikon_nimea(kohdeyksikot_[indeksi].tulosta())
+                        && (!kohdeyksikot_[indeksi].vertaa_nimea(lapi_kaydyt[i2])))){
+                        double sopivan_kohdeyksikon_suhde = kohdeyksikot_[indeksi].palauta_suhde();
+                        suhde_maara = suhde_maara * sopivan_kohdeyksikon_suhde;
+                        return kaikki_yksikot[i].etsi_kohteen_suhde(suhde_maara,
+                                            kaikki_yksikot[i].tulosta_yksikon_nimi(), kohde, kaikki_yksikot, lapi_kaydyt);
+                    }
+                }
+            }
+        }
+        return suhde_maara;
+    }
+    else{
+        return suhde_maara;
     }
 }

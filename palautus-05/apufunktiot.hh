@@ -14,7 +14,7 @@ bool onko_valilyonti(char c);
 bool tarkista_rivi(string rivi);
 bool onko_lisattavaa(string rivi);
 
-
+string piste_pilkuksi(string desimaali);
 string poista_valilyonnit(string rivi);
 
 vector<string> split(const string& merkkijono, char erotinmerkki);
