@@ -57,3 +57,25 @@ double Kohdeyksikko::palauta_suhde(){
         return palautettava;
     }
 }
+
+
+double Kohdeyksikko::palauta_lisattava(){
+    if (suunta_ == true){
+        double palautettava = 0 - lisattava_;
+        return palautettava;
+    }
+    else{
+        double palautettava = 0 + lisattava_;
+        return palautettava;
+    }
+}
+
+
+bool Kohdeyksikko::onko_lisattavyytta(){
+    if(lisattava_ == 0){
+        return false;
+    }
+    else {
+        return true;
+    }
+}

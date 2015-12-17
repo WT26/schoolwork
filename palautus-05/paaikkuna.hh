@@ -30,6 +30,7 @@ private:
     Ui::Paaikkuna *ui;
     vector<Yksikko> muunnoskaaviot_;
     vector<string> kohdeyksikot_;
+    vector<string> lista_yksikoista_joissa_lisattavaa_;
 };
 
 #endif // PAAIKKUNA_HH

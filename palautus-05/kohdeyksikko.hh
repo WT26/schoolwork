@@ -17,8 +17,10 @@ public:
     vector<string> keraa_kohdeyksikot(vector<string> loytyy_listasta);
 
     bool vertaa_nimea(string verrattava);
+    bool onko_lisattavyytta();
 
     double palauta_suhde();
+    double palauta_lisattava();
 private:
     string yksikko_;
     double suhde_;

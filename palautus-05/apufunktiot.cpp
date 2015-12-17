@@ -46,7 +46,6 @@ vector<Yksikko> lue_muunnoskaaviot(){
                 // doubleksi tuleekin haluttu "1.123"
                 string str_suhde = piste_pilkuksi(rivin_loppuosa[0]);
                 suhde = stold(str_suhde);
-                cout<<suhde<<endl;
                 lahtoyksikko = rivin_loppuosa[1];
                 if (onko_lisattavaa(rivin_loppuosa[1])){
                     for(char& c : rivin_loppuosa[1]){

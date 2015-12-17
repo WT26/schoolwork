@@ -13,7 +13,14 @@ Paaikkuna::Paaikkuna(QWidget *parent) :
 {
     ui->setupUi(this);
     muunnoskaaviot_ = lue_muunnoskaaviot();
+    lista_yksikoista_joissa_lisattavaa_;
+    
+    for(auto yksikko : muunnoskaaviot_){
+        lista_yksikoista_joissa_lisattavaa_ = yksikko.kohdeyksikoiden_lisattavyys(lista_yksikoista_joissa_lisattavaa_);
+    }
+    
     kohdeyksikot_;
+
 
     int indeksi{0};
     while(indeksi != muunnoskaaviot_.size()){
@@ -35,15 +42,18 @@ Paaikkuna::~Paaikkuna()
 void Paaikkuna::on_valitse_lahto_clicked()
 {
     ui->haku_label->setText("Haetaan kaikki mahdolliset kohdeyksikot..");
-    ui->kohdeyksikot_dropdown->setEnabled(true);
+    qApp->processEvents();
+    ui->kohdeyksikot_dropdown->setEnabled(false);
     ui->muunna_button->setEnabled(false);
     ui->muutettava_yksikko->setEnabled(false);
-    ui->valitse_kohde->setEnabled(true);
-    qApp->processEvents();
+    ui->valitse_kohde->setEnabled(false);
 
-    for(int tyhjentaja{0};tyhjentaja != ui->kohdeyksikot_dropdown->count();tyhjentaja++){
+    for(int tyhjentaja{0};tyhjentaja != ui->kohdeyksikot_dropdown->count();){
         ui->kohdeyksikot_dropdown->removeItem(tyhjentaja);
     }
+    ui->kohdeyksikot_dropdown->removeItem(0);
+    qApp->processEvents();
+
 
     unsigned int index{0};
     QString q_etsittava = ui->muutettavat_dropdown->currentText();
@@ -58,6 +68,14 @@ void Paaikkuna::on_valitse_lahto_clicked()
         }
         index++;
     }
+
+    ui->kohdeyksikot_dropdown->setEnabled(true);
+    ui->muunna_button->setEnabled(false);
+    ui->muutettava_yksikko->setEnabled(false);
+    ui->valitse_kohde->setEnabled(true);
+    qApp->processEvents();
+
+
     kohdeyksikot_ = loytyy_listasta;
     for(int i{0};i != loytyy_listasta.size();i++){
         QString lisattava = QString::fromStdString(loytyy_listasta[i]);
@@ -96,14 +114,28 @@ void Paaikkuna::on_muunna_button_clicked()
 
 
 void Paaikkuna::muunna_luku(string luku, string lahto, string kohde){
-    double suhde_maara{1};
+    pair<double, int> suhde_maara{1, 0};
+    pair<double, int> suhteet;
+    //double suhde_maara{1};
+    double lisattava_summa{0};
     int indeksi{0};
     vector<string> lapi_kaydyt;
     while(indeksi != muunnoskaaviot_.size()){
         if (muunnoskaaviot_[indeksi].vertaa_yksikon_nimea(lahto)){
-            suhde_maara = muunnoskaaviot_[indeksi].etsi_kohteen_suhde(suhde_maara, lahto, kohde, muunnoskaaviot_, lapi_kaydyt);
+            suhteet = muunnoskaaviot_[indeksi].etsi_kohteen_suhde(suhde_maara, lahto, lahto, kohde, muunnoskaaviot_, lapi_kaydyt);
             double d_luku = stod(luku);
-            double tulos = d_luku * suhde_maara;
+            double tulos = d_luku * suhteet.first;
+
+            for(auto yksikon_nimi : lista_yksikoista_joissa_lisattavaa_){
+                if(yksikon_nimi == lahto || yksikon_nimi == kohde){
+                    vector<string> lapi_kaydyt_yksikot;
+                    lisattava_summa = muunnoskaaviot_[indeksi].etsi_kohteen_lisattava(lisattava_summa, lahto, kohde, muunnoskaaviot_, lapi_kaydyt_yksikot);
+                    break;
+                }
+            }
+            cout<<suhteet.first<<"<-kerroin lisattava->"<<lisattava_summa<<endl;
+            tulos += lisattava_summa;
+
             QString lisattava = QString::number(tulos);
             lisattava += " " + QString::fromStdString(kohde);
 
