@@ -13,6 +13,7 @@ bool tarkista_rivin_vaihto(char c);
 bool onko_valilyonti(char c);
 bool tarkista_rivi(string rivi);
 bool onko_lisattavaa(string rivi);
+bool onko_vain_numeroita(string numero);
 
 string piste_pilkuksi(string desimaali);
 string poista_valilyonnit(string rivi);

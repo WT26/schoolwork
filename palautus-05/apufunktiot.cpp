@@ -2,6 +2,8 @@
 #include "kohdeyksikko.hh"
 #include "yksikko.hh"
 #include "stdlib.h"
+
+#include <algorithm>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -12,7 +14,7 @@ vector<Yksikko> lue_muunnoskaaviot(string tiedoston_nimi){
     string rivi;
     ifstream kaaviot;
     vector<Yksikko> kaikki_yksikot;
-    kaaviot.open("saannot.txt");
+    kaaviot.open(tiedoston_nimi);
 
     if (kaaviot.is_open()){
 
@@ -143,6 +145,7 @@ bool tarkista_rivi(string rivi){
             }
         }
     }
+    return false;
 }
 
 
@@ -202,7 +205,7 @@ vector<Yksikko> lisaa_kaava(string kohdeyksikko, string lahtoyksikko,
     else{
         // Tassa paivitetaan jo olemassaolevan yksikon "kohdeyksikot"
         // listaa.
-        int indeksi{0};
+        unsigned int indeksi{0};
         while(indeksi != kaikki_yksikot.size()){
             if(kaikki_yksikot[indeksi].vertaa_yksikon_nimea(kohdeyksikko)){
                 kaikki_yksikot[indeksi].lisaa_kohdeyksikko(lahtoyksikko,
@@ -225,7 +228,7 @@ vector<Yksikko> lisaa_kaava(string kohdeyksikko, string lahtoyksikko,
     else{
         // Tassa paivitetaan jo olemassaolevan lahtoyksikon "kohdeyksikot"
         // listaa.
-        int indeksi{0};
+        unsigned int indeksi{0};
         while(indeksi != kaikki_yksikot.size()){
             if(kaikki_yksikot[indeksi].vertaa_yksikon_nimea(lahtoyksikko)){
                 kaikki_yksikot[indeksi].lisaa_kohdeyksikko(kohdeyksikko,
@@ -250,4 +253,18 @@ string piste_pilkuksi(string desimaali){
         }
     }
     return uusi_desimaali;
+}
+
+
+bool onko_vain_numeroita(string numero){
+    vector<char> numerot_ja_piste_tai_pilkku{'0', '1', '2', '3', '4', '5',
+                                             '6', '7', '8', '9', '.', ','};
+    for(auto c : numero){
+        if(find(numerot_ja_piste_tai_pilkku.begin(),
+                    numerot_ja_piste_tai_pilkku.end(), c)
+                    != numerot_ja_piste_tai_pilkku.end()){
+            return false;
+        }
+    }
+    return true;
 }

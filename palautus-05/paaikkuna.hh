@@ -26,6 +26,8 @@ private slots:
 
     void on_muunna_button_clicked();
 
+    void on_lue_button_clicked();
+
 private:
     Ui::Paaikkuna *ui;
     vector<Yksikko> muunnoskaaviot_;

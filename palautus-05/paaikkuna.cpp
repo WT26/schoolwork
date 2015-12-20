@@ -12,26 +12,9 @@ Paaikkuna::Paaikkuna(QWidget *parent) :
     ui(new Ui::Paaikkuna)
 {
     ui->setupUi(this);
-    muunnoskaaviot_ = lue_muunnoskaaviot();
-    lista_yksikoista_joissa_lisattavaa_;
-    
-    for(auto yksikko : muunnoskaaviot_){
-        lista_yksikoista_joissa_lisattavaa_ = yksikko.kohdeyksikoiden_lisattavyys(lista_yksikoista_joissa_lisattavaa_);
-    }
-    
-    kohdeyksikot_;
-
-
-    int indeksi{0};
-    while(indeksi != muunnoskaaviot_.size()){
-        string nimi = muunnoskaaviot_[indeksi].tulosta_yksikon_nimi();
-        QString qnimi = QString::fromStdString(nimi);
-        ui->muutettavat_dropdown->addItem(qnimi);
-        indeksi++;
-    }
-
-
-    ui->muutettavat_dropdown->currentText();
+    //muunnoskaaviot_;
+    //lista_yksikoista_joissa_lisattavaa_;
+    //kohdeyksikot_;
 }
 
 Paaikkuna::~Paaikkuna()
@@ -75,9 +58,8 @@ void Paaikkuna::on_valitse_lahto_clicked()
     ui->valitse_kohde->setEnabled(true);
     qApp->processEvents();
 
-
     kohdeyksikot_ = loytyy_listasta;
-    for(int i{0};i != loytyy_listasta.size();i++){
+    for(unsigned int i{0};i != loytyy_listasta.size();i++){
         QString lisattava = QString::fromStdString(loytyy_listasta[i]);
         if(lisattava != ui->muutettavat_dropdown->currentText()){
             ui->kohdeyksikot_dropdown->addItem(lisattava);
@@ -118,7 +100,7 @@ void Paaikkuna::muunna_luku(string luku, string lahto, string kohde){
     pair<double, int> suhteet;
     //double suhde_maara{1};
     double lisattava_summa{0};
-    int indeksi{0};
+    unsigned int indeksi{0};
     vector<string> lapi_kaydyt;
     while(indeksi != muunnoskaaviot_.size()){
         if (muunnoskaaviot_[indeksi].vertaa_yksikon_nimea(lahto)){
@@ -145,4 +127,54 @@ void Paaikkuna::muunna_luku(string luku, string lahto, string kohde){
         }
         indeksi++;
     }
+}
+
+void Paaikkuna::on_lue_button_clicked()
+{
+    // Haetaan QString teksti tiedoston_nimi input kentasta ja tehdaan siita
+    // Std string.
+    string tiedoston_nimi = ui->tiedosto_kentta->text().toUtf8().constData();
+
+    if (tiedoston_nimi == ""){
+        // TODO virhe !
+    }
+    else{
+        ui->muutettavat_dropdown->setEnabled(false);
+        ui->kohdeyksikot_dropdown->setEnabled(false);
+        ui->valitse_lahto->setEnabled(false);
+        ui->muunna_button->setEnabled(false);
+        ui->muutettava_yksikko->setEnabled(false);
+        ui->valitse_kohde->setEnabled(false);
+        qApp->processEvents();
+
+        muunnoskaaviot_.clear();
+        lista_yksikoista_joissa_lisattavaa_.clear();
+
+        // Jos tiedostoa luetaan toista kertaa, tyhjennetaan kohdeyksikot_dropdown
+        for(int tyhjentaja{0};tyhjentaja != ui->muutettavat_dropdown->count();){
+            ui->muutettavat_dropdown->removeItem(tyhjentaja);
+        }
+        ui->muutettavat_dropdown->removeItem(0);
+        qApp->processEvents();
+
+        muunnoskaaviot_ = lue_muunnoskaaviot(tiedoston_nimi);
+
+        for(auto yksikko : muunnoskaaviot_){
+            lista_yksikoista_joissa_lisattavaa_ = yksikko.kohdeyksikoiden_lisattavyys(lista_yksikoista_joissa_lisattavaa_);
+        }
+
+        unsigned int indeksi{0};
+        while(indeksi != muunnoskaaviot_.size()){
+            string nimi = muunnoskaaviot_[indeksi].tulosta_yksikon_nimi();
+            QString qnimi = QString::fromStdString(nimi);
+            ui->muutettavat_dropdown->addItem(qnimi);
+            indeksi++;
+        }
+
+        ui->muutettavat_dropdown->setEnabled(true);
+        ui->valitse_lahto->setEnabled(true);
+        qApp->processEvents();
+    }
+
+
 }
