@@ -192,53 +192,65 @@ vector<Yksikko> lisaa_kaava(string kohdeyksikko, string lahtoyksikko,
         }
     }
 
-    // Luodaan tai paivitetaan parametrin kohdeyksikon "kohdeyksikot" listaa.
-    if(!kohdeyksikko_olemassa){
-        // Tassa luodaan uusi lista uudelle yksikolle.
-        Yksikko uusi_kohdeyksikko(kohdeyksikko);
-        uusi_kohdeyksikko.lisaa_kohdeyksikko(lahtoyksikko, suhde, lisattava,
-                                             true);
+    bool onko_kaava_olemassa{false};
 
-        // Lisataan luotu Yksikko vectoriin.
-        kaikki_yksikot.push_back(uusi_kohdeyksikko);
+    for(auto indeksi : kaikki_yksikot){
+
+    }
+
+    if(onko_kaava_olemassa(lahtoyksikko, kohdeyksikko, kaikki_yksikot)){
+        cout<<"Virhe: Tiedostossa on samat kaavat useasti.\n";
+
     }
     else{
-        // Tassa paivitetaan jo olemassaolevan yksikon "kohdeyksikot"
-        // listaa.
-        unsigned int indeksi{0};
-        while(indeksi != kaikki_yksikot.size()){
-            if(kaikki_yksikot[indeksi].vertaa_yksikon_nimea(kohdeyksikko)){
-                kaikki_yksikot[indeksi].lisaa_kohdeyksikko(lahtoyksikko,
-                                                suhde, lisattava, true);
-            }
-            indeksi++;
+        // Luodaan tai paivitetaan parametrin kohdeyksikon "kohdeyksikot" listaa.
+        if(!kohdeyksikko_olemassa){
+            // Tassa luodaan uusi lista uudelle yksikolle.
+            Yksikko uusi_kohdeyksikko(kohdeyksikko);
+            uusi_kohdeyksikko.lisaa_kohdeyksikko(lahtoyksikko, suhde, lisattava,
+                                                 true);
+
+            // Lisataan luotu Yksikko vectoriin.
+            kaikki_yksikot.push_back(uusi_kohdeyksikko);
         }
-    }
-
-
-    if(!lahtoyksikko_olemassa){
-        // Tassa luodaan uusi lista uudelle yksikolle.
-        Yksikko uusi_lahtoyksikko(lahtoyksikko);
-        uusi_lahtoyksikko.lisaa_kohdeyksikko(kohdeyksikko, suhde, lisattava,
-                                             false);
-
-        // Lisataan luotu Yksikko vectoriin.
-        kaikki_yksikot.push_back(uusi_lahtoyksikko);
-    }
-    else{
-        // Tassa paivitetaan jo olemassaolevan lahtoyksikon "kohdeyksikot"
-        // listaa.
-        unsigned int indeksi{0};
-        while(indeksi != kaikki_yksikot.size()){
-            if(kaikki_yksikot[indeksi].vertaa_yksikon_nimea(lahtoyksikko)){
-                kaikki_yksikot[indeksi].lisaa_kohdeyksikko(kohdeyksikko,
-                                                suhde, lisattava, false);
+        else{
+            // Tassa paivitetaan jo olemassaolevan yksikon "kohdeyksikot"
+            // listaa.
+            unsigned int indeksi{0};
+            while(indeksi != kaikki_yksikot.size()){
+                if(kaikki_yksikot[indeksi].vertaa_yksikon_nimea(kohdeyksikko)){
+                    kaikki_yksikot[indeksi].lisaa_kohdeyksikko(lahtoyksikko,
+                                                    suhde, lisattava, true);
+                }
+                indeksi++;
             }
-            indeksi++;
         }
-    }
 
-    return kaikki_yksikot;
+
+        if(!lahtoyksikko_olemassa){
+            // Tassa luodaan uusi lista uudelle yksikolle.
+            Yksikko uusi_lahtoyksikko(lahtoyksikko);
+            uusi_lahtoyksikko.lisaa_kohdeyksikko(kohdeyksikko, suhde, lisattava,
+                                                 false);
+
+            // Lisataan luotu Yksikko vectoriin.
+            kaikki_yksikot.push_back(uusi_lahtoyksikko);
+        }
+        else{
+            // Tassa paivitetaan jo olemassaolevan lahtoyksikon "kohdeyksikot"
+            // listaa.
+            unsigned int indeksi{0};
+            while(indeksi != kaikki_yksikot.size()){
+                if(kaikki_yksikot[indeksi].vertaa_yksikon_nimea(lahtoyksikko)){
+                    kaikki_yksikot[indeksi].lisaa_kohdeyksikko(kohdeyksikko,
+                                                    suhde, lisattava, false);
+                }
+                indeksi++;
+            }
+        }
+
+        return kaikki_yksikot;
+    }
 }
 
 
@@ -267,4 +279,17 @@ bool onko_vain_numeroita(string numero){
         }
     }
     return true;
+}
+
+
+bool onko_kaava_olemassa(string lahto, string kohde, vector<Yksikko> kaikki_yksikot){
+    for (auto yksikko : kaikki_yksikot){
+        if (yksikko.vertaa_yksikon_nimea(lahto) && yksikko.loytyyko_kohdeyksikko(kohde)){
+            return true;
+        }
+        else if (yksikko.vertaa_yksikon_nimea(kohde) && yksikko.loytyyko_kohdeyksikko(lahto)){
+            return true;
+        }
+    }
+    return false;
 }
