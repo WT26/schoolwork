@@ -7,7 +7,7 @@
 
 using namespace std;
 
-vector<Yksikko> lue_muunnoskaaviot();
+vector<Yksikko> lue_muunnoskaaviot(string tiedoston_nimi);
 
 bool tarkista_rivin_vaihto(char c);
 bool onko_valilyonti(char c);

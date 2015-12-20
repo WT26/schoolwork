@@ -8,7 +8,7 @@
 
 using namespace std;
 
-vector<Yksikko> lue_muunnoskaaviot(){
+vector<Yksikko> lue_muunnoskaaviot(string tiedoston_nimi){
     string rivi;
     ifstream kaaviot;
     vector<Yksikko> kaikki_yksikot;
@@ -63,9 +63,9 @@ vector<Yksikko> lue_muunnoskaaviot(){
                             }
                         }
                     }
-                    cout<<"Kohdeyksikko: "<<kohdeyksikko<<"  Lahtoyksikko: "<<
-                          lahtoyksikko<<"  suhde: "<<suhde<<"  lisattavaa: "<<
-                          lisattava<<endl;
+                    //cout<<"Kohdeyksikko: "<<kohdeyksikko<<"  Lahtoyksikko: "<<
+                     //     lahtoyksikko<<"  suhde: "<<suhde<<"  lisattavaa: "<<
+                      //    lisattava<<endl;
                     kaikki_yksikot = lisaa_kaava(kohdeyksikko, lahtoyksikko, suhde,
                                                  lisattava, kaikki_yksikot);
                 }
