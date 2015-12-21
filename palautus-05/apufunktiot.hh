@@ -1,6 +1,9 @@
 #ifndef APUFUNKTIOT_HH
 #define APUFUNKTIOT_HH
 
+// Apufunktioita, joita kaytetaan apuna ohjelman suorituksessa.
+
+
 #include <yksikko.hh>
 #include <string>
 #include <vector>
@@ -14,7 +17,10 @@ bool onko_valilyonti(char c);
 bool tarkista_rivi(string rivi);
 bool onko_lisattavaa(string rivi);
 bool onko_vain_numeroita(string numero);
-bool onko_kaava_olemassa(string lahtoyksikko, string kohdeyksikko, vector<string> kaikki_yksikot);
+bool onko_yksikko_olemassa(string yksikon_nimi, vector<Yksikko> kaikki_yksikot);
+bool onko_kaava_olemassa(string lahtoyksikko, string kohdeyksikko, vector<Yksikko> kaikki_yksikot);
+
+void lopeta_ohjelma();
 
 string piste_pilkuksi(string desimaali);
 string poista_valilyonnit(string rivi);

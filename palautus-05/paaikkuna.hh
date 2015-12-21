@@ -1,6 +1,9 @@
 #ifndef PAAIKKUNA_HH
 #define PAAIKKUNA_HH
 
+// Paaikkuna, graafinen kayttoliittyma. Siina on kaikki kayttoliittymaan
+// liittyvat komennot.
+
 #include <QMainWindow>
 #include <vector>
 #include "yksikko.hh"

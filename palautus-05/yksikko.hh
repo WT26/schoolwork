@@ -1,6 +1,11 @@
 #ifndef YKSIKKO_HH
 #define YKSIKKO_HH
 
+// Jokaisesta tekstitiedoston kaavasta tehdaan yksikko-olio. Yksikko oliossa
+// on tallessa vektorissa kaikki sen kohdeyksikot, eli ne yksikot, joiden
+// kaavat ovat suoraan lukuvaiheessa yhteydessa yksikkoon. Yksikolla on
+// myos useita metodeita, joita tarvitaan haku, ja muunnos algoritmeissa.
+
 #include "kohdeyksikko.hh"
 #include <string>
 #include <vector>
@@ -18,20 +23,27 @@ public:
 
     void lisaa_kohdeyksikko(string lahtoyksikko, double suhde,
                             double lisattava, bool suunta);
-    void tulosta_kohdeyksikot();
+
     string tulosta_yksikon_nimi();
-    string tulosta_kohdeyksikot_kohdassa(int kohta);
+    string nimi_;
+
 
     int kohdeyksikkojen_maara();
 
-    pair<double, int> etsi_kohteen_suhde(pair<double, int> suhde_maara, string ensimmainen, string lahto, string kohde, vector<Yksikko> kaikki_yksikot, vector<string>lapi_kaydyt);
-    double etsi_kohteen_lisattava(double lisays, string lahto, string kohde, vector<Yksikko> kaikki_yksikot, vector<string>lapi_kaydyt);
+    pair<double, int> etsi_kohteen_suhde(pair<double, int> suhde_maara,
+                string ensimmainen, string lahto, string kohde,
+                vector<Yksikko> kaikki_yksikot, vector<string>lapi_kaydyt);
+
+    double etsi_kohteen_lisattava(double lisays, string lahto, string kohde,
+                vector<Yksikko> kaikki_yksikot, vector<string>lapi_kaydyt);
 
     vector<string> kohdeyksikoiden_lisattavyys(vector<string> jo_lisatyt);
     vector<string> yksikot_stringiksi(vector<Yksikko> kaikki_yksikot);
-    vector<string> keraa_kohdeyksikot(vector<string> loytyy_listasta, vector<Yksikko> kaikki_yksikot, vector<string> lapi_kaydyt);
+
+    vector<string> keraa_kohdeyksikot(vector<string> loytyy_listasta,
+                vector<Yksikko> kaikki_yksikot, vector<string> lapi_kaydyt);
+
 private:
-    string nimi_;
     vector<Kohdeyksikko> kohdeyksikot_;
 };
 
