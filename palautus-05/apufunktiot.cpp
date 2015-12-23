@@ -29,8 +29,8 @@ vector<Yksikko> lue_muunnoskaaviot( string tiedoston_nimi ){
             double lisattava{0};
             double suhde{1.0};
 
-            if ( tarkista_rivi(rivi) ){
-                string valilyonniton = poista_valilyonnit( rivi );
+            if ( tarkista_rivi(rivi) && tarkista_rivin_oikeellisuus(rivi)){
+                string valilyonniton = poista_valilyonnit(rivi);
 
                 // Splitataan kaavio kohdasta '='.
                 // Esim C<=1.0*K-273.15  muuttuu
@@ -134,7 +134,7 @@ bool onko_valilyonti(char c){
 }
 
 
-// Tarkistaa onko selattava kirjain valilyonti tai
+// Tarkistaa rivilta onko selattava kirjain valilyonti tai
 // kommentti (#) tai rivin vaihto. Jos jokin naista
 // tulee ennen kirjainta, palautetaan false. Muulloin
 // palautetaan true.
@@ -153,6 +153,63 @@ bool tarkista_rivi(string rivi){
     return false;
 }
 
+
+// Tarkistaa onko rivi muotoa yksikko kerroin yksikko ja lisattava
+bool tarkista_rivin_oikeellisuus(string rivi){
+    string lahtoyksikko;
+    string Kohdeyksikko;
+    string suhde;
+    string plus_tai_miinus;
+    string lisattava;
+    
+    // Luodaan lahtoyksikko.
+    for ( char& c : rivi){
+        if( c == ' '){
+            rivi.erase(0);
+        }
+        else if ( c != '<'){
+            lahtoyksikko = lahtoyksikko + c;
+            rivi.erase(0);
+        }
+        else if( c == '<' ){
+            rivi.erase(0);
+            rivi.erase(0);
+            break;
+        }
+    }
+    
+    // Luodaan kerroin.
+    for( char& c : rivi ){
+        if( c == ' ' ){
+            rivi.erase(0);
+        }
+        else if ( c != '*' ){
+            suhde = suhde + c;
+            rivi.erase(0);
+        }
+        else if( c == '*' ){
+            rivi.erase(0);
+            break;
+        }
+    }
+    
+    // Luodaan kohdeyksikko
+    for ( char& c : rivi ){
+        if( c == ' ' ){
+            rivi.erase(0);
+        }
+        else if ( c != '+' && c != '-' && c != '\n' ){
+            kohdeyksikko = kohdeyksikko + c;
+            rivi.erase(0);
+        }
+        else if( c == '+' || c == '-' || c == '\n' ){
+            plus_tai_miinus = c;
+            rivi.erase(0);
+            lisattava = rivi;
+            break;
+        }
+    }
+}
 
 // Poistaa rivilta valilyonnit.
 string poista_valilyonnit(string rivi){
@@ -276,7 +333,7 @@ bool onko_vain_numeroita(string numero){
     for(char& c : numero){
         if(find(numerot_ja_piste_tai_pilkku.begin(),
                     numerot_ja_piste_tai_pilkku.end(), c)
-                    != numerot_ja_piste_tai_pilkku.end()){
+                    == numerot_ja_piste_tai_pilkku.end()){
             cout<<c<<endl;
             return false;
         }
