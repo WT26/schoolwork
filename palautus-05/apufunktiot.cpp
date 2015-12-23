@@ -224,6 +224,7 @@ bool tarkista_yksikon_kirjaimet(string lahtoyksikko, string kohdeyksikko){
                                   'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
                                   'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
                                   'W', 'X', 'Y', 'Z', '/' };
+    // Kay lahtoyksikon lapi kirjain kirjaimelta ja testailee onko ne oikein.
     for (char& c : lahtoyksikko){
         if ( sopivat_kirjaimet.end() == find(sopivat_kirjaimet.begin(),
                        sopivat_kirjaimet.end(), c)){
@@ -231,6 +232,7 @@ bool tarkista_yksikon_kirjaimet(string lahtoyksikko, string kohdeyksikko){
         }
     }
 
+    // Kay kohdeyksikon lapi kirjain kirjaimelta ja testailee onko ne oikein.
     for (char& c : kohdeyksikko){
         if ( sopivat_kirjaimet.end() == find(sopivat_kirjaimet.begin(),
                                              sopivat_kirjaimet.end(), c)){
@@ -363,7 +365,6 @@ bool onko_vain_numeroita(string numero){
         if(find(numerot_ja_piste_tai_pilkku.begin(),
                     numerot_ja_piste_tai_pilkku.end(), c)
                     == numerot_ja_piste_tai_pilkku.end()){
-            cout<<c<<endl;
             return false;
         }
     }

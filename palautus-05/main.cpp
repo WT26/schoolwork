@@ -1,6 +1,6 @@
 // TIE-02200 Ohjelmoinnin peruskurssi, syksy 2015
 // Harjoitustehtava 5
-// 246479 joel.alanko@student.tut.fi (35-40h)
+// 246479 joel.alanko@student.tut.fi (40h)
 
 #include "paaikkuna.hh"
 #include "apufunktiot.hh"
