@@ -247,13 +247,13 @@ double Yksikko::etsi_kohteen_lisattava(double lisattava, string lahto,
 
     // Tutkii onko kyseinen Yksikko jo tutkittu.
     bool onko_jo_keratty{false};
-    for(unsigned int etsija{0};etsija != lapi_kaydyt.size();etsija++){
+    for( unsigned int etsija{0}; etsija != lapi_kaydyt.size(); etsija++ ){
         if (lapi_kaydyt[etsija] == nimi_) {
             onko_jo_keratty = true;
             break;
         }
     }
-    if (onko_jo_keratty == false){
+    if ( onko_jo_keratty == false ){
 
         // Tutkii onko kyseinen yksikko juuri se haluttu kohdeyksikko jota
         // etsitaan, jos on palautetaan sen lisattava maara.
@@ -310,9 +310,10 @@ vector<string> Yksikko::kohdeyksikoiden_lisattavyys(vector<string> jo_lisatyt){
                         .lisaa_kohdeyksikko_vectoriin(jo_lisatyt);
             }
             else{
-                for(auto string : jo_lisatyt){
+                for( auto string : jo_lisatyt ){
                     if(!kohdeyksikko.vertaa_nimea(string)){
-                        jo_lisatyt = kohdeyksikko.lisaa_kohdeyksikko_vectoriin(jo_lisatyt);
+                        jo_lisatyt = kohdeyksikko
+                                .lisaa_kohdeyksikko_vectoriin(jo_lisatyt);
                         break;
                     }
                 }
