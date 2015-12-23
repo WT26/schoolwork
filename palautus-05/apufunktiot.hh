@@ -12,6 +12,8 @@ using namespace std;
 
 vector<Yksikko> lue_muunnoskaaviot(string tiedoston_nimi);
 
+bool tarkista_lahto_ja_kohde(string rivi);
+bool tarkista_yksikon_kirjaimet(string lahtoyksikko, string kohdeyksikko);
 bool tarkista_rivin_vaihto(char c);
 bool onko_valilyonti(char c);
 bool tarkista_rivi(string rivi);

@@ -1,8 +1,8 @@
 C<=1.0*Moikka-273.15
-Moikka<=50.5*C+500
 C<=1.0*Ville+0
 Matti<=1.0*C+5
 C<=1.0*Koirakaveri
 Kello<=1.0*C
 C<=5*moido
+C    7C<=6*heippamoi+5
 

@@ -29,56 +29,63 @@ vector<Yksikko> lue_muunnoskaaviot( string tiedoston_nimi ){
             double lisattava{0};
             double suhde{1.0};
 
-            if ( tarkista_rivi(rivi) && tarkista_rivin_oikeellisuus(rivi)){
-                string valilyonniton = poista_valilyonnit(rivi);
+            if ( tarkista_rivi(rivi) ){
+                if(tarkista_lahto_ja_kohde(rivi)){
+                    string valilyonniton = poista_valilyonnit(rivi);
 
-                // Splitataan kaavio kohdasta '='.
-                // Esim C<=1.0*K-273.15  muuttuu
-                // C<    ja    1.0*K-273.15
-                vector<string> kaavio = split( valilyonniton, '=' );
+                    // Splitataan kaavio kohdasta '='.
+                    // Esim C<=1.0*K-273.15  muuttuu
+                    // C<    ja    1.0*K-273.15
+                    vector<string> kaavio = split( valilyonniton, '=' );
 
-                kohdeyksikko = kaavio[0];
-                // Poistetaan kohdeyksikon lopusta merkki '<'.
-                kohdeyksikko.pop_back();
+                    kohdeyksikko = kaavio[0];
+                    // Poistetaan kohdeyksikon lopusta merkki '<'.
+                    kohdeyksikko.pop_back();
 
 
-                // Nyt splitataan kaavion jalkiosa kohdasta '*'
-                // Esim 1.0*K-273.15   muuttuu
-                // 1.0    ja    K-273.15
-                vector<string> rivin_loppuosa = split( kaavio[1], '*' );
+                    // Nyt splitataan kaavion jalkiosa kohdasta '*'
+                    // Esim 1.0*K-273.15   muuttuu
+                    // 1.0    ja    K-273.15
+                    vector<string> rivin_loppuosa = split( kaavio[1], '*' );
 
-                // std::stringing funktio "stod" muutti stringing "1.123"
-                // double "1" joten vaihdetaan pisteet pilkuiksi jolloin
-                // doubleksi tuleekin haluttu "1.123"
-                string str_suhde = piste_pilkuksi( rivin_loppuosa[0] );
-                suhde = stod( str_suhde );
-                lahtoyksikko = rivin_loppuosa[1];
+                    // std::stringing funktio "stod" muutti stringing "1.123"
+                    // double "1" joten vaihdetaan pisteet pilkuiksi jolloin
+                    // doubleksi tuleekin haluttu "1.123"
+                    string str_suhde = piste_pilkuksi( rivin_loppuosa[0] );
+                    suhde = stod( str_suhde );
+                    lahtoyksikko = rivin_loppuosa[1];
 
-                if (onko_lisattavaa( rivin_loppuosa[1] )){
-                    for( char& c : rivin_loppuosa[1] ){
-                        if ( c == '+' || c == '-' ){
-                            vector<string> lahtoyksikko_ja_lisattava =
-                                    split( rivin_loppuosa[1], c );
+                    if (onko_lisattavaa( rivin_loppuosa[1] )){
+                        for( char& c : rivin_loppuosa[1] ){
+                            if ( c == '+' || c == '-' ){
+                                vector<string> lahtoyksikko_ja_lisattava =
+                                        split( rivin_loppuosa[1], c );
 
-                            lahtoyksikko = lahtoyksikko_ja_lisattava[0];
-                            if( c == '-' ){
-                                lisattava =
-                                        -stod( lahtoyksikko_ja_lisattava[1] );
-                            }
-                            else{
-                                lisattava = stod(lahtoyksikko_ja_lisattava[1]);
+                                lahtoyksikko = lahtoyksikko_ja_lisattava[0];
+                                if( c == '-' ){
+                                    lisattava =
+                                            -stod( lahtoyksikko_ja_lisattava[1] );
+                                }
+                                else{
+                                    lisattava = stod(lahtoyksikko_ja_lisattava[1]);
+                                }
                             }
                         }
+                        kaikki_yksikot = lisaa_kaava(kohdeyksikko, lahtoyksikko,
+                                                 suhde, lisattava, kaikki_yksikot);
                     }
-                    kaikki_yksikot = lisaa_kaava(kohdeyksikko, lahtoyksikko,
-                                             suhde, lisattava, kaikki_yksikot);
+                }
+                else{
+                    cout<< "Virhe: Tiedostossa lahto- tai kohdeyksikon nimessa"
+                           "virheita\n";
+                    lopeta_ohjelma();
                 }
             }
         }
         kaaviot.close();
     }
     else {
-        cout << "Virhe: Kaavio tiedostoa ei saatu luettua." << endl;
+        cout << "Virhe: Kaavio tiedostoa ei saatu luettua.\n";
     }
     return kaikki_yksikot;
 }
@@ -155,12 +162,9 @@ bool tarkista_rivi(string rivi){
 
 
 // Tarkistaa onko rivi muotoa yksikko kerroin yksikko ja lisattava
-bool tarkista_rivin_oikeellisuus(string rivi){
+bool tarkista_lahto_ja_kohde(string rivi){
     string lahtoyksikko;
-    string Kohdeyksikko;
-    string suhde;
-    string plus_tai_miinus;
-    string lisattava;
+    string kohdeyksikko;
     
     // Luodaan lahtoyksikko.
     for ( char& c : rivi){
@@ -184,7 +188,6 @@ bool tarkista_rivin_oikeellisuus(string rivi){
             rivi.erase(0);
         }
         else if ( c != '*' ){
-            suhde = suhde + c;
             rivi.erase(0);
         }
         else if( c == '*' ){
@@ -203,12 +206,38 @@ bool tarkista_rivin_oikeellisuus(string rivi){
             rivi.erase(0);
         }
         else if( c == '+' || c == '-' || c == '\n' ){
-            plus_tai_miinus = c;
             rivi.erase(0);
-            lisattava = rivi;
             break;
         }
     }
+    return tarkista_yksikon_kirjaimet(lahtoyksikko, kohdeyksikko);
+}
+
+
+// Tarkistaa onko lahto- ja kohdeyksikoissa oikeat kirjaimet
+// (a-z, A-Z seka '/')
+bool tarkista_yksikon_kirjaimet(string lahtoyksikko, string kohdeyksikko){
+    vector<char> sopivat_kirjaimet{ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+                                  'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+                                  'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+                                  'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F',
+                                  'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
+                                  'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
+                                  'W', 'X', 'Y', 'Z', '/' };
+    for (char& c : lahtoyksikko){
+        if ( sopivat_kirjaimet.end() == find(sopivat_kirjaimet.begin(),
+                       sopivat_kirjaimet.end(), c)){
+            return false;
+        }
+    }
+
+    for (char& c : kohdeyksikko){
+        if ( sopivat_kirjaimet.end() == find(sopivat_kirjaimet.begin(),
+                                             sopivat_kirjaimet.end(), c)){
+            return false;
+        }
+    }
+    return true;
 }
 
 // Poistaa rivilta valilyonnit.
