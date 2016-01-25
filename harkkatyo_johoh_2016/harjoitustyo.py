@@ -11,6 +11,8 @@
 # palat.txt tiedostosta ja aloituslauta luetaan ja muodostetaan
 # tiedostosta pelilauta.txt.
 
+# import random
+
 
 def main():
     # Pääfunktio, joka lukee tiedostot ja alustaa pelin, ja käynnistää
@@ -337,7 +339,6 @@ def tarkista_onko_voittajaa(nykyinen_lauta):
 
 def pelaaja_voitti(pelaajan_numero):
     # Tulostaa voittaneen pelaajan ja voittotekstin.
-
     print("Pelin voitti pelaaja " + str(pelaajan_numero) + ".")
 
 
@@ -598,7 +599,7 @@ class Pala():
 
         # Tarkistetaan vielä onko palan merkki '!' tai '-'. Jos on, vaihdetaan
         # se päittäin toiseen.
-        if self.__palan_merkki == "!":
+        if self.__palan_merkki == "!" or self.__palan_merkki == "I":
             self.__palan_merkki = "-"
 
         elif self.__palan_merkki == "-":
@@ -645,7 +646,8 @@ class Pala():
         # pystysuunnassa).
 
         if suunta == "leveys":
-            if self.__palan_merkki == "!" or self.__palan_merkki == "+":
+            if self.__palan_merkki == "!" or self.__palan_merkki == "+"\
+                    or self.__palan_merkki == "I":
                 return True
 
             else:
@@ -716,5 +718,21 @@ class Pala():
 
         return Pala(self.__palan_merkki, self.__palan_tiedot)
 
+
+# def arvo_järjestys():
+#    """Arpoo järjestyksen paloille."""
+#
+#    merkit = ["1"] + ["2"] + ["-"] + ["I"] + ["+"] + ["o"]*5 + ["."]*7
+#
+#    # Sekoittaa merkit ja tekee niistä listan, jossa on neljän kokoisia listoja
+#    random.shuffle(merkit)
+#    kartta_merkit = [merkit[x:x+4] for x in range(0, len(merkit)-1, 4)]
+#
+#    # Tulostetaan arvottu pelilauta
+#    for rivi in kartta_merkit:
+#        print("".join(rivi))
+#    print(merkit[16])
+
+# arvo_järjestys()
 
 main()
