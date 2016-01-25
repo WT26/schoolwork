@@ -132,54 +132,73 @@ def käyttöjärjestelmä(alustettu_lauta, aloitus_pala):
         # kohtaan.
         elif komento[0] == "vaaka":
 
-            # Tarkistetaan onko luku laudalla.
-            if int(komento[1]) < 1 or int(komento[1]) > 8:
-                print("Virhe: luku ei laudalla.")
+            try:
+                # Jos komennossa jotain ylimääräistä tai liian vähän
+                # argumentteja, on komento virheellinen.
+                if len(komento) != 2:
+                    print("Virheellinen syöte.")
 
-            # Tarkistetaan onko siirto mahdollinen, eli kumoisiko se edellisen
-            # siirron.
-            elif (mahdollinen_siirto(int(komento[1]), "vaaka",
-                                     edellinen_siirto, edellinen_suunta)):
+                # Tarkistetaan onko luku laudalla.
+                elif int(komento[1]) < 1 or int(komento[1]) > 8:
+                    print("Virhe: luku ei laudalla.")
 
-                nykyinen_lauta, pelattava_pala = vaaka_siirto(int(komento[1]),
-                                                              nykyinen_lauta,
-                                                              pelattava_pala)
-                vuoro = vaihda_vuoro(vuoro)
-                edellinen_siirto = komento[1]
-                edellinen_suunta = komento[0]
+                # Tarkistetaan onko siirto mahdollinen, eli kumoisiko se
+                # edellisen siirron.
+                elif (mahdollinen_siirto(int(komento[1]), "vaaka",
+                                         edellinen_siirto, edellinen_suunta)):
 
-                if tarkista_onko_voittajaa(nykyinen_lauta):
-                    return
+                    nykyinen_lauta, pelattava_pala =\
+                        vaaka_siirto(int(komento[1]), nykyinen_lauta,
+                                     pelattava_pala)
+                    vuoro = vaihda_vuoro(vuoro)
+                    edellinen_siirto = komento[1]
+                    edellinen_suunta = komento[0]
+
+                    if tarkista_onko_voittajaa(nykyinen_lauta):
+                        return
+
+                    else:
+                        vuoron_alkutoimet(vuoro, nykyinen_lauta,
+                                          pelattava_pala)
 
                 else:
-                    vuoron_alkutoimet(vuoro, nykyinen_lauta, pelattava_pala)
+                    print("Virhe: kumoaa edellisen siirron.")
 
-            else:
-                print("Virhe: kumoaa edellisen siirron.")
+            except ValueError or TypeError:
+                print("Virheellinen syöte.")
 
         # Komento, jolla yritetään siirtää pala pystysuunnassa haluttuun
         # kohtaan.
         elif komento[0] == "pysty":
-            if int(komento[1]) < 1 or int(komento[1]) > 8:
-                print("Virhe: luku ei laudalla.")
+            try:
+                if len(komento) != 2:
+                    print("Virheellinen syöte.")
 
-            elif (mahdollinen_siirto(int(komento[1]), "pysty",
-                                     edellinen_siirto, edellinen_suunta)):
+                elif int(komento[1]) < 1 or int(komento[1]) > 8:
+                    print("Virhe: luku ei laudalla.")
 
-                nykyinen_lauta, pelattava_pala = pysty_siirto(int(komento[1]),
-                                                              nykyinen_lauta,
-                                                              pelattava_pala)
-                vuoro = vaihda_vuoro(vuoro)
-                edellinen_siirto = komento[1]
-                edellinen_suunta = komento[0]
+                elif (mahdollinen_siirto(int(komento[1]), "pysty",
+                                         edellinen_siirto, edellinen_suunta)):
 
-                if tarkista_onko_voittajaa(nykyinen_lauta):
-                    return
+                    nykyinen_lauta, pelattava_pala = \
+                        pysty_siirto(int(komento[1]), nykyinen_lauta,
+                                     pelattava_pala)
+                    vuoro = vaihda_vuoro(vuoro)
+                    edellinen_siirto = komento[1]
+                    edellinen_suunta = komento[0]
+
+                    if tarkista_onko_voittajaa(nykyinen_lauta):
+                        return
+                    else:
+                        vuoron_alkutoimet(vuoro, nykyinen_lauta,
+                                          pelattava_pala)
+
                 else:
-                    vuoron_alkutoimet(vuoro, nykyinen_lauta, pelattava_pala)
+                    print("Virhe: kumoaa edellisen siirron.")
 
-            else:
-                print("Virhe: kumoaa edellisen siirron.")
+            # Jos syötteissä muuta epämääräistä ollaan valmiina virheeseen.
+            except ValueError or TypeError:
+                print("Virheellinen syöte.")
         else:
             print("Virheellinen syöte.")
 
@@ -306,10 +325,12 @@ def tarkista_onko_voittajaa(nykyinen_lauta):
             pelaaja_2_tartuttanut += 1
 
     if pelaaja_1_tartuttanut >= 3:
+        tulosta_lauta(nykyinen_lauta)
         pelaaja_voitti(1)
         return True
 
     elif pelaaja_2_tartuttanut >= 3:
+        tulosta_lauta(nykyinen_lauta)
         pelaaja_voitti(2)
         return True
 
