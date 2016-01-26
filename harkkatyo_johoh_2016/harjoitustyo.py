@@ -11,8 +11,6 @@
 # palat.txt tiedostosta ja aloituslauta luetaan ja muodostetaan
 # tiedostosta pelilauta.txt.
 
-# import random
-
 
 def main():
     # Pääfunktio, joka lukee tiedostot ja alustaa pelin, ja käynnistää
@@ -114,7 +112,9 @@ def käyttöjärjestelmä(alustettu_lauta, aloitus_pala):
     # Tulostaa pelivuoron ja pelilaudan sekä pelattavan palan.
     vuoron_alkutoimet(vuoro, nykyinen_lauta, pelattava_pala)
 
-    edellinen_siirto = 0
+    # Alkuarvo 26 on luku, joka ei ole pelattavien lukujen 0-8 sisällä,
+    # joten se ei aiheuta "bugeja".
+    edellinen_siirto = 26
     edellinen_suunta = "vaaka"
 
     while komento != "lopeta":
@@ -718,21 +718,5 @@ class Pala():
 
         return Pala(self.__palan_merkki, self.__palan_tiedot)
 
-
-# def arvo_järjestys():
-#    """Arpoo järjestyksen paloille."""
-#
-#    merkit = ["1"] + ["2"] + ["-"] + ["I"] + ["+"] + ["o"]*5 + ["."]*7
-#
-#    # Sekoittaa merkit ja tekee niistä listan, jossa on neljän kokoisia listoja
-#    random.shuffle(merkit)
-#    kartta_merkit = [merkit[x:x+4] for x in range(0, len(merkit)-1, 4)]
-#
-#    # Tulostetaan arvottu pelilauta
-#    for rivi in kartta_merkit:
-#        print("".join(rivi))
-#    print(merkit[16])
-
-# arvo_järjestys()
 
 main()
