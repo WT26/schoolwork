@@ -1,0 +1,6 @@
+0:1:5:0:ABCJKLSTU=
+0:2:6:1:DEFMNOVWX
+0:0:7:2:GHIPQRYZ#
+5:3:0:0:abcjklstu
+6:4:0:3:defmnovwx
+7:0:0:4:ghipqryz#
