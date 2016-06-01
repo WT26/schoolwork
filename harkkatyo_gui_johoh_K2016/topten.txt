@@ -1,0 +1,10 @@
+Pelintekijan ennatys:27:85
+Erkki Esimerkki:600:550
+Milla Malli:900:777
+-:0:0
+-:0:0
+-:0:0
+-:0:0
+-:0:0
+-:0:0
+-:0:0
