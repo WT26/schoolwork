@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/kuvat">
+        <file>ph_drooni.png</file>
+        <file>ph_matkustaja.png</file>
+        <file>ph_nysse.png</file>
+        <file>ph_pysakki.png</file>
+        <file>drooni.gif</file>
+        <file>ph_alkunakyma.png</file>
+        <file>matkustaja.png</file>
+        <file>nysse.png</file>
+        <file>pysakki.png</file>
+        <file>kursori.png</file>
+        <file>lemp.gif</file>
+        <file>alkunakyma.png</file>
+        <file>shaderi.gif</file>
+        <file>valahdys.png</file>
+    </qresource>
+</RCC>
