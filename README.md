@@ -5,7 +5,7 @@ Info:
 
 harkkatyo_game_otekn_K2016:
 	
-	Missing little library of code that school side did. 
+	Missing bunch of code that school side did. 
 	Don't have rights to post here.
 	
 	Size: Large
