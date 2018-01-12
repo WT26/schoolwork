@@ -1,0 +1,16 @@
+{% extends 'website_frame.html' %}
+{% block content %}
+
+<div>
+  {% if game%}
+    {{game}}
+    <br>
+    {{game.title}}
+    <br>
+    {% for category in game.categories %}
+     {{category}}
+    {% endfor %}
+  {% endif %}
+</div>
+
+{% endblock %}

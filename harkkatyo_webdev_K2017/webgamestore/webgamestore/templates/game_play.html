@@ -1,0 +1,77 @@
+{% extends 'website_frame.html' %}
+{% block content %}
+<script>
+
+  var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+  var eventer = window[eventMethod];
+  var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+  eventer(messageEvent,function(e) {
+    if(e.data.messageType == "SETTING") {
+      var iFrame = document.getElementById( 'game_iframe' );
+      iFrame.height = e.data.options.height + 20;
+      iFrame.width = e.data.options.width + 20;
+    }
+    else if (e.data.messageType == "SCORE") {
+      // Debugging outputs TODO Scores
+      var comment = "Score submitted: " + e.data.score;
+      var newParagraph = document.createElement('p');
+      newParagraph.textContent = comment;
+      document.getElementById("debugConsole").appendChild(newParagraph);
+    }
+    else if (e.data.messageType == "SAVE") {
+      var comment = "Saved!";
+      var newParagraph = document.createElement('p');
+      newParagraph.textContent = comment;
+      document.getElementById("debugConsole").appendChild(newParagraph);
+    }
+    else if (e.data.messageType == "LOAD_REQUEST") {
+      var comment = "Load requested!";
+      var newParagraph = document.createElement('p');
+      newParagraph.textContent = comment;
+      document.getElementById("debugConsole").appendChild(newParagraph);
+    }
+    else if (e.data.messageType == "LOAD_REQUEST") {
+      var comment = "Load requested!";
+      var newParagraph = document.createElement('p');
+      newParagraph.textContent = comment;
+      document.getElementById("debugConsole").appendChild(newParagraph);
+    }
+  },false);
+</script>
+
+<body>
+  <h1>Example game's id: {{ gameTitle }}</h1>
+  <table id=divider width=100% height=100%>
+    <tr>
+      <td width=50%>
+        <iframe id="game_iframe" src="{{ gameUrl }}" ></iframe>
+      </td>
+      <td width=50%>
+        <h1>HIGH SCORES</h1>
+        <h3>Your score: {{ playerScore.score }}</h3>
+        <table style="width:100%">
+          <tr>
+            <th>Rank</th>
+            <th>Player</th>
+            <th>Score</th>
+          </tr>
+          {% for item in hiscore %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.score }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </td>
+    </tr>
+  </table>
+  <!-- Div used when debugging game_play.html's save/load/submit score events-->
+  <div id="debugConsole"></div>
+
+  <div id="content">
+  </div>
+</body>
+
+{% endblock %}

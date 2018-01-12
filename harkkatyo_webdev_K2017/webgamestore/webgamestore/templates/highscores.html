@@ -1,0 +1,29 @@
+{% extends 'website_frame.html' %}
+{% block content %}
+
+<body>
+  <h1>{{ gameTitle }}'s HIGH SCORES</h1>
+
+  {% if playerHasGame %}
+    <h3>Your score: {{ playerScore.score }}<br></h3>
+  {% else %}
+    <h3>You don't own this game<br></h3>
+  {% endif %}
+
+  <table style="width:100%">
+    <tr>
+      <th><h4>Rank</h4></th>
+      <th><h4>Player</h4></th>
+      <th><h4>Score</h4></th>
+    </tr>
+    {% for item in hiscore %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.score }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+
+{% endblock %}

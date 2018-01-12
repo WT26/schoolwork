@@ -1,0 +1,59 @@
+{% extends 'website_frame.html' %}
+{% block content %}
+
+<body>
+  <form action=/user/change_password>
+    <input type="submit" value="Change password" />
+  </form>
+{% if developer %}
+  <form action=/user/add_game>
+    <input type="submit" value="Add game" />
+  </form>
+  <div>
+  {% if edited %}
+    Game: "{{edited}}" edited succesfully
+  {% elif added %}
+    Game: "{{added}}" added succesfully
+  {% elif deleted %}
+    Game: "{{deleted}}" was removed succesfully
+  {% endif %}
+  </div>
+  <table>
+  <tr>
+    <th> Game </th>
+    <th> Sold </th>
+    <th> </th>
+    <th> </th>
+  </tr>
+  {% for game, sales, gameId in games %}
+  <tr>
+    <td> {{game}} </td>
+    <td> <a href=/user/sales_detail/{{gameId}}> {{sales}} </a> </td>
+    <td>
+      <button onClick="editGame({{gameId}})"> Edit Game </button>
+    </td>
+    <td>
+      <button onclick="confirmDelete(&#34{{game}}&#34)"> Remove </button>
+    </td>
+  </tr>
+  {% endfor %}
+  </table>
+
+{% else %}
+  <table>
+  <tr>
+    <th>Game</th>
+    <th>Score</th>
+  </tr>
+  {% for key, gameId, value in games %}
+  <tr>
+    <td> {{key}}</td>
+    <td> {{value}} </td>
+    <td> <button onClick="toPlayGame({{gameId}})"> Play Game </button> </td>
+  </tr>
+  {% endfor %}
+  </table>
+{% endif %}
+</body>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'website_frame.html' %}
+{% block content %}
+
+<button onClick="backToUser()"> Back </button>
+<div>
+  Click a month to show or hide a breakdown of sales for that month.
+</div>
+<div>
+  {% if sales%}
+  <table>
+    <tr>
+      <th> Month </th>
+      <th> Sales </th>
+    </tr>
+    {% for month, days in sales.items%}
+    <tr>
+      <td class="month"> {{month}} </td>
+      <td> {{days.0}} </td>
+    </tr>
+    <tr style="display: none;">
+    <td colspan="2">
+    <table class="inner">
+      <tr> <th> Day </th> <th> Amount </th> </tr>
+      {% for day, amount in days.1.items%}
+      <tr>
+        <td> {{day}} </td>
+        <td> {{amount}} </td>
+      </tr>
+      {% endfor %}
+    </table>
+    </td>
+    {% endfor %}
+  </table>
+  {% else %}
+  No sales
+  {% endif %}
+</div>
+
+{% endblock %}

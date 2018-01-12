@@ -1,0 +1,285 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Tap the Circle</title>
+    <style>
+        * { padding: 0; margin: 0; }
+        canvas { background: #eee; display: block; margin: 0 auto; }
+    </style>
+</head>
+<body>
+    
+    <canvas id="TapCanvas" width="960" height="540"></canvas>
+    
+    <script>
+        var canvas = document.getElementById("TapCanvas");
+        var context = canvas.getContext("2d");
+
+        var circleX = -100;
+        var circleY = -100;
+        var circleR = Math.max(20*960/canvas.width,1);
+        var circleC = "#FF0000";
+        var circleMaxTicks = 120;
+        var circleTicks = circleMaxTicks+1;
+        var combo = 0;
+        var clicked = false;
+
+        var score = 0;
+        var upgrades = [0,0,0,0,0];
+        var maxCombo = 0
+
+        var upgradeStrs = ["Stay Time+","Radius+","Gold/Click+","Combo Reward+","Shrink/Acceleration-"];
+        var upgradeBase = [10,12,20,50,100];
+        var upgradeExp = [1.1,1.3,1.5,3,10];
+        var costs = [10,12,20,50,100];
+
+        // check for mouse click
+        canvas.addEventListener('click', clickHandler, false);
+
+        // handle mouse click
+        function clickHandler(e) {
+            var muoseX = e.pageX - canvas.offsetLeft;
+            var mouseY = e.pageY - canvas.offsetTop;
+            if (Math.pow(Math.pow(muoseX - circleX, 2) + Math.pow(mouseY - circleY, 2), 0.5) < circleR) {
+                circleTicks = circleMaxTicks+1;
+                score += 1+upgrades[2]+combo*upgrades[3];
+                combo += 1
+                maxCombo = Math.max(combo,maxCombo)
+                clicked = true;
+                update();
+            }
+            var squareStartX = canvas.height*1.5;
+            var squareStartY = 0;
+            var squareWidth = canvas.width-canvas.height*1.5;
+            var squareHeight = canvas.height/10;
+            for (var i = 0; i < 5; i++) {
+                if (muoseX >= squareStartX && mouseY >= squareStartY && mouseY < squareStartY+squareHeight) {
+                    getUpgrade(i);
+                }
+                squareStartY = squareStartY + squareHeight
+            }
+            squareWidth = (squareWidth)/2;
+            if (muoseX >= squareStartX && mouseY >= squareStartY && mouseY < squareStartY+squareHeight) {
+                if (muoseX < squareStartX+squareWidth) {
+                    sendSave();
+                }
+                else {
+                    sendLoad();
+                }
+            }
+            else if (muoseX >= squareStartX && mouseY >= squareStartY+squareHeight && mouseY < squareStartY+squareHeight*2) {
+                sendScore();
+            }
+        }
+
+        // send save request
+        function sendSave() {
+            var msg = {
+                "messageType": "SAVE",
+                "gameState": {
+                    "score": score,
+                    "upgrades": upgrades,
+                    "maxCombo": maxCombo
+                }
+            };
+            window.parent.postMessage(msg, "*");
+        }
+
+        // send load request
+        function sendLoad() {
+            var msg = {
+                "messageType": "LOAD_REQUEST",
+            };
+            window.parent.postMessage(msg, "*");
+        }
+
+        // send submit score request
+        function sendScore() {
+            var msg = {
+                "messageType": "SCORE",
+                "score": maxCombo
+            };
+            window.parent.postMessage(msg, "*");
+        }
+
+        // listen to messages
+        window.addEventListener("message", function(e) {
+            if(e.data.messageType === "LOAD") {
+                score = e.data.gameState.score;
+                upgrades = e.data.gameState.upgrades;
+                maxCombo = e.data.gameState.maxCombo;
+                var i = 0;
+                while (i < 5) {
+                    costs[i] = upgradeBase[i] * Math.pow(upgradeExp[i], upgrades[i]);
+                    i++;
+                }
+                update();
+              }
+            else if (e.data.messageType === "ERROR") {
+                alert(e.data.info);
+          }
+        });
+
+        // add 1 to an upgrade
+        function getUpgrade(i) {
+            if (costs[i] <=  score) {
+                upgrades[i]++;
+                score -= costs[i];
+                costs[i] = upgradeBase[i] * Math.pow(upgradeExp[i], upgrades[i]);
+                circleTicks--;
+                update();
+            }
+        }
+
+        // gui text functions
+
+        function to10Power(n) {
+            var exp = 0
+            while(n >= 1000) {
+                n = n/1000
+                exp = exp+3
+            }
+            n = round3Dec(n)
+            return n + "x10^" + exp;
+        }
+
+        function round3Dec(n) {
+            n = Math.floor(n * 1000) / 1000
+            return n;
+        }
+
+        function drawCircle(x,y,r,c) {
+            context.beginPath();
+            context.arc(x, y, r, 0, Math.PI*2);
+            context.fillStyle = c;
+            context.fill();
+            context.closePath();
+        }
+
+        // gui draw functions
+
+        function drawSquare(x, y, width, height, c, outline, c2) {
+            context.beginPath();
+            context.rect(x, y, width, height);
+            context.fillStyle = c;
+            context.fill();
+            if (outline) {
+                context.lineWidth=outline;
+                context.strokeStyle=c2;
+                context.stroke();
+            }
+            context.closePath();
+        }
+
+        // gui element drawing
+
+        function updateCircle() {
+            circleTicks += 1;
+            if (circleTicks > circleMaxTicks) {
+                if (!clicked) {
+                    combo = 0;
+                }
+                circleR = Math.max((20+upgrades[1]-combo/(1+upgrades[4]/2))*960/canvas.width,1);
+                circleMaxTicks = Math.max(120+upgrades[0]-combo*2/(1+upgrades[4]/2),1);
+                circleX = (canvas.height*1.5 - circleR*2) * Math.random() + circleR;
+                circleY = (canvas.height - circleR*2) * Math.random() + circleR;
+                circleTicks = 0;
+            }
+            drawCircle(circleX,circleY,circleR,circleC);
+        }
+
+        function updateBoxes() {
+            var squareStartX = canvas.height*1.5 + 1;
+            var squareStartY = 1;
+            var squareWidth = canvas.width-canvas.height*1.5 - 3;
+            var squareHeight = canvas.height/10 - 2;
+            for (var i = 0; i < 5; i++) {
+                drawSquare(squareStartX, squareStartY, squareWidth, squareHeight,"#d0d0d0", 2, "#000000");
+                updateText(squareStartX + 1, squareStartY+canvas.height/10 - 4, i);
+                squareStartY = squareStartY + canvas.height/10;
+            }
+            context.font = "18px Arial";
+            drawSquare(squareStartX, squareStartY + canvas.height/10, squareWidth, squareHeight,"#d0d0d0", 2, "#000000");
+            context.fillStyle = "#000000";
+            context.fillText("Submit Score", squareStartX+17, squareStartY+canvas.height/5-23);
+
+            squareWidth = (squareWidth + 3)/2 - 2.5;
+            drawSquare(squareStartX, squareStartY, squareWidth, squareHeight,"#d0d0d0", 2, "#000000");
+            context.fillStyle = "#000000";
+            context.fillText("Save", squareStartX+14, squareStartY+canvas.height/10-23);
+
+            squareStartX += squareWidth + 2;
+            drawSquare(squareStartX, squareStartY, squareWidth, squareHeight,"#d0d0d0", 2, "#000000");
+            context.fillStyle = "#000000";
+            context.fillText("Load", squareStartX+14, squareStartY+canvas.height/10-23);
+        }
+
+        function updateText(x, y, upgrade) {
+            var costStr = costs[upgrade];
+            context.font = "16px Arial";
+            context.fillStyle = "#000000";
+            context.fillText(upgradeStrs[upgrade], x, y-35);
+
+            context.font = "12px Arial";
+            context.fillText("Lv." + upgrades[upgrade], x, y-17);
+            if (costStr < 1000000) {
+                context.fillText("Cost: "+round3Dec(costStr), x, y);
+            }
+            else {
+                context.fillText("Cost: "+to10Power(costStr), x, y);
+            }
+        }
+
+        function updateScore() {
+            context.font = "16px Arial";
+            context.fillStyle = "#d0c000";
+            if (score < 1000000) {
+                context.fillText("Gold: "+round3Dec(score), canvas.height*1.5+2, canvas.height-6);
+            }
+            else {
+                context.fillText("Gold: "+to10Power(score), canvas.height*1.5, canvas.height-6);
+            }
+        }
+
+        function statistics() {
+            context.font = "14px Arial";
+            context.fillStyle = "#000000";
+            context.fillText("Highest Combo: "+maxCombo, canvas.height*1.5+2, canvas.height-26);
+        }
+
+        function comboMeter() {
+            if (combo) {
+                drawSquare(canvas.height*0.75-30, canvas.height/5, 60, 15,"#d0e8e8", 2, "#c0d8d8");
+                drawSquare(canvas.height*0.75-30, canvas.height/5, 60*(circleMaxTicks-circleTicks)/circleMaxTicks, 15,"#a0c0f0");
+                context.font = "14px Arial";
+                context.fillStyle = "#000000";
+                context.fillText(combo + " Hits", canvas.height*0.75-30, canvas.height/5 + 14);
+            }
+        }
+
+        // gui update at 60fps
+        function update() {
+            context.clearRect(0,0,canvas.width,canvas.height);
+            updateCircle();
+            comboMeter();
+            updateBoxes();
+            updateScore();
+            statistics();
+            clicked = false;
+        }
+        setInterval(update, 16.666666666)
+
+        // request resolution
+        var message =  {
+          messageType: "SETTING",
+          options: {
+      	    "width": 964,
+            "height": 544
+            }
+        };
+        window.parent.postMessage(message, "*");
+    </script>
+    
+</body>
+</html>

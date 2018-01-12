@@ -1,0 +1,30 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Game Store</title>
+  <meta charset="utf-8"/>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- Load css for dropdown menu in logged_out.html. Currently added straight to the .html file -->
+  <link rel="stylesheet"  href="/static/css/dropdown.css" />
+</head>
+
+
+
+<body>
+{% include 'header.html' %}
+
+{% block content %}
+{% endblock %}
+
+</body>
+
+</html>

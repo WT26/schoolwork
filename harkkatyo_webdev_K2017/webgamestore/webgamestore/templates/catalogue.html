@@ -1,0 +1,22 @@
+{% extends 'website_frame.html' %}
+{% block content %}
+
+<div>
+  {% if titles%}
+  <table>
+    <tr>
+      <th> Title </th>
+    </tr>
+    {% for title in titles%}
+    <tr>
+      <td> {{title}} </td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  No games
+  {% endif %}
+</div>
+</body>
+
+{% endblock %}
