@@ -5,8 +5,9 @@ Info:
 
 harkkatyo_game_otekn_K2016:
 	
-	Still missing little library of code that school side did. 
-	Waiting for approval to add it here.
+	Missing bunch of code that school side did. 
+	Don't have rights to post here.
+	
 	Size: Large
 	Language: C++
 	Grade: 5 / 5
@@ -15,7 +16,7 @@ harkkatyo_gui_otekn_K2016:
 	
 	Size: Small
 	Language: Python
-	Grade: ?
+	Grade: 5 / 5
   
 harkkatyo_johoh_K2016:
 	
