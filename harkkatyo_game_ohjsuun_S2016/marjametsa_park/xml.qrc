@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>temp_parkingdata.xml</file>
+        <file>temp_changed_parkingdata.xml</file>
+    </qresource>
+</RCC>

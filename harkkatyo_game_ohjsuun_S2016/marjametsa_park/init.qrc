@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ini_files/weapons.ini</file>
+        <file>ini_files/armors.ini</file>
+        <file>ini_files/implants.ini</file>
+        <file>ini_files/enemies.ini</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,26 @@
+10000/200/"Laura", 20, 20, 15, 10, "SMG", "None", "Radar"#"Char1", 20, 20, 15, 10, "SMG", "None", "Radar"#"Char2", 20, 20, 15, 10, "SMG", "None", "Radar""Char2", 20, 20, 15, 10, "SMG", "None", "Radar"#"Char3", 20, 20, 15, 10, "SMG", "None", "Radar"/"Pistol", "SMG", "Radar"/"TRE.S.17474","TRE.S.17473","TRE.S.17477"/500000/25
+
+0. Money
+    10000
+
+1. Enemies killed
+    200
+
+2. Characters progress
+    name, maxHp, currenHp, maxAp, currentAp, equippedGun, equippedMod, equippedTool
+    "Laura", 20, 20, 15, 10, "SMG", "None", "Radar"#
+    "Char1", 20, 20, 15, 10, "SMG", "None", "Radar"#
+    "Char2", 20, 20, 15, 10, "SMG", "None", "Radar"#
+    "Char3", 20, 20, 15, 10, "SMG", "None", "Radar"#
+
+3. Researched Items
+    "Pistol", "SMG", "Radar"
+
+4. Parkinghalls Controlled
+    "TRE.S.17474","TRE.S.17473","TRE.S.17477"
+
+5. Total Gameplay Time
+    500000
+
+6. Game Completition
+    25
